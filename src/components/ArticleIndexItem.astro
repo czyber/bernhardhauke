@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  article: CollectionEntry<"articles">;
+}
+
+const { article } = Astro.props;
+const pubDate = article.data.pubDate;
+const date = [
+  pubDate.getFullYear(),
+  String(pubDate.getMonth() + 1).padStart(2, "0"),
+  String(pubDate.getDate()).padStart(2, "0"),
+].join(".");
+const datetime = pubDate.toISOString();
+---
+
+<article class="article-index-item">
+  <a class="article-index-link" href={`/articles/${article.id}/`}>
+    <time class="article-index-date" datetime={datetime}>{date}</time>
+    <span class="article-index-copy">
+      <h3 class="article-index-title">{article.data.title}</h3>
+      <span class="article-index-description">
+        {article.data.description}
+      </span>
+    </span>
+    <span class="article-index-notch" aria-hidden="true"></span>
+  </a>
+</article>

@@ -1,0 +1,27 @@
+{
+  "name": "bernhardhauke",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro check && ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@fontsource-variable/ibm-plex-sans": "^5.2.8",
+    "@lucide/astro": "^1.21.0",
+    "@tailwindcss/postcss": "^4.3.1",
+    "astro": "^6.4.8",
+    "geist": "^1.7.2",
+    "postcss": "^8.5.15",
+    "prettier": "^3.8.4",
+    "prettier-plugin-astro": "^0.14.1",
+    "remark-gfm": "^4.0.1",
+    "tailwindcss": "^4.3.1",
+    "typescript": "^6.0.3"
+  }
+}

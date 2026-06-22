@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+import ArticleIndexItem from "../../components/ArticleIndexItem.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const articles = (await getCollection("articles"))
+  .filter((article) => !article.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title="Articles"
+  description="Articles and notes by Bernhard Hauke."
+>
+  <section class="page-intro" data-section-label="03 / Articles" data-animate>
+    <h1>A dated index of working notes.</h1>
+    <p>
+      A mechanical bibliography for observations, project notes, and longer
+      pieces as they take shape.
+    </p>
+  </section>
+
+  <section
+    class="article-index"
+    data-section-label="03.1 / Index"
+    data-animate
+    style="--delay: 80ms"
+  >
+    {articles.map((article) => <ArticleIndexItem article={article} />)}
+  </section>
+</BaseLayout>

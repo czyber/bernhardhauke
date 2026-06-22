@@ -1,0 +1,50 @@
+---
+import SectionHeading from "../components/SectionHeading.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="About" description="Software engineer, dad and learner">
+  <section class="page-intro" data-section-label="01 / About" data-animate>
+    <h1>About Bernhard Hauke</h1>
+    <p>
+      A software engineer, navigating professional development, expanding
+      horizons and being a dad. In love with the process.
+    </p>
+  </section>
+
+  <section
+    class="section-grid"
+    data-section-label="01.1 / Focus"
+    data-animate
+    style="--delay: 80ms"
+  >
+    <SectionHeading title="Pragmatic craftmanship" />
+    <div class="text-block">
+      <p>
+        Consulting, traditional finance, FinTech, construction tech, startup,
+        scaleup or enterprise. I have been there and even if decisions and
+        approaches may differ, I truly believe the following is true:
+      </p>
+      <p>
+        Enjoy what you do, own it, and stay curious. These principles do not
+        just lead to a great career but more important to a great life.
+      </p>
+    </div>
+  </section>
+
+  <section
+    class="note-panel"
+    data-section-label="01.2 / Contact"
+    data-animate
+    style="--delay: 120ms"
+  >
+    <SectionHeading title="Open for conversations" />
+    <p>
+      Contact me if you want to talk about work, software in general, or have
+      any questions to my projects.
+    </p>
+    <a class="button button-secondary" href="mailto:hello@bernhardhauke.com"
+      >Get in touch</a
+    >
+  </section>
+</BaseLayout>

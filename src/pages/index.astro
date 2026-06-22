@@ -1,0 +1,88 @@
+---
+import { getCollection } from "astro:content";
+import ArticleIndexItem from "../components/ArticleIndexItem.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const statusRank = {
+  Active: 0,
+  Shipped: 1,
+  Exploring: 2,
+  Archived: 3,
+};
+
+const allProjects = (await getCollection("projects"))
+  .filter((project) => !project.data.draft)
+  .sort(
+    (a, b) =>
+      Number(b.data.featured) - Number(a.data.featured) ||
+      statusRank[a.data.status] - statusRank[b.data.status] ||
+      b.data.year - a.data.year ||
+      a.data.title.localeCompare(b.data.title),
+  );
+
+const articles = (await getCollection("articles"))
+  .filter((article) => !article.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout>
+  <section class="section-grid" data-section-label="01 / About" data-animate>
+    <SectionHeading
+      title="A focused place for what I am building and learning."
+      description="A curious mind, exploring the landscape of software."
+    />
+    <div class="text-block">
+      <p>
+        This is a collection of my journey, exploring the fascinating realms of
+        software and engineering. For me, educating myself is sparked by
+        curiosity and impulse, all over the place.
+      </p>
+      <p>
+        I deeply believe in giving in to the process and enjoying it. No matter
+        if it "makes sense".
+      </p>
+    </div>
+  </section>
+
+  <section
+    class="section-stack"
+    data-section-label="02 / Projects"
+    data-animate
+    style="--delay: 80ms"
+  >
+    <div class="section-row">
+      <SectionHeading title="Selected work" />
+      <a class="text-link" href="/projects/">All projects</a>
+    </div>
+    <div class="card-grid">
+      {
+        allProjects
+          .slice(0, 2)
+          .map((project, index) => (
+            <ProjectCard project={project} index={index} />
+          ))
+      }
+    </div>
+  </section>
+
+  <section
+    class="section-stack"
+    data-section-label="03 / Articles"
+    data-animate
+    style="--delay: 120ms"
+  >
+    <div class="section-row">
+      <SectionHeading title="Recent writing" />
+      <a class="text-link" href="/articles/">All articles</a>
+    </div>
+    <div class="article-index article-index--compact">
+      {
+        articles
+          .slice(0, 2)
+          .map((article) => <ArticleIndexItem article={article} />)
+      }
+    </div>
+  </section>
+</BaseLayout>

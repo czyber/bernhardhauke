@@ -1,0 +1,134 @@
+---
+import { Check, Copy } from "@lucide/astro";
+---
+
+<template id="code-copy-icon">
+  <Copy size={14} stroke-width={1.8} aria-hidden="true" />
+</template>
+
+<template id="code-check-icon">
+  <Check size={14} stroke-width={1.8} aria-hidden="true" />
+</template>
+
+<script>
+  const copyIconTemplate =
+    document.querySelector<HTMLTemplateElement>("#code-copy-icon");
+  const checkIconTemplate =
+    document.querySelector<HTMLTemplateElement>("#code-check-icon");
+
+  const cloneIcon = (template: HTMLTemplateElement | null) =>
+    template?.content.firstElementChild?.cloneNode(true) ?? "";
+
+  const writeClipboard = async (value: string) => {
+    if (navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(value);
+        return;
+      } catch {
+        // Fall through to the selection-based legacy path below.
+      }
+    }
+
+    const field = document.createElement("textarea");
+    const legacyCopy = (
+      document as unknown as {
+        execCommand?: (commandId: string) => boolean;
+      }
+    ).execCommand;
+
+    field.value = value;
+    field.setAttribute("readonly", "");
+    field.style.position = "fixed";
+    field.style.top = "-999px";
+    field.style.left = "0";
+    field.style.opacity = "0";
+    field.style.pointerEvents = "none";
+    document.body.append(field);
+    field.focus({ preventScroll: true });
+    field.select();
+    field.setSelectionRange(0, field.value.length);
+
+    const didCopy = legacyCopy?.call(document, "copy") ?? false;
+    field.remove();
+
+    if (!didCopy) {
+      throw new Error("Clipboard is unavailable.");
+    }
+  };
+
+  const selectCode = (code: Element) => {
+    const selection = window.getSelection();
+    if (!selection) return;
+
+    const range = document.createRange();
+    range.selectNodeContents(code);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  };
+
+  const setButtonState = (
+    button: HTMLButtonElement,
+    state: "copy" | "copied" | "selected",
+  ) => {
+    const isDone = state !== "copy";
+    button.dataset.state = state;
+    button.setAttribute(
+      "aria-label",
+      state === "copied"
+        ? "Code copied"
+        : state === "selected"
+          ? "Code selected"
+          : "Copy code",
+    );
+    button.title =
+      state === "copied"
+        ? "Copied"
+        : state === "selected"
+          ? "Selected"
+          : "Copy code";
+    button.replaceChildren(
+      cloneIcon(isDone ? checkIconTemplate : copyIconTemplate),
+    );
+  };
+
+  const initializeCodeCopy = () => {
+    document.querySelectorAll<HTMLPreElement>(".prose pre").forEach((pre) => {
+      if (pre.dataset.copyReady === "true") return;
+
+      const code = pre.querySelector("code");
+      if (!code) return;
+
+      pre.dataset.copyReady = "true";
+
+      const button = document.createElement("button");
+      button.className = "code-copy-button";
+      button.type = "button";
+      setButtonState(button, "copy");
+
+      let resetTimer = 0;
+      button.addEventListener("click", async () => {
+        window.clearTimeout(resetTimer);
+        try {
+          await writeClipboard((code.textContent ?? "").trimEnd());
+          setButtonState(button, "copied");
+        } catch {
+          selectCode(code);
+          setButtonState(button, "selected");
+        }
+        resetTimer = window.setTimeout(() => {
+          setButtonState(button, "copy");
+        }, 1600);
+      });
+
+      pre.append(button);
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeCodeCopy, {
+      once: true,
+    });
+  } else {
+    initializeCodeCopy();
+  }
+</script>

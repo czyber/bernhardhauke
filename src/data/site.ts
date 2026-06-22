@@ -1,0 +1,12 @@
+export const site = {
+  name: "Bernhard Hauke",
+  title: "Bernhard Hauke",
+  description:
+    "Personal website for Bernhard Hauke: projects, articles, and notes on thoughtful software.",
+  url: "https://bernhardhauke.com",
+  nav: [
+    { label: "About", href: "/about/" },
+    { label: "Projects", href: "/projects/" },
+    { label: "Articles", href: "/articles/" },
+  ],
+};

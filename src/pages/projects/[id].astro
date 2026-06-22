@@ -1,0 +1,67 @@
+---
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import GitHubRepoLink from "../../components/GitHubRepoLink.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+
+export async function getStaticPaths() {
+  const projects = (await getCollection("projects")).filter(
+    (project) => !project.data.draft,
+  );
+
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={project.data.title} description={project.data.description}>
+  <article class="article-page" data-animate>
+    <header class="article-header">
+      <a class="back-link" href="/projects/">Projects</a>
+      <div class="card-meta">
+        <span>{project.data.year}</span>
+        <span>{project.data.status}</span>
+      </div>
+      <h1>{project.data.title}</h1>
+      <p>{project.data.description}</p>
+      {
+        project.data.stack.length > 0 && (
+          <ul class="tag-list" aria-label="Project stack">
+            {project.data.stack.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        )
+      }
+      <div class="hero-actions">
+        {
+          project.data.link && (
+            <a class="button button-primary" href={project.data.link}>
+              Live site
+            </a>
+          )
+        }
+        {
+          project.data.repo && (
+            <GitHubRepoLink
+              href={project.data.repo}
+              showStars={project.data.showRepoStars}
+            />
+          )
+        }
+      </div>
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

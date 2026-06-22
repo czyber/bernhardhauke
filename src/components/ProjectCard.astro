@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  index?: number;
+}
+
+const { project, index } = Astro.props;
+const label =
+  typeof index === "number" ? `P.${String(index + 1).padStart(2, "0")}` : "P";
+---
+
+<article class="content-card link-card">
+  <a class="card-hit" href={`/projects/${project.id}/`}>
+    <div class="card-meta">
+      <span>{label}</span>
+      <span>{project.data.year} / {project.data.status}</span>
+    </div>
+    <h3>{project.data.title}</h3>
+    <p>{project.data.description}</p>
+    {
+      project.data.stack.length > 0 && (
+        <ul class="tag-list" aria-label="Project stack">
+          {project.data.stack.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      )
+    }
+  </a>
+</article>

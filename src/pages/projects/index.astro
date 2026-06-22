@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import ProjectCard from "../../components/ProjectCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const statusRank = {
+  Active: 0,
+  Shipped: 1,
+  Exploring: 2,
+  Archived: 3,
+};
+
+const projects = (await getCollection("projects"))
+  .filter((project) => !project.data.draft)
+  .sort(
+    (a, b) =>
+      Number(b.data.featured) - Number(a.data.featured) ||
+      statusRank[a.data.status] - statusRank[b.data.status] ||
+      b.data.year - a.data.year ||
+      a.data.title.localeCompare(b.data.title),
+  );
+---
+
+<BaseLayout
+  title="Projects"
+  description="Projects and experiments by Bernhard Hauke."
+>
+  <section class="page-intro" data-section-label="02 / Projects" data-animate>
+    <h1>Selected work and experiments.</h1>
+    <p>
+      A concise index for shipped work, current explorations, and small
+      interface experiments worth keeping around.
+    </p>
+  </section>
+
+  <section
+    class="card-grid"
+    data-section-label="02.1 / Index"
+    data-animate
+    style="--delay: 80ms"
+  >
+    {
+      projects.map((project, index) => (
+        <ProjectCard project={project} index={index} />
+      ))
+    }
+  </section>
+</BaseLayout>
