@@ -2,7 +2,7 @@
 title: "Kanchi"
 description: "Self hosted Celery monitoring for teams that need clearer task visibility."
 year: 2026
-status: "Shipped - Ongoing"
+status: "Shipped" 
 stack:
   - Next.js
   - Python
