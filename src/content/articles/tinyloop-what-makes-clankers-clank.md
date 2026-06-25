@@ -1,6 +1,6 @@
 ---
 title: "tinyloop: What makes clankers clank"
-description: "A deliberately small coding agent, you can understand in one afternoon"
+description: "A deliberately small coding agent, you can understand in an afternoon"
 pubDate: 2026-06-25
 tags:
   - Agent tooling
@@ -12,11 +12,11 @@ The realms of software engineering experienced a drastic change in the previous 
 
 The process changed so quickly and so drastically, first GitHub Copilot was this weird and somewhat (not) working tool that made autocomplete do some inline completions. ChatGPT emerged and we could play around and poke it, copy-paste some snippets from the IDE and hope it would not hallucinate stuff or derail to quickly. When Anthropic released Claude Code, the game changed.
 
-LLM technology became something no developer could ignore any longer. Some like it, some hate it, but one thing is sure: In some form or another, _it is here to stay_.
+LLM technology became something no developer could ignore any longer. Some like it, some hate it, but one thing is for sure: In some form or another, _it is here to stay_.
 
 Next to Claude Code, Codex and Pi, a gazillion other coding agents wait to hammer away at your codebase. Generating piles of code. They interact with their environment and are not any more merely a question-answer machinery.
 
-64% of developers already use agentic tools, and another 21% are exploring or planning to do so. (Source: https://www.sonarsource.com/state-of-code-developer-survey-report.pdf).
+[64% of developers already use agentic tools, and another 21% are exploring or planning to do so.](https://www.sonarsource.com/state-of-code-developer-survey-report.pdf)
 
 If you used an agent before and just wonder: What is necessary that a simple question-answer tool becomes a capable agent that can do changes in my codebase and use other tools - **tinyloop** is a good starting point - hence I will take it as an example for this article.
 
@@ -218,4 +218,113 @@ for await (const event of agent.events()) {
 As events come in, they would be printed.
 
 ### Blingify It!
-As we most likely are not used to raw prints, we will render some TUI components based on the events. 
+As we most likely are not used to raw prints, we will render some TUI components based on the events.
+
+This is where the architecture becomes useful. We do not want the terminal interface to know how OpenAI works, how tools are executed, or how many model calls happen inside one turn. The UI should only know about a session. It sends user input in one direction and receives events from the other direction.
+
+In **tinyloop**, this boundary is the `SessionDriver`.
+
+```ts
+export type SessionDriver = {
+  sendUserMessage(text: string): Promise<void>;
+  events(): AsyncIterable<UiSessionEvent>;
+};
+```
+
+That is tiny, but it is doing a lot of architectural work. The UI can talk to a real agent session, a fake session, or a demo session without changing the rendering code. You can see this split in the [`packages/tui/src/session`](https://github.com/czyber/tinyloop/tree/main/packages/tui/src/session) folder.
+
+The real driver is just an adapter:
+
+```ts
+export function createAgentSessionDriver(workspaceRoot: string): SessionDriver {
+  const session = new AgentSession(new Agent({ workspaceRoot }));
+
+  return {
+    sendUserMessage: (text) => session.dispatch({ type: "user_message", text }),
+    async *events() {
+      for await (const event of session.events()) {
+        yield toUiSessionEvent(event);
+      }
+    },
+  };
+}
+```
+
+So we have three layers now:
+
+1. `Agent` knows how to call the model and tools.
+2. `AgentSession` knows how to turn commands into ordered events.
+3. `SessionDriver` gives the UI a small interface it can consume.
+
+The UI does not care that `run_command` uses `spawn`, or that `edit_file` uses a snippet replacement, or that the agent might need multiple tool turns before it can answer. The UI receives a stream of normalized events.
+
+## From Events To Interface
+
+The next piece is a reducer. If you have used React state management before, this will feel familiar. Each event comes in, and the reducer folds it into a view model.
+
+In **tinyloop**, events become turns. Turns contain transcript items. Transcript items can be user messages, assistant messages, tool calls, or errors.
+
+Roughly speaking:
+
+```text
+event -> reducer -> TUI state -> Ink components
+```
+
+A `tool.started` event appends a running tool card. A `tool.progress` event appends output to that card. A `tool.finished` event marks it as completed and stores structured details.
+
+This is important because tools are not instant, invisible function calls. They are part of the user experience. When an agent runs `pnpm test`, edits a file, or reads a config, the user should see that motion. Not every byte needs to be shown, but the user should understand what the agent is doing and where the result came from.
+
+That is what the [`reduceSessionEvent`](https://github.com/czyber/tinyloop/blob/main/packages/tui/src/state/reduce-session-event.ts) function does. It makes the agent legible.
+
+## Tool Cards
+
+The final step is rendering. The TUI has a `ToolCard` component that takes a tool transcript item and turns it into a small terminal panel.
+
+It shows:
+
+- the tool name
+- whether it is running or completed
+- the important argument, like a command or file path
+- a trimmed output preview
+- diffs as diff-flavored code blocks
+- exit codes for commands
+
+This sounds cosmetic, but it is actually part of the agent contract. If a coding agent changes a file and you only see the final assistant message, you have to trust it too much. If you see the tool card, the diff, and the exit code, you can stay oriented, and if necessary intervene. This might be opinionated, but I still very much favor to _know_ what the agent actually does and _what code it produces_. Often you can determine from the first few edits, if the agent will do what you want it to do for the next 10 minutes.
+
+That is the small shift from chatbot to coding agent: the model is not just speaking. It is acting in a workspace, and the interface shows enough of those actions that a human can follow along.
+
+## The Full Loop
+
+So if we put the whole thing together, a tiny coding agent looks like this:
+
+1. The user sends a message.
+2. The session starts a turn and emits a `user.message` event.
+3. The agent sends the prompt, tools, and previous response id to the model.
+4. The model either answers or requests one or more tools.
+5. The agent executes the tools inside the workspace.
+6. Tool output is sent back to the model as `function_call_output`.
+7. The model continues until it can answer.
+8. The session emits the assistant message and completes the turn.
+9. The UI consumes the events and renders the transcript.
+
+This is basically the clanker machinery. Not magic. Just a loop, a set of tools, and an event stream that keeps the user in the room.
+
+## What tinyloop Leaves Out
+
+The nice thing about a small project is that the missing pieces are visible too.
+
+A production coding agent needs more: approvals, cancellation, interrupts, resumable sessions, steering, queued messages, better sandboxing, richer diffs, maybe a browser UI, maybe persistence. 
+
+**tinyloop** is valuable precisely because it stops before all of that becomes a platform. You can read it and see the bones:
+
+- a model loop in [`packages/agent/src/agent.ts`](https://github.com/czyber/tinyloop/blob/main/packages/agent/src/agent.ts)
+- a session event stream in [`packages/agent/src/session.ts`](https://github.com/czyber/tinyloop/blob/main/packages/agent/src/session.ts)
+- four basic tools in [`packages/agent/src/tools`](https://github.com/czyber/tinyloop/tree/main/packages/agent/src/tools)
+- a terminal UI boundary in [`packages/tui/src/session`](https://github.com/czyber/tinyloop/tree/main/packages/tui/src/session)
+- a reducer that turns events into interface state in [`packages/tui/src/state`](https://github.com/czyber/tinyloop/tree/main/packages/tui/src/state)
+
+That is enough to understand the core idea. Once you see those pieces, bigger agents become less mysterious. They have more layers, better safety systems, more careful prompting, better interfaces, and a lot more operational hardening. But the clank is still recognizable.
+
+The model asks for a tool. Your code runs it. The result goes back. The interface tells the human what happened. Clank clank.
+
+_That is the loop._
