@@ -52,7 +52,7 @@ const response = await client.responses.create({
 console.log(response.output_text);
 ```
 
-This is the basic chitty chatty you already now from early ChatGPT days and Copilot. You feed the model some input and it answers. No magic code edits, no browser use. In 2023, Meta came out with a paper about [Toolformer](https://openreview.net/forum?id=Yacmpz84TH), a model capable of tool use. Simply said, those are LLMs which can produce reliable JSON and decide when to call a tool or not. Later, this became the defacto standard - OpenAI called it [Function Calling](https://developers.openai.com/api/docs/guides/function-calling), while Anthropic called it [Tool Use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview).
+This is the basic chitty chatty you already know from early ChatGPT days and Copilot. You feed the model some input and it answers. No magic code edits, no browser use. In 2023, Meta came out with a paper about [Toolformer](https://openreview.net/forum?id=Yacmpz84TH), a model capable of tool use. Simply said, those are LLMs which can produce reliable JSON and decide when to call a tool or not. Later, this became the defacto standard - OpenAI called it [Function Calling](https://developers.openai.com/api/docs/guides/function-calling), while Anthropic called it [Tool Use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview).
 
 ## Tools
 
