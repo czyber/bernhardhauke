@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-import ArticleIndexItem from "../components/ArticleIndexItem.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -21,10 +20,6 @@ const allProjects = (await getCollection("projects"))
       b.data.year - a.data.year ||
       a.data.title.localeCompare(b.data.title),
   );
-
-const articles = (await getCollection("articles"))
-  .filter((article) => !article.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <BaseLayout>
@@ -74,15 +69,19 @@ const articles = (await getCollection("articles"))
     style="--delay: 120ms"
   >
     <div class="section-row">
-      <SectionHeading title="Recent writing" />
-      <a class="text-link" href="/articles/">All articles</a>
+      <SectionHeading title="Articles" />
+      <a class="text-link" href="/articles/">Coming soon</a>
     </div>
-    <div class="article-index article-index--compact">
-      {
-        articles
-          .slice(0, 2)
-          .map((article) => <ArticleIndexItem article={article} />)
-      }
+    <div class="empty-state empty-state--compact">
+      <div class="empty-state-meta">
+        <span>writing system ready</span>
+        <span>publishing paused</span>
+      </div>
+      <h2>Notes will land here soon.</h2>
+      <p>
+        I am keeping the article index private for now while the first pieces
+        settle into something useful.
+      </p>
     </div>
   </section>
 </BaseLayout>

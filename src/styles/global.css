@@ -988,6 +988,91 @@ main > .section-stack:first-child {
   line-height: 21px;
 }
 
+.empty-state {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 0 34px;
+}
+
+.empty-state[data-section-label] {
+  padding-top: 52px;
+}
+
+.empty-state::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.28;
+}
+
+.empty-state::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  right: 0;
+  width: 72px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-line));
+}
+
+.empty-state-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.empty-state-meta span + span::before {
+  content: "/";
+  margin-right: 16px;
+  color: var(--muted);
+}
+
+.empty-state h2 {
+  max-width: 620px;
+  margin: 18px 0 0;
+  color: var(--text);
+  font-family: var(--font-title);
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: 0;
+}
+
+.empty-state p {
+  max-width: 580px;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-family: var(--font-copy);
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.empty-state--compact {
+  padding: 24px 0 28px;
+}
+
+.empty-state--compact h2 {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.empty-state--compact p {
+  max-width: 540px;
+  font-size: 15px;
+  line-height: 24px;
+}
+
 .content-card {
   position: relative;
   overflow: hidden;
