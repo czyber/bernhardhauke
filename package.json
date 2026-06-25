@@ -23,5 +23,8 @@
     "remark-gfm": "^4.0.1",
     "tailwindcss": "^4.3.1",
     "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "asciinema-player": "^3.16.0"
   }
 }

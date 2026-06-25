@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import GitHubRepoLink from "../../components/GitHubRepoLink.astro";
+import TinyloopDemo from "../../components/TinyloopDemo.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 interface Props {
@@ -60,6 +61,7 @@ const { Content } = await render(project);
         }
       </div>
     </header>
+    {project.id === "tinyloop" && <TinyloopDemo />}
     <div class="prose">
       <Content />
     </div>

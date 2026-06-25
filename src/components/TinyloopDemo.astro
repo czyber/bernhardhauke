@@ -1,0 +1,31 @@
+---
+import "asciinema-player/dist/bundle/asciinema-player.css";
+---
+
+<div id="tinyloop-demo"></div>
+
+<script>
+  import * as AsciinemaPlayer from "asciinema-player";
+
+  const target = document.getElementById("tinyloop-demo");
+
+  if (target) {
+    AsciinemaPlayer.create("/tinyloop.cast", target, {
+      theme: "dracula",
+      fit: "width",
+      idleTimeLimit: 2,
+      autoPlay: true,
+      controls: false,
+      loop: true,
+    });
+  }
+</script>
+
+<style>
+  #tinyloop-demo {
+    margin: 1.5rem 0 3rem;
+    border: 1px solid #27272a;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+</style>
