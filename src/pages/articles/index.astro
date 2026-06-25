@@ -1,5 +1,11 @@
 ---
+import { getCollection } from "astro:content";
+import ArticleIndexItem from "../../components/ArticleIndexItem.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const articles = (await getCollection("articles"))
+  .filter((article) => !article.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <BaseLayout
@@ -7,28 +13,19 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   description="Articles and notes by Bernhard Hauke."
 >
   <section class="page-intro" data-section-label="03 / Articles" data-animate>
-    <h1>Articles are coming soon.</h1>
+    <h1>A dated index of working notes.</h1>
     <p>
-      This space is reserved for notes on building products, interfaces, and
-      technical systems. The structure is ready, but the public index stays
-      quiet until I find the first pieces are worth publishing.
+      A mechanical bibliography for observations, project notes, and longer
+      pieces as they take shape.
     </p>
   </section>
 
   <section
-    class="empty-state"
-    data-section-label="03.1 / Queue"
+    class="article-index"
+    data-section-label="03.1 / Index"
     data-animate
     style="--delay: 80ms"
   >
-    <div class="empty-state-meta">
-      <span>draft buffer</span>
-      <span>public index closed</span>
-    </div>
-    <h2>No published notes yet.</h2>
-    <p>
-      A few drafts are still behind the panel. Once they have enough shape, this
-      will become a compact, dated index.
-    </p>
+    {articles.map((article) => <ArticleIndexItem article={article} />)}
   </section>
 </BaseLayout>
