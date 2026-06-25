@@ -57,7 +57,7 @@ This is the basic chitty chatty you already know from early ChatGPT days and Cop
 ## Tools
 
 But what are tools?
-Dead simple, you tell the LLM that you provide extra functionality, that it can use if necessary. And you also provide information about how and when to use it, as well as what it can expect as a return value.
+Dead simple, you tell the LLM that you provide extra functionality, that it can use if necessary. And you also provide information about how and when to use it.
 
 Let's do a simple example.
 
