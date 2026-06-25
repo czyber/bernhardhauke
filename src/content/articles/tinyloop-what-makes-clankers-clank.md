@@ -63,7 +63,7 @@ Let's do a simple example.
 
 ### Scenario: No Tool Use
 
-Suppose you have an LLM that never so any data about Pokémon during training (poor thing). And now you ask it "_What is the weight of Pikachu?_". It does not have a chance of telling you and will either make something up (hallucinate) or tell you that it does not know.
+Suppose you have an LLM that never saw any data about Pokémon during training (poor thing). And now you ask it "_What is the weight of Pikachu?_". It does not have a chance of telling you and will either make something up (hallucinate) or tell you that it does not know.
 
 ### Scenario: Tool Use
 
