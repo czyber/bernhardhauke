@@ -12,9 +12,7 @@ repo: "https://github.com/czyber/tinyloop"
 featured: true
 ---
 
-**tinyloop** is a deliberately small coding agent. I started it as a practical way to learn how these systems are put together: tool calls, event streams, command handling, terminal interaction.
-
-The project is not meant to compete with full coding agents. Its value is in being compact enough to inspect. Every part should feel close to the surface, so the agent can be changed, broken, repaired, and understood within an afternoon.
+**tinyloop** is a tiny coding agent. It is not meant to compete with full coding agents. Its value is in being compact enough to inspect. Every part should feel close to the surface, so the agent can be changed, broken, repaired, and understood within an afternoon.
 
 ## Shape
 
