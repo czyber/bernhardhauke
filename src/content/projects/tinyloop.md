@@ -29,20 +29,23 @@ The agent package exposes events and commands for consuming interfaces. That kee
 
 ## Why it exists
 
-Nowadays coding agents and harnesses are everywhere. Companies s.a. OpenAI and Anthropic are shipping heavy agents that can achieve astonishing results, and feel weird to watch progress through some tasks. They install CLI tools, use the browser interact with other programs, launch sub agents. 
+Nowadays coding agents and harnesses are everywhere. Companies s.a. OpenAI and Anthropic are shipping heavy agents that can achieve astonishing results, and feel weird to watch progress through some tasks. They install CLI tools, use the browser interact with other programs, launch sub agents.
 
 Everyone uses them, but does everyone really understand what they are and how they function?
 
 tinyloop exists to help curious people get a solid high-level understanding of how the tools that have taken over the modern software engineering world actually work.
 
 ## What Can It Do
-**tinyloop** is a basic agent harness. Using a Terminal User Interface (TUI), users interact with an LLM, that runs in a loop and has access to *tools*. 
+
+**tinyloop** is a basic agent harness. Using a Terminal User Interface (TUI), users interact with an LLM, that runs in a loop and has access to _tools_.
 
 **tinyloop** has access to four tools:
+
 - read (read files)
 - write (create files)
 - edit (edit files)
 - run command (run a bash command)
 
 ## What Is Left Out
+
 Production-ready agents need more. They need session persistance, sandboxing, multi-turn conversations, steering, branching and the list goes on. While for agents that are used for professional software development, these are necesssary capabilities, I don't think adding those to **tinyloop** would assist the goal of making an understandable minimalist agent (made for education purposes).

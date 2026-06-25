@@ -1,8 +1,8 @@
 ---
 title: "Kanchi"
-description: "Self hosted Celery monitoring for teams that need clearer task visibility."
+description: "Self hosted Celery monitoring and recovery for teams running production task queues."
 year: 2026
-status: "Shipped" 
+status: "Shipped"
 stack:
   - Next.js
   - Python
@@ -16,34 +16,24 @@ showRepoStars: true
 featured: true
 ---
 
-Kanchi is a monitoring interface for Celery based systems. It connects to the message broker and gives teams a direct view into task state, worker health, retry history, and operational drift.
+Kanchi is a self hosted control surface for Celery task queues. It connects to RabbitMQ or Redis and gives teams one place to watch tasks, inspect failures, understand worker health, and recover jobs without jumping between logs, dashboards, and shell commands.
 
-The product is built around one practical idea: task queues should be inspectable without reading logs, guessing worker state, or piecing together partial traces from several tools.
+It is built for teams running background jobs in production, where the useful question is rarely just whether a task failed. Kanchi helps answer what happened, whether the task can be safely retried, and what should become a repeatable recovery workflow.
 
-![Kanchi dashboard overview](/projects/kanchi/dashboard.png)
+![Kanchi operations dashboard](/projects/kanchi/dashboard-overview.png)
 
-## What it does
+## Product
 
-Kanchi surfaces live task activity, failed jobs, worker signals, queue behavior, and retry chains in one place. The interface is designed for developers who already know their system, but need faster feedback when something gets stuck.
+The interface keeps the operational loop tight: monitor task activity, open the relevant context, recover deliberately, and keep a record of what changed.
 
-The core work covered three areas.
+Core surfaces include live task monitoring, failed and orphaned task views, worker health, task progress, workflow automation, action history, and safe rerun review.
 
-1. A live dashboard for task and worker activity.
-2. Failure views that make retry decisions easier.
-3. Workflow automation for repeatable queue operations.
+The design favors dense tables, clear status states, and focused detail views. It should feel calm enough to leave open during normal development, but precise enough for production incident work.
 
-![Kanchi workflow automation](/projects/kanchi/workflow.png)
+![Kanchi rerun review](/projects/kanchi/rerun-review.png)
 
-## Product shape
+## Recovery
 
-The interface tries to keep noisy infrastructure data readable. Dense tables, clear status states, and focused detail panels help the user move from signal to action without leaving the browser.
+Recovery is one of the main product decisions. Instead of treating retry as a blind replay, Kanchi gives operators a review step where they can see available payloads, repair inputs when needed, skip unsafe items, and record the final action.
 
-The retry flow is a good example. A failed task can be inspected, traced through its retry chain, and sent back into the queue with guardrails in place.
-
-![Kanchi retry flow](/projects/kanchi/retry.png)
-
-## Role
-
-I worked on the product direction, interface structure, and implementation. The challenge was to make a technical operations tool feel fast, legible, and calm while still exposing enough detail for production debugging.
-
-Kanchi became a compact control surface for distributed work: direct enough for daily use, detailed enough for incident work, and quiet enough to stay open beside the rest of the stack.
+That makes the product more than a monitor. It becomes a place to make queue operations visible, traceable, and safer to repeat.
