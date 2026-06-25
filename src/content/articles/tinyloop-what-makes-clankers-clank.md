@@ -8,6 +8,19 @@ tags:
   - AI
 ---
 
+[View the tinyloop project page](/projects/tinyloop/)
+
+<figure class="prose-figure prose-figure--small">
+  <img
+    src="/articles/tinyloop/leannk-OUSRuN8JnzM-unsplash.jpg"
+    alt="A warmly lit vintage radio and shelves in a dark room"
+  />
+  <figcaption>
+    Photo by
+    <a href="https://unsplash.com/@leannk_official?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">leannk.</a>
+  </figcaption>
+</figure>
+
 The realms of software engineering experienced a drastic change in the previous year or so. When I think back what it used to look like to develop something a year ago (damn, lets not go back 2 years), and what it looks like now - I guess its the same if you compare modern hardware to when you had dial-up internet in the 2000s.
 
 The process changed so quickly and so drastically, first GitHub Copilot was this weird and somewhat (not) working tool that made autocomplete do some inline completions. ChatGPT emerged and we could play around and poke it, copy-paste some snippets from the IDE and hope it would not hallucinate stuff or derail to quickly. When Anthropic released Claude Code, the game changed.
