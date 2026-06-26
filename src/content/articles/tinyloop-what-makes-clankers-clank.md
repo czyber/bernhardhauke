@@ -196,7 +196,7 @@ export async function runToolCalls(
     toolOutputs.push(execution.output);
 
     // After the tool call has finished, we emit another event "tool.execution.finished"
-    // It carries information about the tool call result, s.a. the raw output and a structured representation
+    // It carries information about the tool call result, such as the raw output and a structured representation
     options?.emit(
       toToolFinishedEvent(toolCall.name, toolCall.call_id, execution.result.output, execution.result.details),
     );

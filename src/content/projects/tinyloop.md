@@ -27,7 +27,7 @@ The agent package exposes events and commands for consuming interfaces. That kee
 
 ## Why it exists
 
-Nowadays coding agents and harnesses are everywhere. Companies s.a. OpenAI and Anthropic are shipping heavy agents that can achieve astonishing results, and feel weird to watch progress through some tasks. They install CLI tools, use the browser interact with other programs, launch sub agents.
+Nowadays coding agents and harnesses are everywhere. Companies such as OpenAI and Anthropic are shipping heavy agents that can achieve astonishing results, and feel weird to watch progress through some tasks. They install CLI tools, use the browser interact with other programs, launch sub agents.
 
 Everyone uses them, but does everyone really understand what they are and how they function?
 
@@ -46,4 +46,4 @@ tinyloop exists to help curious people get a solid high-level understanding of h
 
 ## What Is Left Out
 
-Production-ready agents need more. They need session persistance, sandboxing, multi-turn conversations, steering, branching and the list goes on. While for agents that are used for professional software development, these are necesssary capabilities, I don't think adding those to **tinyloop** would assist the goal of making an understandable minimalist agent (made for education purposes).
+Production-ready agents need more. They need session persistence, sandboxing, multi-turn conversations, steering, branching and the list goes on. While for agents that are used for professional software development, these are necessary capabilities, I don't think adding those to **tinyloop** would assist the goal of making an understandable minimalist agent (made for education purposes).
