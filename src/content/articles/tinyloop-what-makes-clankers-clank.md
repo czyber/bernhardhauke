@@ -10,6 +10,12 @@ tags:
 
 [View the tinyloop project page](/projects/tinyloop/)
 
+In this article:
+- what turns an LLM into an agent
+- what tools actually are
+- why events matter in agent UX
+- how tinyloop keeps the architecture small
+
 <figure class="prose-figure prose-figure--small">
   <img
     src="/articles/tinyloop/leannk-OUSRuN8JnzM-unsplash.jpg"
@@ -23,7 +29,7 @@ tags:
 
 The realms of software engineering experienced a drastic change in the previous year or so. When I think back what it used to look like to develop something a year ago (damn, lets not go back 2 years), and what it looks like now - I guess its the same if you compare modern hardware to when you had dial-up internet in the 2000s.
 
-The process changed so quickly and so drastically, first GitHub Copilot was this weird and somewhat (not) working tool that made autocomplete do some inline completions. ChatGPT emerged and we could play around and poke it, copy-paste some snippets from the IDE and hope it would not hallucinate stuff or derail to quickly. When Anthropic released Claude Code, the game changed.
+The process changed so quickly and so drastically, first GitHub Copilot was this weird and somewhat (not) working tool that made autocomplete do some inline completions. ChatGPT emerged and we could play around and poke it, copy-paste some snippets from the IDE and hope it would not hallucinate stuff or derail too quickly. When Anthropic released Claude Code, the game changed.
 
 LLM technology became something no developer could ignore any longer. Some like it, some hate it, but one thing is for sure: In some form or another, _it is here to stay_.
 
@@ -31,7 +37,7 @@ Next to Claude Code, Codex and Pi, a gazillion other coding agents wait to hamme
 
 [64% of developers already use agentic tools, and another 21% are exploring or planning to do so.](https://www.sonarsource.com/state-of-code-developer-survey-report.pdf)
 
-If you used an agent before and just wonder: What is necessary that a simple question-answer tool becomes a capable agent that can do changes in my codebase and use other tools - **tinyloop** is a good starting point - hence I will take it as an example for this article.
+If you used an agent before and just wonder: What is necessary that a simple question-answer tool becomes a capable agent that can do changes in my codebase and use other tools - **tinyloop** is a good starting point - hence I will take it as an example for this article. It's a small coding agent, heavily inspired by Pi.
 
 ## The Core
 
@@ -52,7 +58,7 @@ const response = await client.responses.create({
 console.log(response.output_text);
 ```
 
-This is the basic chitty chatty you already know from early ChatGPT days and Copilot. You feed the model some input and it answers. No magic code edits, no browser use. In 2023, Meta came out with a paper about [Toolformer](https://openreview.net/forum?id=Yacmpz84TH), a model capable of tool use. Simply said, those are LLMs which can produce reliable JSON and decide when to call a tool or not. Later, this became the defacto standard - OpenAI called it [Function Calling](https://developers.openai.com/api/docs/guides/function-calling), while Anthropic called it [Tool Use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview).
+This is the basic chitty chatty you already know from early ChatGPT days and Copilot. You feed the model some input and it answers. No magic code edits, no browser use. In 2023, Meta came out with a paper about [Toolformer](https://openreview.net/forum?id=Yacmpz84TH), a model capable of tool use. Simply said, those are LLMs which can produce reliable JSON and decide when to call a tool or not. Later, this became the de facto standard - OpenAI called it [Function Calling](https://developers.openai.com/api/docs/guides/function-calling), while Anthropic called it [Tool Use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview).
 
 ## Tools
 
@@ -138,7 +144,7 @@ Now the LLM will receive your prompt and the tool definitions, it will initiate 
 
 Normally this is where you would check the LLM responses if they are of type `function_call`, if so, you would match the tool `name` (e.g. `getPokemonWeightTool`) and call the corresponding function `getPokemonWeight`.
 
-Now comes an important part. After calling the `getPokemonWeight` function, implictly calling the PokeAPI, and retrieving the data - **you** have the result - but not the LLM. It's last state is still "_I want to call the_ `getPokemonWeightTool` _tool_". So, now you have to call the LLM once again and spread the news about the retrieved Pokémon data. It will then respond with the result woven into its response, e.g.: `Pikachu weighs 6kg.`.
+Now comes an important part. After calling the `getPokemonWeight` function, implicitly calling the PokeAPI, and retrieving the data - **you** have the result - but not the LLM. It's last state is still "_I want to call the_ `getPokemonWeightTool` _tool_". So, now you have to call the LLM once again and spread the news about the retrieved Pokémon data. It will then respond with the result woven into its response, e.g.: `Pikachu weighs 6kg.`.
 
 ### Translate To Coding Agent, pls
 
@@ -152,7 +158,7 @@ The same holds for the tools a coding agent needs to handle software engineering
 You provide the tools, it calls them, your code reports back (e.g. file snippets, diffs, terminal output). These four tools are trivial to implement and can be seen in [tinyloop's tools](https://github.com/czyber/tinyloop/tree/main/packages/agent/src/tools).
 
 ## As Simple As That
-This already concludes what an agent does under the hood. Sure there is more to it, but this is what matters. The agents does it work now, but we need to interact with it, we want live updates and we want to scream at it. Let's start with the updates of the agent, since we just went through its implementation.
+This already concludes what an agent does under the hood. Sure there is more to it, but this is what matters. The agent does it's work now, but we need to interact with it, we want live updates and we want to scream at it. Let's start with the updates of the agent, since we just went through its implementation.
 
 ## Thinking About Us
 Now the agent does its job, but what about us? How would we as a user like to interact with the agent? We want to do two things really: _look at the output it produces and give it input, this could be a prompt - but also something else, e.g. approving a tool call_.
