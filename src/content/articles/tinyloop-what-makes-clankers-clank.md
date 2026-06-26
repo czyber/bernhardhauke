@@ -90,7 +90,7 @@ async function getPokemonWeight({ name }) {
 }
 ```
 
-Now that you have the functionality in place, you need to tell the LLM about it, so it knows it exists and it can call it. This is where the _tool definition_ comes in. Essentially, the LLM provider tells you what the LLM expects to know how to call a tool. For OpenAI it follows this format:
+Now that you have the functionality in place, you need to tell the LLM about it, so it knows it exists and it can call it. This is where the _tool definition_ comes in. Essentially, the LLM provider tells you what the LLM expects to know about how to call a tool. For OpenAI it follows this format:
 
 ```js
 const pokemonTool = {
