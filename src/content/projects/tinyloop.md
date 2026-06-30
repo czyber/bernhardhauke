@@ -8,6 +8,7 @@ stack:
   - Node.js
   - Ink
   - Agent tooling
+link: "https://learntinyloop.com"
 repo: "https://github.com/czyber/tinyloop"
 featured: true
 ---
