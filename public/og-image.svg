@@ -1,0 +1,85 @@
+<svg
+  width="1200"
+  height="630"
+  viewBox="0 0 1200 630"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect width="1200" height="630" fill="#050505" />
+  <path d="M0 0H1200V630H0V0Z" fill="url(#grid)" opacity="0.36" />
+  <path
+    d="M64 92H184"
+    stroke="#b36a48"
+    stroke-width="2"
+    stroke-dasharray="2 12"
+  />
+  <path d="M64 528H1136" stroke="#2e2e2e" />
+  <path d="M64 96V528" stroke="#2e2e2e" />
+  <rect x="64" y="72" width="58" height="58" rx="6" fill="#ededed" />
+  <text
+    x="84"
+    y="111"
+    fill="#050505"
+    font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+    font-size="28"
+    font-weight="700"
+  >
+    B
+  </text>
+  <text
+    x="136"
+    y="109"
+    fill="#ededed"
+    font-family="Inter, ui-sans-serif, system-ui, sans-serif"
+    font-size="28"
+    font-weight="600"
+  >
+    Bernhard Hauke
+  </text>
+  <text
+    x="64"
+    y="260"
+    fill="#ededed"
+    font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+    font-size="76"
+    font-weight="600"
+    letter-spacing="0"
+  >
+    Thoughtful software,
+  </text>
+  <text
+    x="64"
+    y="348"
+    fill="#ededed"
+    font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+    font-size="76"
+    font-weight="600"
+    letter-spacing="0"
+  >
+    projects, and notes.
+  </text>
+  <text
+    x="64"
+    y="430"
+    fill="#a0a0a0"
+    font-family="Inter, ui-sans-serif, system-ui, sans-serif"
+    font-size="30"
+    font-weight="400"
+  >
+    A personal engineering blog by Bernhard Hauke.
+  </text>
+  <text
+    x="64"
+    y="568"
+    fill="#b36a48"
+    font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+    font-size="22"
+  >
+    www.bernhardhauke.at
+  </text>
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" stroke="#ffffff" stroke-opacity="0.12" />
+    </pattern>
+  </defs>
+</svg>

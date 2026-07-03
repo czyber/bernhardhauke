@@ -27,7 +27,17 @@ const date = article.data.pubDate.toLocaleDateString("en", {
 });
 ---
 
-<BaseLayout title={article.data.title} description={article.data.description}>
+<BaseLayout
+  title={article.data.title}
+  description={article.data.description}
+  type="article"
+  canonicalPath={`/articles/${article.id}/`}
+  publishedTime={article.data.pubDate.toISOString()}
+  modifiedTime={(
+    article.data.updatedDate ?? article.data.pubDate
+  ).toISOString()}
+  tags={article.data.tags}
+>
   <article class="article-page" data-animate>
     <header class="article-header">
       <a class="back-link" href="/articles/">Articles</a>

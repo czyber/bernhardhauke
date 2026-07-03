@@ -782,6 +782,7 @@ main > .section-stack:first-child {
   margin-bottom: 24px;
 }
 
+.section-heading h1,
 .section-heading h2,
 .note-panel h2 {
   max-width: 23ch;
@@ -1767,6 +1768,7 @@ main > .section-stack:first-child {
     line-height: 26px;
   }
 
+  .section-heading h1,
   .section-heading h2,
   .note-panel h2 {
     font-size: 28px;
