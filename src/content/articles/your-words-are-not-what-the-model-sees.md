@@ -1,6 +1,8 @@
 ---
 title: "Your words are not what the model sees"
 description: "Part one of a tour from prompt to model: how tokenizers turn text into token IDs, why character counting is awkward, and how IDs become vectors."
+socialDescription: "How a tokenizer turns your prompt into the token IDs and vectors an LLM actually receives."
+socialImage: "/articles/your-words-are-not-what-the-model-sees/og-image.png"
 pubDate: 2026-07-31
 tags:
   - AI

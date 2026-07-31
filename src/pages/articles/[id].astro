@@ -30,6 +30,8 @@ const date = article.data.pubDate.toLocaleDateString("en", {
 <BaseLayout
   title={article.data.title}
   description={article.data.description}
+  socialDescription={article.data.socialDescription}
+  image={article.data.socialImage}
   type="article"
   canonicalPath={`/articles/${article.id}/`}
   publishedTime={article.data.pubDate.toISOString()}

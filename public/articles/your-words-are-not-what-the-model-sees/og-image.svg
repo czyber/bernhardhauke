@@ -1,0 +1,133 @@
+<svg
+  width="1200"
+  height="630"
+  viewBox="0 0 1200 630"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect width="1200" height="630" fill="#000000" />
+
+  <g stroke="#b36a48" stroke-opacity="0.42">
+    <path d="M38 0V630" />
+    <path d="M38 24H50M38 48H44M38 72H44M38 96H50M38 120H44M38 144H44M38 168H50M38 192H44M38 216H44M38 240H50M38 264H44M38 288H44M38 312H50M38 336H44M38 360H44M38 384H50M38 408H44M38 432H44M38 456H50M38 480H44M38 504H44M38 528H50M38 552H44M38 576H44M38 600H50" />
+  </g>
+
+  <g transform="translate(88 62)">
+    <rect width="42" height="42" rx="4" fill="#0d0d0d" stroke="#2e2e2e" />
+    <rect x="31" y="8" width="3" height="26" fill="#b36a48" />
+    <text
+      x="10"
+      y="29"
+      fill="#ededed"
+      font-family="'Departure Mono'"
+      font-size="22"
+      font-weight="600"
+    >B</text>
+  </g>
+
+  <text
+    x="146"
+    y="91"
+    fill="#ededed"
+    font-family="'Departure Mono'"
+    font-size="19"
+    font-weight="500"
+    letter-spacing="0.3"
+  >Bernhard Hauke</text>
+
+  <text
+    x="1112"
+    y="91"
+    fill="#b36a48"
+    text-anchor="end"
+    font-family="'Departure Mono'"
+    font-size="17"
+    letter-spacing="0.5"
+  >ARTICLE / 2026.07.31</text>
+
+  <path d="M88 128H1112" stroke="#242424" />
+
+  <text
+    x="88"
+    y="245"
+    fill="#ededed"
+    font-family="'Newsreader Variable'"
+    font-size="76"
+    font-weight="500"
+    letter-spacing="-1.2"
+  >Your words are not what</text>
+  <text
+    x="88"
+    y="329"
+    fill="#ededed"
+    font-family="'Newsreader Variable'"
+    font-size="76"
+    font-weight="500"
+    letter-spacing="-1.2"
+  >the model sees</text>
+
+  <text
+    x="88"
+    y="383"
+    fill="#8f8f8f"
+    font-family="'Departure Mono'"
+    font-size="18"
+    letter-spacing="0.25"
+  >PART 1 / FROM WORDS TO TOKENS</text>
+
+  <path d="M88 430H1112" stroke="#242424" />
+
+  <text
+    x="88"
+    y="493"
+    fill="#a0a0a0"
+    font-family="'Departure Mono'"
+    font-size="22"
+  >&quot;strawberry&quot;</text>
+  <text
+    x="275"
+    y="493"
+    fill="#b36a48"
+    font-family="'Departure Mono'"
+    font-size="22"
+  >→</text>
+  <text
+    x="326"
+    y="493"
+    fill="#ededed"
+    font-family="'Departure Mono'"
+    font-size="22"
+  >[&quot;st&quot;, &quot;raw&quot;, &quot;berry&quot;]</text>
+  <text
+    x="698"
+    y="493"
+    fill="#b36a48"
+    font-family="'Departure Mono'"
+    font-size="22"
+  >→</text>
+  <text
+    x="750"
+    y="493"
+    fill="#ededed"
+    font-family="'Departure Mono'"
+    font-size="22"
+  >[302, 1618, 19772]</text>
+
+  <text
+    x="88"
+    y="572"
+    fill="#8f8f8f"
+    font-family="'Departure Mono'"
+    font-size="16"
+    letter-spacing="0.45"
+  >AI / LLMs / Foundations</text>
+  <text
+    x="1112"
+    y="572"
+    fill="#b36a48"
+    text-anchor="end"
+    font-family="'Departure Mono'"
+    font-size="16"
+    letter-spacing="0.35"
+  >BERNHARDHAUKE.AT</text>
+</svg>

@@ -11,6 +11,7 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  socialDescription?: string;
   type?: "website" | "article";
   image?: string;
   canonicalPath?: string;
@@ -22,6 +23,7 @@ interface Props {
 const {
   title = site.title,
   description = site.description,
+  socialDescription,
   type = "website",
   image = site.defaultImage,
   canonicalPath = Astro.url.pathname,
@@ -31,6 +33,7 @@ const {
 } = Astro.props;
 
 const pageTitle = title === site.title ? title : `${title} | ${site.title}`;
+const shareDescription = socialDescription ?? description;
 const canonicalUrl = new URL(canonicalPath, site.url).toString();
 const imageUrl = new URL(image, site.url).toString();
 const structuredData =
@@ -86,18 +89,18 @@ const structuredData =
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalUrl} />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={shareDescription} />
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={site.title} />
     <meta property="og:image" content={imageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${pageTitle} social preview`} />
+    <meta property="og:image:alt" content={`${title} social preview`} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={shareDescription} />
     <meta name="twitter:image" content={imageUrl} />
     {
       type === "article" && publishedTime && (

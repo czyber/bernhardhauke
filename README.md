@@ -9,6 +9,7 @@ npm install
 npm run dev
 npm run check
 npm run build
+npm run build:og
 ```
 
 ## Content
