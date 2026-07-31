@@ -41,6 +41,26 @@ Before the model can do anything useful, your prompt has to change shape.
   />
 </figure>
 
+## Tokens are chunks, not words
+
+A token is not necessarily a character, syllable, or word. It is better to think of it as a chunk: a slice of text with an arbitrary length. As a rough rule of thumb, a token is around four characters of common English text, but there are exceptions everywhere.
+
+Common text often becomes a single token. Less common text might be split into several. Spaces can be part of a token, and the same word can be encoded differently depending on whether it appears at the beginning of a sentence or after a space.
+
+For one current OpenAI tokenizer, `o200k_base`, the word `strawberry` is split like this:
+
+```text
+"strawberry"
+      ↓
+["st", "raw", "berry"]
+      ↓
+[302, 1618, 19772]
+```
+
+Those boundaries and IDs are not universal. Another tokenizer can split the same word differently.
+
+This sounds like a mundane preprocessing step, but the way your words are split has consequences you have almost certainly encountered.
+
 This brings us to the first necessary component that is not in the weights themselves: the **tokenizer**.
 
 ## The tokenizer
@@ -91,26 +111,6 @@ The last missing piece of the tokenizer is the **algorithm**. The tokenizer used
 ```
 
 If the `"b e"` rule would not exist, you would end up with three tokens instead: `be rr y`.
-
-## Tokens are chunks, not words
-
-A token is not necessarily a character, syllable, or word. It is better to think of it as a chunk: a slice of text with an arbitrary length. As a rough rule of thumb, a token is around four characters of common English text, but there are exceptions everywhere.
-
-Common text often becomes a single token. Less common text might be split into several. Spaces can be part of a token, and the same word can be encoded differently depending on whether it appears at the beginning of a sentence or after a space.
-
-For one current OpenAI tokenizer, `o200k_base`, the word `strawberry` is split like this:
-
-```text
-"strawberry"
-      ↓
-["st", "raw", "berry"]
-      ↓
-[302, 1618, 19772]
-```
-
-Those boundaries and IDs are not universal. Another tokenizer can split the same word differently.
-
-This sounds like a mundane preprocessing step, but the way your words are split has consequences you have almost certainly encountered.
 
 ## Why "strawberry" is awkward
 
