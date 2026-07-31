@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import ArticleIndexItem from "../components/ArticleIndexItem.astro";
-import LabIndexItem from "../components/LabIndexItem.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -26,14 +25,6 @@ const allProjects = (await getCollection("projects"))
 const articles = (await getCollection("articles"))
   .filter((article) => !article.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-const labs = (await getCollection("labs"))
-  .filter((lab) => !lab.data.draft)
-  .sort(
-    (a, b) =>
-      (b.data.updatedDate ?? b.data.startedDate).valueOf() -
-      (a.data.updatedDate ?? a.data.startedDate).valueOf(),
-  );
 ---
 
 <BaseLayout>
@@ -58,24 +49,9 @@ const labs = (await getCollection("labs"))
 
   <section
     class="section-stack"
-    data-section-label="02 / Labs"
+    data-section-label="02 / Projects"
     data-animate
     style="--delay: 80ms"
-  >
-    <div class="section-row">
-      <SectionHeading title="Labs" />
-      <a class="text-link" href="/labs/">All labs</a>
-    </div>
-    <div class="article-index article-index--compact">
-      {labs.slice(0, 1).map((lab) => <LabIndexItem lab={lab} />)}
-    </div>
-  </section>
-
-  <section
-    class="section-stack"
-    data-section-label="03 / Projects"
-    data-animate
-    style="--delay: 120ms"
   >
     <div class="section-row">
       <SectionHeading title="Selected work" />
@@ -94,9 +70,9 @@ const labs = (await getCollection("labs"))
 
   <section
     class="section-stack"
-    data-section-label="04 / Articles"
+    data-section-label="03 / Articles"
     data-animate
-    style="--delay: 160ms"
+    style="--delay: 120ms"
   >
     <div class="section-row">
       <SectionHeading title="Recent writing" />

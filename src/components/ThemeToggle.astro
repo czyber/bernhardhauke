@@ -21,13 +21,8 @@
 
   type Theme = "light" | "dark";
 
-  const systemTheme = (): Theme =>
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-
   const currentTheme = (): Theme =>
-    themeRoot.dataset.theme === "dark" ? "dark" : systemTheme();
+    themeRoot.dataset.theme === "dark" ? "dark" : "light";
 
   const applyTheme = (theme: Theme) => {
     themeRoot.dataset.theme = theme;

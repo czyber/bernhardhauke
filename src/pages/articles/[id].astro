@@ -38,7 +38,7 @@ const date = article.data.pubDate.toLocaleDateString("en", {
   ).toISOString()}
   tags={article.data.tags}
 >
-  <article class="article-page" data-animate>
+  <article class="article-page article-page--reading" data-animate>
     <header class="article-header">
       <a class="back-link" href="/articles/">Articles</a>
       <p class="eyebrow">{date}</p>
@@ -46,11 +46,9 @@ const date = article.data.pubDate.toLocaleDateString("en", {
       <p>{article.data.description}</p>
       {
         article.data.tags.length > 0 && (
-          <ul class="tag-list" aria-label="Article tags">
-            {article.data.tags.map((tag) => (
-              <li>{tag}</li>
-            ))}
-          </ul>
+          <p class="article-tags">
+            <span>Filed under</span> {article.data.tags.join(" / ")}
+          </p>
         )
       }
     </header>

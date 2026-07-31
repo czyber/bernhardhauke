@@ -92,36 +92,38 @@ import { Check, Copy } from "@lucide/astro";
   };
 
   const initializeCodeCopy = () => {
-    document.querySelectorAll<HTMLPreElement>(".prose pre").forEach((pre) => {
-      if (pre.dataset.copyReady === "true") return;
+    document
+      .querySelectorAll<HTMLPreElement>(".prose pre[data-copy]")
+      .forEach((pre) => {
+        if (pre.dataset.copyReady === "true") return;
 
-      const code = pre.querySelector("code");
-      if (!code) return;
+        const code = pre.querySelector("code");
+        if (!code) return;
 
-      pre.dataset.copyReady = "true";
+        pre.dataset.copyReady = "true";
 
-      const button = document.createElement("button");
-      button.className = "code-copy-button";
-      button.type = "button";
-      setButtonState(button, "copy");
+        const button = document.createElement("button");
+        button.className = "code-copy-button";
+        button.type = "button";
+        setButtonState(button, "copy");
 
-      let resetTimer = 0;
-      button.addEventListener("click", async () => {
-        window.clearTimeout(resetTimer);
-        try {
-          await writeClipboard((code.textContent ?? "").trimEnd());
-          setButtonState(button, "copied");
-        } catch {
-          selectCode(code);
-          setButtonState(button, "selected");
-        }
-        resetTimer = window.setTimeout(() => {
-          setButtonState(button, "copy");
-        }, 1600);
+        let resetTimer = 0;
+        button.addEventListener("click", async () => {
+          window.clearTimeout(resetTimer);
+          try {
+            await writeClipboard((code.textContent ?? "").trimEnd());
+            setButtonState(button, "copied");
+          } catch {
+            selectCode(code);
+            setButtonState(button, "selected");
+          }
+          resetTimer = window.setTimeout(() => {
+            setButtonState(button, "copy");
+          }, 1600);
+        });
+
+        pre.append(button);
       });
-
-      pre.append(button);
-    });
   };
 
   if (document.readyState === "loading") {
