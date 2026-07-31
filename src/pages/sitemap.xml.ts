@@ -38,11 +38,22 @@ export const GET: APIRoute = async () => {
       priority: "0.7",
     }));
 
+  const labs = (await getCollection("labs"))
+    .filter((lab) => !lab.data.draft)
+    .map((lab) => ({
+      path: `/labs/${lab.id}/`,
+      lastmod: lab.data.updatedDate ?? lab.data.startedDate,
+      changefreq: "monthly",
+      priority: "0.7",
+    }));
+
   const entries: SitemapEntry[] = [
     { path: "/", changefreq: "weekly", priority: "1.0" },
     { path: "/about/", changefreq: "monthly", priority: "0.7" },
+    { path: "/labs/", changefreq: "weekly", priority: "0.8" },
     { path: "/projects/", changefreq: "weekly", priority: "0.8" },
     { path: "/articles/", changefreq: "weekly", priority: "0.8" },
+    ...labs,
     ...projects,
     ...articles,
   ];

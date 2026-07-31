@@ -1,0 +1,67 @@
+---
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+interface Props {
+  lab: CollectionEntry<"labs">;
+}
+
+export async function getStaticPaths() {
+  const labs = (await getCollection("labs")).filter((lab) => !lab.data.draft);
+
+  return labs.map((lab) => ({
+    params: { id: lab.id },
+    props: { lab },
+  }));
+}
+
+const { lab } = Astro.props;
+const { Content } = await render(lab);
+const startedDate = lab.data.startedDate.toLocaleDateString("en", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+const updatedDate = lab.data.updatedDate?.toLocaleDateString("en", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+---
+
+<BaseLayout
+  title={lab.data.title}
+  description={lab.data.description}
+  type="article"
+  canonicalPath={`/labs/${lab.id}/`}
+  publishedTime={lab.data.startedDate.toISOString()}
+  modifiedTime={(lab.data.updatedDate ?? lab.data.startedDate).toISOString()}
+  tags={lab.data.focus}
+>
+  <article class="article-page lab-page" data-animate>
+    <header class="article-header">
+      <a class="back-link" href="/labs/">Labs</a>
+      <div class="card-meta lab-entry-meta">
+        <span>{lab.data.status}</span>
+        <span>
+          Started {startedDate}{updatedDate ? ` / Updated ${updatedDate}` : ""}
+        </span>
+      </div>
+      <h1>{lab.data.title}</h1>
+      <p>{lab.data.description}</p>
+      {
+        lab.data.focus.length > 0 && (
+          <ul class="tag-list" aria-label="Lab focus areas">
+            {lab.data.focus.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

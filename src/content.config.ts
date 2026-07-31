@@ -32,4 +32,19 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { articles, projects };
+const labs = defineCollection({
+  loader: glob({ base: "./src/content/labs", pattern: "**/*.{md,mdx}" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    startedDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    status: z
+      .enum(["Exploring", "Active", "Paused", "Archived"])
+      .default("Active"),
+    focus: z.array(z.string()).default([]),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { articles, projects, labs };

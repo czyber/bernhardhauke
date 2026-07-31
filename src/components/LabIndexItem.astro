@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  lab: CollectionEntry<"labs">;
+}
+
+const { lab } = Astro.props;
+const displayDate = lab.data.updatedDate ?? lab.data.startedDate;
+const date = [
+  displayDate.getFullYear(),
+  String(displayDate.getMonth() + 1).padStart(2, "0"),
+  String(displayDate.getDate()).padStart(2, "0"),
+].join(".");
+const datetime = displayDate.toISOString();
+---
+
+<article class="article-index-item lab-index-item">
+  <a class="article-index-link" href={`/labs/${lab.id}/`}>
+    <time class="article-index-date" datetime={datetime}>{date}</time>
+    <span class="article-index-copy">
+      <span class="card-meta lab-index-meta">
+        <span>{lab.data.status}</span>
+        {
+          lab.data.focus.length > 0 && (
+            <span>{lab.data.focus.slice(0, 3).join(" / ")}</span>
+          )
+        }
+      </span>
+      <h3 class="article-index-title">{lab.data.title}</h3>
+      <span class="article-index-description">
+        {lab.data.description}
+      </span>
+    </span>
+    <span class="article-index-notch" aria-hidden="true"></span>
+  </a>
+</article>

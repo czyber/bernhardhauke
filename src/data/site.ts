@@ -8,6 +8,7 @@ export const site = {
   email: "bernhardhauke@icloud.com",
   nav: [
     { label: "About", href: "/about/" },
+    { label: "Labs", href: "/labs/" },
     { label: "Projects", href: "/projects/" },
     { label: "Articles", href: "/articles/" },
   ],

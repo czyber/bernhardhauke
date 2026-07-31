@@ -1,0 +1,55 @@
+---
+import { getCollection } from "astro:content";
+import LabIndexItem from "../../components/LabIndexItem.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const labs = (await getCollection("labs"))
+  .filter((lab) => !lab.data.draft)
+  .sort(
+    (a, b) =>
+      (b.data.updatedDate ?? b.data.startedDate).valueOf() -
+      (a.data.updatedDate ?? a.data.startedDate).valueOf(),
+  );
+---
+
+<BaseLayout
+  title="Labs"
+  description="Lab notes on learning, small experiments, and creative practice by Bernhard Hauke."
+>
+  <section class="page-intro" data-section-label="02 / Labs" data-animate>
+    <h1>A quiet place for things still becoming.</h1>
+    <p>
+      Not a showcase. More like a bench with half-built things on it: small
+      exercises, confusing parts, next steps, and notes from the process.
+    </p>
+  </section>
+
+  <section
+    class="section-grid"
+    data-section-label="02.1 / Method"
+    data-animate
+    style="--delay: 80ms"
+  >
+    <SectionHeading title="Small loops over grand declarations." />
+    <div class="text-block">
+      <p>
+        A lab is for interests that need somewhere to live before they become
+        articles, projects, or nothing in particular.
+      </p>
+      <p>
+        The format is deliberately modest: what I tried, what felt alive, what
+        was confusing, and what the next small attempt should be.
+      </p>
+    </div>
+  </section>
+
+  <section
+    class="article-index"
+    data-section-label="02.2 / Notes"
+    data-animate
+    style="--delay: 120ms"
+  >
+    {labs.map((lab) => <LabIndexItem lab={lab} />)}
+  </section>
+</BaseLayout>
