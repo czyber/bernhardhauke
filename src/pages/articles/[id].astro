@@ -40,7 +40,11 @@ const date = article.data.pubDate.toLocaleDateString("en", {
   ).toISOString()}
   tags={article.data.tags}
 >
-  <article class="article-page article-page--reading" data-animate>
+  <article
+    class="article-page article-page--reading"
+    data-animate
+    data-analytics-article
+  >
     <header class="article-header">
       <a class="back-link" href="/articles/">Articles</a>
       <p class="eyebrow">{date}</p>

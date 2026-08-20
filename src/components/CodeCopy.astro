@@ -91,6 +91,13 @@ import { Check, Copy } from "@lucide/astro";
     );
   };
 
+  const trackCodeCopy = () => {
+    const analyticsWindow = window as Window & {
+      umami?: { track: (event: string) => void };
+    };
+    analyticsWindow.umami?.track("code-copy");
+  };
+
   const initializeCodeCopy = () => {
     document
       .querySelectorAll<HTMLPreElement>(".prose pre[data-copy]")
@@ -117,6 +124,7 @@ import { Check, Copy } from "@lucide/astro";
             selectCode(code);
             setButtonState(button, "selected");
           }
+          trackCodeCopy();
           resetTimer = window.setTimeout(() => {
             setButtonState(button, "copy");
           }, 1600);

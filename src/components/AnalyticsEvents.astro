@@ -1,0 +1,72 @@
+<script>
+  type UmamiTracker = {
+    track: (
+      event: string,
+      data?: Record<string, string | number | boolean>,
+    ) => void;
+  };
+
+  const analyticsWindow = window as Window & { umami?: UmamiTracker };
+  const track = (
+    event: string,
+    data?: Record<string, string | number | boolean>,
+  ) => analyticsWindow.umami?.track(event, data);
+
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+
+    const link = event.target.closest<HTMLAnchorElement>("a[href]");
+    if (!link) return;
+
+    if (link.protocol === "mailto:") {
+      track("email-click");
+      return;
+    }
+
+    if (
+      (link.protocol === "http:" || link.protocol === "https:") &&
+      link.origin !== window.location.origin
+    ) {
+      track("outbound-link-click", { domain: link.hostname });
+    }
+  });
+
+  const article = document.querySelector<HTMLElement>(
+    "[data-analytics-article]",
+  );
+
+  if (article) {
+    let completed = false;
+    let frame = 0;
+
+    const stopWatching = () => {
+      window.removeEventListener("scroll", scheduleProgressCheck);
+      window.removeEventListener("resize", scheduleProgressCheck);
+      window.cancelAnimationFrame(frame);
+    };
+
+    const checkProgress = () => {
+      frame = 0;
+      if (completed) return;
+
+      const bounds = article.getBoundingClientRect();
+      const viewedDistance = window.innerHeight - bounds.top;
+      const progress = viewedDistance / bounds.height;
+
+      if (progress >= 0.75) {
+        completed = true;
+        track("article-read-75");
+        stopWatching();
+      }
+    };
+
+    function scheduleProgressCheck() {
+      if (frame) return;
+      frame = window.requestAnimationFrame(checkProgress);
+    }
+
+    window.addEventListener("scroll", scheduleProgressCheck, { passive: true });
+    window.addEventListener("resize", scheduleProgressCheck);
+    scheduleProgressCheck();
+  }
+</script>
