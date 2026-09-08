@@ -169,11 +169,19 @@ Here is a small implementation. We mask excluded logits with negative infinity, 
 ```python copy
 def top_p_filter(logits, p):
     sorted_logits, indices = torch.sort(logits, descending=True)
+
+    # Running probability total, from most to least likely.
     cumulative = torch.softmax(sorted_logits, dim=-1).cumsum(dim=-1)
     remove = cumulative >= p
+
+    # Shift the mask right so the token that reaches p stays in.
+    # clone() avoids reading and writing overlapping tensor slices.
     remove[1:] = remove[:-1].clone()
-    remove[0] = False
+    remove[0] = False  # Always keep the most likely token.
+
     filtered = logits.clone()
+    # indices maps the sorted mask back to the original token positions.
+    # Negative infinity becomes zero probability after softmax.
     filtered[indices[remove]] = -float("inf")
     return filtered
 ```
