@@ -1,0 +1,1984 @@
+{
+  "environment": {
+    "python": "3.9.6",
+    "torch": "2.8.0",
+    "transformers": "4.57.6",
+    "device": "cpu",
+    "dtype": "float32",
+    "attention": "eager",
+    "threads": 4,
+    "model": "gpt2",
+    "revision": "607a30d783dfa663caf39e06633721c8d4cfcd7e"
+  },
+  "prompt": "the river bank was",
+  "eos_token": "<|endoftext|>",
+  "eos_id": 50256,
+  "distributions": [
+    {
+      "temperature": 0.5,
+      "tokens": [
+        {
+          "id": 257,
+          "token": " a",
+          "probability": 0.33053871989250183
+        },
+        {
+          "id": 262,
+          "token": " the",
+          "probability": 0.12850995361804962
+        },
+        {
+          "id": 407,
+          "token": " not",
+          "probability": 0.08862727135419846
+        },
+        {
+          "id": 3170,
+          "token": " built",
+          "probability": 0.04390113800764084
+        },
+        {
+          "id": 635,
+          "token": " also",
+          "probability": 0.04203290492296219
+        }
+      ],
+      "other_probability": 0.3663899898529053,
+      "nucleus_size_p09": 35
+    },
+    {
+      "temperature": 1.0,
+      "tokens": [
+        {
+          "id": 257,
+          "token": " a",
+          "probability": 0.047477517277002335
+        },
+        {
+          "id": 262,
+          "token": " the",
+          "probability": 0.02960364706814289
+        },
+        {
+          "id": 407,
+          "token": " not",
+          "probability": 0.0245844516903162
+        },
+        {
+          "id": 3170,
+          "token": " built",
+          "probability": 0.017302732914686203
+        },
+        {
+          "id": 635,
+          "token": " also",
+          "probability": 0.01693056710064411
+        }
+      ],
+      "other_probability": 0.8641010820865631,
+      "nucleus_size_p09": 1279
+    },
+    {
+      "temperature": 2.0,
+      "tokens": [
+        {
+          "id": 257,
+          "token": " a",
+          "probability": 0.0036239593755453825
+        },
+        {
+          "id": 262,
+          "token": " the",
+          "probability": 0.0028616199269890785
+        },
+        {
+          "id": 407,
+          "token": " not",
+          "probability": 0.002607771661132574
+        },
+        {
+          "id": 3170,
+          "token": " built",
+          "probability": 0.0021877449471503496
+        },
+        {
+          "id": 635,
+          "token": " also",
+          "probability": 0.0021640886552631855
+        }
+      ],
+      "other_probability": 0.9865548154339194,
+      "nucleus_size_p09": 14905
+    }
+  ],
+  "runs": {
+    "greedy": {
+      "temperature": 1.0,
+      "seed": 42,
+      "greedy": true,
+      "top_p": null,
+      "stop_eos": false,
+      "stopped_on_eos": false,
+      "new_tokens": 50,
+      "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply",
+      "token_ids": [
+        1169,
+        7850,
+        3331,
+        373,
+        257,
+        1688,
+        2723,
+        286,
+        1660,
+        329,
+        262,
+        1748,
+        13,
+        198,
+        198,
+        464,
+        1748,
+        338,
+        1660,
+        5127,
+        373,
+        635,
+        257,
+        1688,
+        2723,
+        286,
+        2057,
+        290,
+        9007,
+        13,
+        198,
+        198,
+        464,
+        1748,
+        338,
+        1660,
+        5127,
+        373,
+        635,
+        257,
+        1688,
+        2723,
+        286,
+        2057,
+        290,
+        9007,
+        13,
+        198,
+        198,
+        464,
+        1748,
+        338,
+        1660,
+        5127
+      ],
+      "steps": [
+        {
+          "id": 257,
+          "text": "the river bank was a"
+        },
+        {
+          "id": 1688,
+          "text": "the river bank was a major"
+        },
+        {
+          "id": 2723,
+          "text": "the river bank was a major source"
+        },
+        {
+          "id": 286,
+          "text": "the river bank was a major source of"
+        },
+        {
+          "id": 1660,
+          "text": "the river bank was a major source of water"
+        },
+        {
+          "id": 329,
+          "text": "the river bank was a major source of water for"
+        },
+        {
+          "id": 262,
+          "text": "the river bank was a major source of water for the"
+        },
+        {
+          "id": 1748,
+          "text": "the river bank was a major source of water for the city"
+        },
+        {
+          "id": 13,
+          "text": "the river bank was a major source of water for the city."
+        },
+        {
+          "id": 198,
+          "text": "the river bank was a major source of water for the city.\n"
+        },
+        {
+          "id": 198,
+          "text": "the river bank was a major source of water for the city.\n\n"
+        },
+        {
+          "id": 464,
+          "text": "the river bank was a major source of water for the city.\n\nThe"
+        },
+        {
+          "id": 1748,
+          "text": "the river bank was a major source of water for the city.\n\nThe city"
+        },
+        {
+          "id": 338,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's"
+        },
+        {
+          "id": 1660,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water"
+        },
+        {
+          "id": 5127,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply"
+        },
+        {
+          "id": 373,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was"
+        },
+        {
+          "id": 635,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also"
+        },
+        {
+          "id": 257,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a"
+        },
+        {
+          "id": 1688,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major"
+        },
+        {
+          "id": 2723,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source"
+        },
+        {
+          "id": 286,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of"
+        },
+        {
+          "id": 2057,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food"
+        },
+        {
+          "id": 290,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and"
+        },
+        {
+          "id": 9007,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine"
+        },
+        {
+          "id": 13,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine."
+        },
+        {
+          "id": 198,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n"
+        },
+        {
+          "id": 198,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\n"
+        },
+        {
+          "id": 464,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe"
+        },
+        {
+          "id": 1748,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city"
+        },
+        {
+          "id": 338,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's"
+        },
+        {
+          "id": 1660,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water"
+        },
+        {
+          "id": 5127,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply"
+        },
+        {
+          "id": 373,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was"
+        },
+        {
+          "id": 635,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also"
+        },
+        {
+          "id": 257,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a"
+        },
+        {
+          "id": 1688,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major"
+        },
+        {
+          "id": 2723,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source"
+        },
+        {
+          "id": 286,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of"
+        },
+        {
+          "id": 2057,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food"
+        },
+        {
+          "id": 290,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and"
+        },
+        {
+          "id": 9007,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine"
+        },
+        {
+          "id": 13,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine."
+        },
+        {
+          "id": 198,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n"
+        },
+        {
+          "id": 198,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\n"
+        },
+        {
+          "id": 464,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe"
+        },
+        {
+          "id": 1748,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city"
+        },
+        {
+          "id": 338,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's"
+        },
+        {
+          "id": 1660,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water"
+        },
+        {
+          "id": 5127,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply"
+        }
+      ]
+    },
+    "cold": {
+      "temperature": 0.001,
+      "seed": 42,
+      "greedy": false,
+      "top_p": null,
+      "stop_eos": false,
+      "stopped_on_eos": false,
+      "new_tokens": 50,
+      "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply",
+      "token_ids": [
+        1169,
+        7850,
+        3331,
+        373,
+        257,
+        1688,
+        2723,
+        286,
+        1660,
+        329,
+        262,
+        1748,
+        13,
+        198,
+        198,
+        464,
+        1748,
+        338,
+        1660,
+        5127,
+        373,
+        635,
+        257,
+        1688,
+        2723,
+        286,
+        2057,
+        290,
+        9007,
+        13,
+        198,
+        198,
+        464,
+        1748,
+        338,
+        1660,
+        5127,
+        373,
+        635,
+        257,
+        1688,
+        2723,
+        286,
+        2057,
+        290,
+        9007,
+        13,
+        198,
+        198,
+        464,
+        1748,
+        338,
+        1660,
+        5127
+      ],
+      "steps": [
+        {
+          "id": 257,
+          "text": "the river bank was a"
+        },
+        {
+          "id": 1688,
+          "text": "the river bank was a major"
+        },
+        {
+          "id": 2723,
+          "text": "the river bank was a major source"
+        },
+        {
+          "id": 286,
+          "text": "the river bank was a major source of"
+        },
+        {
+          "id": 1660,
+          "text": "the river bank was a major source of water"
+        },
+        {
+          "id": 329,
+          "text": "the river bank was a major source of water for"
+        },
+        {
+          "id": 262,
+          "text": "the river bank was a major source of water for the"
+        },
+        {
+          "id": 1748,
+          "text": "the river bank was a major source of water for the city"
+        },
+        {
+          "id": 13,
+          "text": "the river bank was a major source of water for the city."
+        },
+        {
+          "id": 198,
+          "text": "the river bank was a major source of water for the city.\n"
+        },
+        {
+          "id": 198,
+          "text": "the river bank was a major source of water for the city.\n\n"
+        },
+        {
+          "id": 464,
+          "text": "the river bank was a major source of water for the city.\n\nThe"
+        },
+        {
+          "id": 1748,
+          "text": "the river bank was a major source of water for the city.\n\nThe city"
+        },
+        {
+          "id": 338,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's"
+        },
+        {
+          "id": 1660,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water"
+        },
+        {
+          "id": 5127,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply"
+        },
+        {
+          "id": 373,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was"
+        },
+        {
+          "id": 635,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also"
+        },
+        {
+          "id": 257,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a"
+        },
+        {
+          "id": 1688,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major"
+        },
+        {
+          "id": 2723,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source"
+        },
+        {
+          "id": 286,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of"
+        },
+        {
+          "id": 2057,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food"
+        },
+        {
+          "id": 290,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and"
+        },
+        {
+          "id": 9007,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine"
+        },
+        {
+          "id": 13,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine."
+        },
+        {
+          "id": 198,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n"
+        },
+        {
+          "id": 198,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\n"
+        },
+        {
+          "id": 464,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe"
+        },
+        {
+          "id": 1748,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city"
+        },
+        {
+          "id": 338,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's"
+        },
+        {
+          "id": 1660,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water"
+        },
+        {
+          "id": 5127,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply"
+        },
+        {
+          "id": 373,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was"
+        },
+        {
+          "id": 635,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also"
+        },
+        {
+          "id": 257,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a"
+        },
+        {
+          "id": 1688,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major"
+        },
+        {
+          "id": 2723,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source"
+        },
+        {
+          "id": 286,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of"
+        },
+        {
+          "id": 2057,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food"
+        },
+        {
+          "id": 290,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and"
+        },
+        {
+          "id": 9007,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine"
+        },
+        {
+          "id": 13,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine."
+        },
+        {
+          "id": 198,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n"
+        },
+        {
+          "id": 198,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\n"
+        },
+        {
+          "id": 464,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe"
+        },
+        {
+          "id": 1748,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city"
+        },
+        {
+          "id": 338,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's"
+        },
+        {
+          "id": 1660,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water"
+        },
+        {
+          "id": 5127,
+          "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply"
+        }
+      ]
+    },
+    "normal": {
+      "temperature": 1.0,
+      "seed": 42,
+      "greedy": false,
+      "top_p": null,
+      "stop_eos": false,
+      "stopped_on_eos": false,
+      "new_tokens": 50,
+      "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria cost $65,600, has an estimated completion",
+      "token_ids": [
+        1169,
+        7850,
+        3331,
+        373,
+        4735,
+        290,
+        6565,
+        257,
+        1178,
+        1528,
+        287,
+        5963,
+        526,
+        198,
+        198,
+        13921,
+        262,
+        1628,
+        761,
+        257,
+        649,
+        8749,
+        30,
+        198,
+        198,
+        6090,
+        470,
+        1064,
+        597,
+        2274,
+        8739,
+        326,
+        7125,
+        14313,
+        468,
+        3199,
+        286,
+        4849,
+        24100,
+        13,
+        383,
+        5870,
+        27746,
+        27872,
+        1575,
+        720,
+        2996,
+        11,
+        8054,
+        11,
+        468,
+        281,
+        6108,
+        11939
+      ],
+      "steps": [
+        {
+          "id": 4735,
+          "text": "the river bank was solid"
+        },
+        {
+          "id": 290,
+          "text": "the river bank was solid and"
+        },
+        {
+          "id": 6565,
+          "text": "the river bank was solid and empty"
+        },
+        {
+          "id": 257,
+          "text": "the river bank was solid and empty a"
+        },
+        {
+          "id": 1178,
+          "text": "the river bank was solid and empty a few"
+        },
+        {
+          "id": 1528,
+          "text": "the river bank was solid and empty a few days"
+        },
+        {
+          "id": 287,
+          "text": "the river bank was solid and empty a few days in"
+        },
+        {
+          "id": 5963,
+          "text": "the river bank was solid and empty a few days in advance"
+        },
+        {
+          "id": 526,
+          "text": "the river bank was solid and empty a few days in advance.\""
+        },
+        {
+          "id": 198,
+          "text": "the river bank was solid and empty a few days in advance.\"\n"
+        },
+        {
+          "id": 198,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\n"
+        },
+        {
+          "id": 13921,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes"
+        },
+        {
+          "id": 262,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the"
+        },
+        {
+          "id": 1628,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project"
+        },
+        {
+          "id": 761,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need"
+        },
+        {
+          "id": 257,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a"
+        },
+        {
+          "id": 649,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new"
+        },
+        {
+          "id": 8749,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit"
+        },
+        {
+          "id": 30,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?"
+        },
+        {
+          "id": 198,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n"
+        },
+        {
+          "id": 198,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\n"
+        },
+        {
+          "id": 6090,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan"
+        },
+        {
+          "id": 470,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't"
+        },
+        {
+          "id": 1064,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find"
+        },
+        {
+          "id": 597,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any"
+        },
+        {
+          "id": 2274,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent"
+        },
+        {
+          "id": 8739,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps"
+        },
+        {
+          "id": 326,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that"
+        },
+        {
+          "id": 7125,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that AC"
+        },
+        {
+          "id": 14313,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS"
+        },
+        {
+          "id": 468,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has"
+        },
+        {
+          "id": 3199,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published"
+        },
+        {
+          "id": 286,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of"
+        },
+        {
+          "id": 4849,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Sal"
+        },
+        {
+          "id": 24100,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno"
+        },
+        {
+          "id": 13,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno."
+        },
+        {
+          "id": 383,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The"
+        },
+        {
+          "id": 5870,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CH"
+        },
+        {
+          "id": 27746,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE"
+        },
+        {
+          "id": 27872,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria"
+        },
+        {
+          "id": 1575,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria cost"
+        },
+        {
+          "id": 720,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria cost $"
+        },
+        {
+          "id": 2996,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria cost $65"
+        },
+        {
+          "id": 11,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria cost $65,"
+        },
+        {
+          "id": 8054,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria cost $65,600"
+        },
+        {
+          "id": 11,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria cost $65,600,"
+        },
+        {
+          "id": 468,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria cost $65,600, has"
+        },
+        {
+          "id": 281,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria cost $65,600, has an"
+        },
+        {
+          "id": 6108,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria cost $65,600, has an estimated"
+        },
+        {
+          "id": 11939,
+          "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria cost $65,600, has an estimated completion"
+        }
+      ]
+    },
+    "hot": {
+      "temperature": 2.0,
+      "seed": 42,
+      "greedy": false,
+      "top_p": null,
+      "stop_eos": false,
+      "stopped_on_eos": false,
+      "new_tokens": 50,
+      "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria cost cambpp North bands sm--- hisicism",
+      "token_ids": [
+        1169,
+        7850,
+        3331,
+        373,
+        4735,
+        25607,
+        277,
+        608,
+        1299,
+        20462,
+        287,
+        20086,
+        517,
+        41413,
+        43412,
+        11,
+        11079,
+        4689,
+        10740,
+        28442,
+        554,
+        49540,
+        23499,
+        4325,
+        21385,
+        33458,
+        40135,
+        27960,
+        21387,
+        33687,
+        4874,
+        632,
+        7125,
+        6535,
+        29564,
+        1605,
+        37378,
+        4849,
+        42244,
+        9954,
+        12348,
+        32985,
+        29421,
+        27872,
+        1575,
+        269,
+        4131,
+        381,
+        2258,
+        11760,
+        895,
+        6329,
+        465,
+        11965
+      ],
+      "steps": [
+        {
+          "id": 4735,
+          "text": "the river bank was solid"
+        },
+        {
+          "id": 25607,
+          "text": "the river bank was solid fairy"
+        },
+        {
+          "id": 277,
+          "text": "the river bank was solid fairy f"
+        },
+        {
+          "id": 608,
+          "text": "the river bank was solid fairy fount"
+        },
+        {
+          "id": 1299,
+          "text": "the river bank was solid fairy fountains"
+        },
+        {
+          "id": 20462,
+          "text": "the river bank was solid fairy fountains commissioned"
+        },
+        {
+          "id": 287,
+          "text": "the river bank was solid fairy fountains commissioned in"
+        },
+        {
+          "id": 20086,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies"
+        },
+        {
+          "id": 517,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more"
+        },
+        {
+          "id": 41413,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound"
+        },
+        {
+          "id": 43412,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich"
+        },
+        {
+          "id": 11,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich,"
+        },
+        {
+          "id": 11079,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice"
+        },
+        {
+          "id": 4689,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La"
+        },
+        {
+          "id": 10740,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear"
+        },
+        {
+          "id": 28442,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad"
+        },
+        {
+          "id": 554,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad In"
+        },
+        {
+          "id": 49540,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective"
+        },
+        {
+          "id": 23499,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing"
+        },
+        {
+          "id": 4325,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens"
+        },
+        {
+          "id": 21385,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon"
+        },
+        {
+          "id": 33458,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell"
+        },
+        {
+          "id": 40135,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato"
+        },
+        {
+          "id": 27960,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight"
+        },
+        {
+          "id": 21387,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\""
+        },
+        {
+          "id": 33687,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes"
+        },
+        {
+          "id": 4874,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once"
+        },
+        {
+          "id": 632,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It"
+        },
+        {
+          "id": 7125,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It AC"
+        },
+        {
+          "id": 6535,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT"
+        },
+        {
+          "id": 29564,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD"
+        },
+        {
+          "id": 1605,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American"
+        },
+        {
+          "id": 37378,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness"
+        },
+        {
+          "id": 4849,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal"
+        },
+        {
+          "id": 42244,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Mei"
+        },
+        {
+          "id": 9954,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve"
+        },
+        {
+          "id": 12348,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal"
+        },
+        {
+          "id": 32985,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mog"
+        },
+        {
+          "id": 29421,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent"
+        },
+        {
+          "id": 27872,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria"
+        },
+        {
+          "id": 1575,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria cost"
+        },
+        {
+          "id": 269,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria cost c"
+        },
+        {
+          "id": 4131,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria cost camb"
+        },
+        {
+          "id": 381,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria cost cambpp"
+        },
+        {
+          "id": 2258,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria cost cambpp North"
+        },
+        {
+          "id": 11760,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria cost cambpp North bands"
+        },
+        {
+          "id": 895,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria cost cambpp North bands sm"
+        },
+        {
+          "id": 6329,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria cost cambpp North bands sm---"
+        },
+        {
+          "id": 465,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria cost cambpp North bands sm--- his"
+        },
+        {
+          "id": 11965,
+          "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria cost cambpp North bands sm--- hisicism"
+        }
+      ]
+    },
+    "nucleus_41": {
+      "temperature": 1.0,
+      "seed": 41,
+      "greedy": false,
+      "top_p": 0.9,
+      "stop_eos": true,
+      "stopped_on_eos": false,
+      "new_tokens": 50,
+      "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n\nThe excavation site was discovered as part of a",
+      "token_ids": [
+        1169,
+        7850,
+        3331,
+        373,
+        1682,
+        1498,
+        284,
+        3368,
+        852,
+        16318,
+        503,
+        416,
+        262,
+        6947,
+        526,
+        198,
+        198,
+        2990,
+        2087,
+        326,
+        262,
+        513,
+        12,
+        76,
+        2915,
+        1973,
+        290,
+        1863,
+        262,
+        4269,
+        2957,
+        284,
+        3236,
+        40068,
+        326,
+        30267,
+        262,
+        4269,
+        878,
+        340,
+        29738,
+        1497,
+        13,
+        198,
+        198,
+        464,
+        45499,
+        2524,
+        373,
+        5071,
+        355,
+        636,
+        286,
+        257
+      ],
+      "steps": [
+        {
+          "id": 1682,
+          "text": "the river bank was actually"
+        },
+        {
+          "id": 1498,
+          "text": "the river bank was actually able"
+        },
+        {
+          "id": 284,
+          "text": "the river bank was actually able to"
+        },
+        {
+          "id": 3368,
+          "text": "the river bank was actually able to avoid"
+        },
+        {
+          "id": 852,
+          "text": "the river bank was actually able to avoid being"
+        },
+        {
+          "id": 16318,
+          "text": "the river bank was actually able to avoid being blown"
+        },
+        {
+          "id": 503,
+          "text": "the river bank was actually able to avoid being blown out"
+        },
+        {
+          "id": 416,
+          "text": "the river bank was actually able to avoid being blown out by"
+        },
+        {
+          "id": 262,
+          "text": "the river bank was actually able to avoid being blown out by the"
+        },
+        {
+          "id": 6947,
+          "text": "the river bank was actually able to avoid being blown out by the flood"
+        },
+        {
+          "id": 526,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\""
+        },
+        {
+          "id": 198,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n"
+        },
+        {
+          "id": 198,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\n"
+        },
+        {
+          "id": 2990,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey"
+        },
+        {
+          "id": 2087,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added"
+        },
+        {
+          "id": 326,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that"
+        },
+        {
+          "id": 262,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the"
+        },
+        {
+          "id": 513,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3"
+        },
+        {
+          "id": 12,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-"
+        },
+        {
+          "id": 76,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-m"
+        },
+        {
+          "id": 2915,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles"
+        },
+        {
+          "id": 1973,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across"
+        },
+        {
+          "id": 290,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and"
+        },
+        {
+          "id": 1863,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along"
+        },
+        {
+          "id": 262,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the"
+        },
+        {
+          "id": 4269,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream"
+        },
+        {
+          "id": 2957,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led"
+        },
+        {
+          "id": 284,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to"
+        },
+        {
+          "id": 3236,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge"
+        },
+        {
+          "id": 40068,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches"
+        },
+        {
+          "id": 326,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that"
+        },
+        {
+          "id": 30267,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated"
+        },
+        {
+          "id": 262,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the"
+        },
+        {
+          "id": 4269,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream"
+        },
+        {
+          "id": 878,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before"
+        },
+        {
+          "id": 340,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it"
+        },
+        {
+          "id": 29738,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained"
+        },
+        {
+          "id": 1497,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away"
+        },
+        {
+          "id": 13,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away."
+        },
+        {
+          "id": 198,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n"
+        },
+        {
+          "id": 198,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n\n"
+        },
+        {
+          "id": 464,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n\nThe"
+        },
+        {
+          "id": 45499,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n\nThe excavation"
+        },
+        {
+          "id": 2524,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n\nThe excavation site"
+        },
+        {
+          "id": 373,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n\nThe excavation site was"
+        },
+        {
+          "id": 5071,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n\nThe excavation site was discovered"
+        },
+        {
+          "id": 355,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n\nThe excavation site was discovered as"
+        },
+        {
+          "id": 636,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n\nThe excavation site was discovered as part"
+        },
+        {
+          "id": 286,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n\nThe excavation site was discovered as part of"
+        },
+        {
+          "id": 257,
+          "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n\nThe excavation site was discovered as part of a"
+        }
+      ]
+    },
+    "nucleus_42": {
+      "temperature": 1.0,
+      "seed": 42,
+      "greedy": false,
+      "top_p": 0.9,
+      "stop_eos": true,
+      "stopped_on_eos": false,
+      "new_tokens": 50,
+      "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American statesmen. You will notice a separation in both",
+      "token_ids": [
+        1169,
+        7850,
+        3331,
+        373,
+        4735,
+        290,
+        6565,
+        737,
+        383,
+        3842,
+        287,
+        428,
+        7968,
+        11,
+        996,
+        11,
+        318,
+        12411,
+        25,
+        1752,
+        757,
+        11,
+        356,
+        1064,
+        340,
+        281,
+        21275,
+        12364,
+        11710,
+        286,
+        45592,
+        12,
+        14792,
+        4736,
+        11,
+        1605,
+        3942,
+        15425,
+        290,
+        1605,
+        16035,
+        5348,
+        290,
+        1605,
+        2585,
+        3653,
+        13,
+        921,
+        481,
+        4003,
+        257,
+        14139,
+        287,
+        1111
+      ],
+      "steps": [
+        {
+          "id": 4735,
+          "text": "the river bank was solid"
+        },
+        {
+          "id": 290,
+          "text": "the river bank was solid and"
+        },
+        {
+          "id": 6565,
+          "text": "the river bank was solid and empty"
+        },
+        {
+          "id": 737,
+          "text": "the river bank was solid and empty)."
+        },
+        {
+          "id": 383,
+          "text": "the river bank was solid and empty). The"
+        },
+        {
+          "id": 3842,
+          "text": "the river bank was solid and empty). The activity"
+        },
+        {
+          "id": 287,
+          "text": "the river bank was solid and empty). The activity in"
+        },
+        {
+          "id": 428,
+          "text": "the river bank was solid and empty). The activity in this"
+        },
+        {
+          "id": 7968,
+          "text": "the river bank was solid and empty). The activity in this county"
+        },
+        {
+          "id": 11,
+          "text": "the river bank was solid and empty). The activity in this county,"
+        },
+        {
+          "id": 996,
+          "text": "the river bank was solid and empty). The activity in this county, though"
+        },
+        {
+          "id": 11,
+          "text": "the river bank was solid and empty). The activity in this county, though,"
+        },
+        {
+          "id": 318,
+          "text": "the river bank was solid and empty). The activity in this county, though, is"
+        },
+        {
+          "id": 12411,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable"
+        },
+        {
+          "id": 25,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable:"
+        },
+        {
+          "id": 1752,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once"
+        },
+        {
+          "id": 757,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again"
+        },
+        {
+          "id": 11,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again,"
+        },
+        {
+          "id": 356,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we"
+        },
+        {
+          "id": 1064,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find"
+        },
+        {
+          "id": 340,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it"
+        },
+        {
+          "id": 281,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an"
+        },
+        {
+          "id": 21275,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intox"
+        },
+        {
+          "id": 12364,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating"
+        },
+        {
+          "id": 11710,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture"
+        },
+        {
+          "id": 286,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of"
+        },
+        {
+          "id": 45592,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth"
+        },
+        {
+          "id": 12,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-"
+        },
+        {
+          "id": 14792,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century"
+        },
+        {
+          "id": 4736,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities"
+        },
+        {
+          "id": 11,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities,"
+        },
+        {
+          "id": 1605,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American"
+        },
+        {
+          "id": 3942,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian"
+        },
+        {
+          "id": 15425,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages"
+        },
+        {
+          "id": 290,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and"
+        },
+        {
+          "id": 1605,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American"
+        },
+        {
+          "id": 16035,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming"
+        },
+        {
+          "id": 5348,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities"
+        },
+        {
+          "id": 290,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and"
+        },
+        {
+          "id": 1605,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American"
+        },
+        {
+          "id": 2585,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American states"
+        },
+        {
+          "id": 3653,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American statesmen"
+        },
+        {
+          "id": 13,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American statesmen."
+        },
+        {
+          "id": 921,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American statesmen. You"
+        },
+        {
+          "id": 481,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American statesmen. You will"
+        },
+        {
+          "id": 4003,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American statesmen. You will notice"
+        },
+        {
+          "id": 257,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American statesmen. You will notice a"
+        },
+        {
+          "id": 14139,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American statesmen. You will notice a separation"
+        },
+        {
+          "id": 287,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American statesmen. You will notice a separation in"
+        },
+        {
+          "id": 1111,
+          "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American statesmen. You will notice a separation in both"
+        }
+      ]
+    },
+    "nucleus_43": {
+      "temperature": 1.0,
+      "seed": 43,
+      "greedy": false,
+      "top_p": 0.9,
+      "stop_eos": true,
+      "stopped_on_eos": true,
+      "new_tokens": 47,
+      "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and had to sell to pay back the investments.<|endoftext|>",
+      "token_ids": [
+        1169,
+        7850,
+        3331,
+        373,
+        1248,
+        8331,
+        2769,
+        11,
+        475,
+        340,
+        373,
+        7448,
+        416,
+        2608,
+        7713,
+        13,
+        198,
+        198,
+        55,
+        33701,
+        494,
+        290,
+        607,
+        2988,
+        11,
+        9966,
+        11,
+        5839,
+        257,
+        642,
+        1510,
+        6616,
+        2366,
+        2156,
+        379,
+        5425,
+        8999,
+        874,
+        287,
+        26352,
+        290,
+        550,
+        284,
+        3677,
+        284,
+        1414,
+        736,
+        262,
+        11115,
+        13,
+        50256
+      ],
+      "steps": [
+        {
+          "id": 1248,
+          "text": "the river bank was 18"
+        },
+        {
+          "id": 8331,
+          "text": "the river bank was 18 inches"
+        },
+        {
+          "id": 2769,
+          "text": "the river bank was 18 inches deep"
+        },
+        {
+          "id": 11,
+          "text": "the river bank was 18 inches deep,"
+        },
+        {
+          "id": 475,
+          "text": "the river bank was 18 inches deep, but"
+        },
+        {
+          "id": 340,
+          "text": "the river bank was 18 inches deep, but it"
+        },
+        {
+          "id": 373,
+          "text": "the river bank was 18 inches deep, but it was"
+        },
+        {
+          "id": 7448,
+          "text": "the river bank was 18 inches deep, but it was saved"
+        },
+        {
+          "id": 416,
+          "text": "the river bank was 18 inches deep, but it was saved by"
+        },
+        {
+          "id": 2608,
+          "text": "the river bank was 18 inches deep, but it was saved by 26"
+        },
+        {
+          "id": 7713,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors"
+        },
+        {
+          "id": 13,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors."
+        },
+        {
+          "id": 198,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n"
+        },
+        {
+          "id": 198,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\n"
+        },
+        {
+          "id": 55,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nX"
+        },
+        {
+          "id": 33701,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenf"
+        },
+        {
+          "id": 494,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie"
+        },
+        {
+          "id": 290,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and"
+        },
+        {
+          "id": 607,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her"
+        },
+        {
+          "id": 2988,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father"
+        },
+        {
+          "id": 11,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father,"
+        },
+        {
+          "id": 9966,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert"
+        },
+        {
+          "id": 11,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert,"
+        },
+        {
+          "id": 5839,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought"
+        },
+        {
+          "id": 257,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a"
+        },
+        {
+          "id": 642,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5"
+        },
+        {
+          "id": 1510,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million"
+        },
+        {
+          "id": 6616,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square"
+        },
+        {
+          "id": 2366,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot"
+        },
+        {
+          "id": 2156,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house"
+        },
+        {
+          "id": 379,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at"
+        },
+        {
+          "id": 5425,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp"
+        },
+        {
+          "id": 8999,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Ba"
+        },
+        {
+          "id": 874,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals"
+        },
+        {
+          "id": 287,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in"
+        },
+        {
+          "id": 26352,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952"
+        },
+        {
+          "id": 290,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and"
+        },
+        {
+          "id": 550,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and had"
+        },
+        {
+          "id": 284,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and had to"
+        },
+        {
+          "id": 3677,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and had to sell"
+        },
+        {
+          "id": 284,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and had to sell to"
+        },
+        {
+          "id": 1414,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and had to sell to pay"
+        },
+        {
+          "id": 736,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and had to sell to pay back"
+        },
+        {
+          "id": 262,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and had to sell to pay back the"
+        },
+        {
+          "id": 11115,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and had to sell to pay back the investments"
+        },
+        {
+          "id": 13,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and had to sell to pay back the investments."
+        },
+        {
+          "id": 50256,
+          "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and had to sell to pay back the investments.<|endoftext|>"
+        }
+      ]
+    }
+  },
+  "checks": [
+    "nucleus cutoff includes crossing token and masks tail",
+    "top-p edge cases retain candidates",
+    "cold sample equals greedy",
+    "temperature plus argmax equals greedy over 50 steps",
+    "hand-written greedy loop equals generate()"
+  ]
+}

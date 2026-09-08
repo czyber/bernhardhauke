@@ -66,4 +66,39 @@ const date = article.data.pubDate.toLocaleDateString("en", {
 
 <script>
   import "../../components/MeaningAcrossLayers";
+
+  if (document.querySelector("token-loop, sampling-comparison")) {
+    import("../../components/GenerationExamples");
+  }
 </script>
+
+<style is:global>
+  .article-page--reading .prose:has(token-loop) {
+    hyphens: none;
+  }
+
+  .prose token-loop,
+  .prose sampling-comparison {
+    display: block;
+    margin-block: 28px;
+  }
+
+  .prose .generation-equation {
+    margin-block: 28px;
+    overflow-x: auto;
+    padding-block: 8px;
+    color: var(--text);
+  }
+
+  .prose .generation-equation math {
+    font-size: 1.15em;
+  }
+
+  .prose .generation-reproduction {
+    border-top: 1px solid var(--border);
+    margin-top: 36px;
+    padding-top: 20px;
+    font-size: 0.85em;
+    line-height: 1.6;
+  }
+</style>

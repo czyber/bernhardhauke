@@ -6,10 +6,13 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const articleDirectory = path.join(
-  root,
-  "public/articles/your-words-are-not-what-the-model-sees",
-);
+const articleSlug = process.argv[2] ?? "your-words-are-not-what-the-model-sees";
+if (!/^[a-z0-9-]+$/.test(articleSlug)) {
+  throw new Error(
+    "Provide an article slug using lowercase letters, numbers, and hyphens.",
+  );
+}
+const articleDirectory = path.join(root, "public/articles", articleSlug);
 const sourcePath = path.join(articleDirectory, "og-image.svg");
 const outputPath = path.join(articleDirectory, "og-image.png");
 const newsreaderPath = path.join(

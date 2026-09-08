@@ -1,0 +1,92 @@
+{
+  "prompt": "the river bank was",
+  "greedyTokens": [
+    " a",
+    " major",
+    " source",
+    " of",
+    " water",
+    " for",
+    " the",
+    " city",
+    ".",
+    "\n",
+    "\n",
+    "The",
+    " city",
+    "'s",
+    " water",
+    " supply",
+    " was",
+    " also",
+    " a",
+    " major",
+    " source",
+    " of",
+    " food",
+    " and",
+    " medicine",
+    ".",
+    "\n",
+    "\n",
+    "The",
+    " city",
+    "'s",
+    " water",
+    " supply",
+    " was",
+    " also",
+    " a",
+    " major",
+    " source",
+    " of",
+    " food",
+    " and",
+    " medicine",
+    ".",
+    "\n",
+    "\n",
+    "The",
+    " city",
+    "'s",
+    " water",
+    " supply"
+  ],
+  "temperatures": [
+    {
+      "label": "T = 0.001",
+      "text": "the river bank was a major source of water for the city.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply was also a major source of food and medicine.\n\nThe city's water supply",
+      "tokens": 50
+    },
+    {
+      "label": "T = 1.0",
+      "text": "the river bank was solid and empty a few days in advance.\"\n\nDoes the project need a new permit?\n\nCan't find any recent maps that ACGS has published of Salerno. The CHANGE Alexandria cost $65,600, has an estimated completion",
+      "tokens": 50
+    },
+    {
+      "label": "T = 2.0",
+      "text": "the river bank was solid fairy fountains commissioned in dependencies more abound Zurich, Vice La Gear Glad Inspective Publishing happens bacon farewell Yamato Midnight).\" Takes Once It ACHT WORLD American loneliness Sal Meielve Dal mogocent Alexandria cost cambpp North bands sm--- hisicism",
+      "tokens": 50
+    }
+  ],
+  "seeds": [
+    {
+      "label": "Seed 41",
+      "text": "the river bank was actually able to avoid being blown out by the flood.\"\n\nThey added that the 3-miles across and along the stream led to huge trenches that coated the stream before it drained away.\n\nThe excavation site was discovered as part of a",
+      "tokens": 50,
+      "eos": false
+    },
+    {
+      "label": "Seed 42",
+      "text": "the river bank was solid and empty). The activity in this county, though, is notable: once again, we find it an intoxicating mixture of eighteenth-century cities, American Indian villages and American farming communities and American statesmen. You will notice a separation in both",
+      "tokens": 50,
+      "eos": false
+    },
+    {
+      "label": "Seed 43",
+      "text": "the river bank was 18 inches deep, but it was saved by 26 investors.\n\nXenfie and her father, Albert, bought a 5 million square foot house at Camp Baals in 1952 and had to sell to pay back the investments.<|endoftext|>",
+      "tokens": 47,
+      "eos": true
+    }
+  ]
+}
