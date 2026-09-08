@@ -44,12 +44,46 @@ const styles = `
   .tabs { display: flex; flex-wrap: wrap; gap: 20px; }
   .timeline { display: flex; align-items: center; gap: 18px; margin-top: 8px; }
   input[type="range"] {
+    appearance: none;
+    -webkit-appearance: none;
     flex: 1;
     min-width: 0;
     height: 28px;
     margin: 0;
-    accent-color: var(--accent);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 2px;
+    border: 0;
+    border-radius: 0;
+    background: linear-gradient(to right, var(--accent) var(--progress), var(--border-strong) var(--progress));
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 3px;
+    height: 14px;
+    margin-top: -6px;
+    border: 0;
+    border-radius: 0;
+    background: var(--accent);
+    box-shadow: none;
+  }
+  input[type="range"]::-moz-range-track {
+    height: 2px;
+    border: 0;
+    border-radius: 0;
+    background: linear-gradient(to right, var(--accent) var(--progress), var(--border-strong) var(--progress));
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 3px;
+    height: 14px;
+    border: 0;
+    border-radius: 0;
+    background: var(--accent);
+    box-shadow: none;
   }
   pre {
     margin: 18px 0;
@@ -129,6 +163,7 @@ class TokenLoop extends HTMLElement {
     };
     const draw = () => {
       range.value = String(step);
+      range.style.setProperty("--progress", `${(step / total) * 100}%`);
       count.textContent = `${step} / ${total} tokens`;
       output.textContent =
         evidence.prompt + evidence.greedyTokens.slice(0, step).join("");

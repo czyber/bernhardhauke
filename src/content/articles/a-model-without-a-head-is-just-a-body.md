@@ -1,6 +1,7 @@
 ---
 title: "A Model without a head is just a body"
 description: "The title itself is an example of why context matters. This article explores how context is built into token representations and how a model arrives at its next-token prediction."
+socialImage: "/articles/a-model-without-a-head-is-just-a-body/og-image.png?v=2"
 pubDate: 2026-08-17
 tags:
   - AI

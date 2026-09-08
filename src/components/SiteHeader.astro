@@ -1,6 +1,5 @@
 ---
 import { site } from "../data/site";
-import ThemeToggle from "./ThemeToggle.astro";
 
 const pathname = Astro.url.pathname;
 const isActive = (href: string) =>
@@ -9,22 +8,101 @@ const isActive = (href: string) =>
 
 <header class="site-header">
   <a class="brand" href="/" aria-label={`${site.name} home`}>
-    <img src="/favicon.svg" alt="" width="32" height="32" />
     <span>{site.name}</span>
   </a>
 
-  <nav class="site-nav" aria-label="Primary navigation">
-    {
-      site.nav.map((item) => (
-        <a
-          href={item.href}
-          aria-current={isActive(item.href) ? "page" : undefined}
-        >
-          {item.label}
-        </a>
-      ))
-    }
-  </nav>
-
-  <ThemeToggle />
+  <details class="site-menu">
+    <summary>Menu</summary>
+    <nav class="site-nav" aria-label="Primary navigation">
+      {
+        site.nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </details>
 </header>
+
+<style>
+  .site-header {
+    position: relative;
+    z-index: 5;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .site-menu {
+    position: relative;
+    font-family: var(--font-mono);
+  }
+  .brand,
+  .site-menu {
+    font-size: 14px;
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    min-height: 36px;
+    padding: 0 4px;
+    list-style: none;
+    cursor: pointer;
+    font-size: inherit;
+    color: var(--text);
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .site-menu .site-nav {
+    position: absolute;
+    top: 44px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    min-width: 130px;
+    padding: 8px 12px 12px;
+    background: transparent;
+  }
+  .site-menu .site-nav a {
+    flex: none;
+    font-size: inherit;
+    min-height: 36px;
+    padding: 0;
+  }
+  @media (max-width: 760px) {
+    .brand,
+    .site-menu {
+      font-size: 12px;
+    }
+    .brand {
+      gap: 6px;
+    }
+    .site-header {
+      gap: 8px;
+    }
+  }
+</style>
+<script>
+  document
+    .querySelectorAll<HTMLDetailsElement>(".site-menu")
+    .forEach((menu) => {
+      menu.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          menu.open = false;
+          menu.querySelector("summary")?.focus();
+        }
+      });
+      document.addEventListener("click", (event) => {
+        if (event.target instanceof Node && !menu.contains(event.target))
+          menu.open = false;
+      });
+    });
+</script>

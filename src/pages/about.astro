@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="About" description="Software engineer, dad and learner">
-  <section class="page-intro" data-section-label="01 / About" data-animate>
+  <section class="page-intro" data-animate>
     <h1>About Bernhard Hauke</h1>
     <p>
       A software engineer, navigating professional development, expanding
@@ -12,12 +12,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </p>
   </section>
 
-  <section
-    class="section-grid"
-    data-section-label="01.1 / Focus"
-    data-animate
-    style="--delay: 80ms"
-  >
+  <section class="section-grid" data-animate style="--delay: 80ms">
     <SectionHeading title="Pragmatic craftsmanship" />
     <div class="text-block">
       <p>
@@ -32,12 +27,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </div>
   </section>
 
-  <section
-    class="note-panel"
-    data-section-label="01.2 / Contact"
-    data-animate
-    style="--delay: 120ms"
-  >
+  <section class="note-panel" data-animate style="--delay: 120ms">
     <SectionHeading title="Open for conversations" />
     <p>
       Contact me if you want to talk about work, software in general, or have

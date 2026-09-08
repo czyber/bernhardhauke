@@ -17,7 +17,7 @@ const labs = (await getCollection("labs"))
   title="Labs"
   description="Lab notes on learning, small experiments, and creative practice by Bernhard Hauke."
 >
-  <section class="page-intro" data-section-label="02 / Labs" data-animate>
+  <section class="page-intro" data-animate>
     <h1>A quiet place for things still becoming.</h1>
     <p>
       Not a showcase. More like a bench with half-built things on it: small
@@ -25,12 +25,7 @@ const labs = (await getCollection("labs"))
     </p>
   </section>
 
-  <section
-    class="section-grid"
-    data-section-label="02.1 / Method"
-    data-animate
-    style="--delay: 80ms"
-  >
+  <section class="section-grid" data-animate style="--delay: 80ms">
     <SectionHeading title="Small loops over grand declarations." />
     <div class="text-block">
       <p>
@@ -44,12 +39,7 @@ const labs = (await getCollection("labs"))
     </div>
   </section>
 
-  <section
-    class="article-index"
-    data-section-label="02.2 / Notes"
-    data-animate
-    style="--delay: 120ms"
-  >
+  <section class="article-index" data-animate style="--delay: 120ms">
     {labs.map((lab) => <LabIndexItem lab={lab} />)}
   </section>
 </BaseLayout>

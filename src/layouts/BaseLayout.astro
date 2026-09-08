@@ -1,5 +1,5 @@
 ---
-import InteractiveGrid from "../components/InteractiveGrid.astro";
+import FlowField from "../components/FlowField.astro";
 import AnalyticsEvents from "../components/AnalyticsEvents.astro";
 import CodeCopy from "../components/CodeCopy.astro";
 import SiteFooter from "../components/SiteFooter.astro";
@@ -73,19 +73,10 @@ const structuredData =
 ---
 
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script is:inline>
-      const storedTheme = localStorage.getItem("bernhardhauke-theme");
-      const preferredTheme =
-        storedTheme ||
-        (window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light");
-      document.documentElement.dataset.theme = preferredTheme;
-    </script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
@@ -125,7 +116,7 @@ const structuredData =
       type === "article" &&
         tags.map((tag) => <meta property="article:tag" content={tag} />)
     }
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#1d1d1c" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link
       rel="alternate"
@@ -140,7 +131,7 @@ const structuredData =
     />
   </head>
   <body>
-    <InteractiveGrid />
+    <FlowField />
     <div class="site-shell">
       <SiteHeader />
       <main>

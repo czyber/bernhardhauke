@@ -1,6 +1,7 @@
 ---
 title: "tinyloop: What makes clankers clank"
 description: "A deliberately small coding agent, you can understand in an afternoon"
+socialImage: "/articles/tinyloop-what-makes-clankers-clank/og-image.png?v=2"
 pubDate: 2026-06-25
 tags:
   - Agent tooling

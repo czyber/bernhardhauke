@@ -25,7 +25,7 @@ const projects = (await getCollection("projects"))
   title="Projects"
   description="Projects and experiments by Bernhard Hauke."
 >
-  <section class="page-intro" data-section-label="03 / Projects" data-animate>
+  <section class="page-intro" data-animate>
     <h1>Selected work and experiments.</h1>
     <p>
       A concise index for shipped work, current explorations, and small
@@ -33,16 +33,7 @@ const projects = (await getCollection("projects"))
     </p>
   </section>
 
-  <section
-    class="card-grid"
-    data-section-label="03.1 / Index"
-    data-animate
-    style="--delay: 80ms"
-  >
-    {
-      projects.map((project, index) => (
-        <ProjectCard project={project} index={index} />
-      ))
-    }
+  <section class="card-grid" data-animate style="--delay: 80ms">
+    {projects.map((project) => <ProjectCard project={project} />)}
   </section>
 </BaseLayout>

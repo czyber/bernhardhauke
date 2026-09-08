@@ -4,7 +4,7 @@ export const site = {
   description:
     "Personal website for Bernhard Hauke: projects, articles, and notes on thoughtful software.",
   url: "https://www.bernhardhauke.at",
-  defaultImage: "/og-image.png",
+  defaultImage: "/og-image.png?v=2",
   email: "bernhardhauke@icloud.com",
   nav: [
     { label: "About", href: "/about/" },

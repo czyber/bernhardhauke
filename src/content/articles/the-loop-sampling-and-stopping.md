@@ -1,7 +1,7 @@
 ---
 title: "The loop, sampling, and stopping"
 description: "Part three of the series: how a simple loop turns predictions into text, how sampling changes the choices, and what makes generation stop."
-socialImage: "/articles/the-loop-sampling-and-stopping/og-image.png"
+socialImage: "/articles/the-loop-sampling-and-stopping/og-image.png?v=2"
 pubDate: 2026-09-08
 tags:
   - AI
