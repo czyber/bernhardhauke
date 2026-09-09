@@ -32,6 +32,13 @@ float noise(vec2 p) {
   return mix(mix(hash(cell), hash(cell + vec2(1.0, 0.0)), f.x),
              mix(hash(cell + vec2(0.0, 1.0)), hash(cell + 1.0), f.x), f.y);
 }
+// Independent random brightness targets, interpolated without a repeating pulse.
+float twinkle(float clock, vec2 id) {
+  float sampleId = floor(clock);
+  float blend = fract(clock);
+  return mix(hash(id + vec2(sampleId, 83.1)),
+             hash(id + vec2(sampleId + 1.0, 83.1)), blend);
+}
 float stars(vec2 pixel, float spacing, float seed, float radius, float strength, vec2 velocity) {
   vec2 offset = vec2(seed * 73.7, seed * 29.3);
   vec2 shifted = pixel + offset + velocity * time;
@@ -51,12 +58,17 @@ float stars(vec2 pixel, float spacing, float seed, float radius, float strength,
   float spread = size * size + footprint * footprint * 0.18;
   float core = exp(-dot(local, local) / spread) * size * size / spread;
   float halo = exp(-dot(local, local) / (spread * 9.0)) * 0.045;
-  float phase = individual * 62.83;
-  float slow = 0.5 + 0.5 * sin(time * mix(1.0, 2.2, hash(id + 23.4)) + phase);
-  float shimmer = noise(vec2(time * mix(2.4, 5.0, individual) + phase, seed + individual));
-  float flicker = 0.12 + 0.95 * slow + 0.4 * shimmer;
+  float temperament = hash(id + 23.4);
+  float clock = time * mix(1.3, 3.1, temperament) + individual * 62.83;
+  float wander = twinkle(clock, id);
+  float rapid = twinkle(clock * 3.7 + 19.3, id + 51.7);
+  // Rare high samples make brief glints; most rapid variation stays subtle.
+  float glint = smoothstep(0.78, 0.98, rapid);
+  float variation = (wander - 0.5) * 1.1 + (rapid - 0.5) * 0.24 + glint * 0.65;
   float anchor = step(0.95, strength);
-  flicker = mix(flicker, 0.5 + 0.52 * slow + 0.12 * shimmer, anchor);
+  // Some stars remain almost steady, and the brightest anchors fluctuate less.
+  float activity = mix(0.1, 1.0, smoothstep(0.18, 0.42, temperament));
+  float flicker = 0.78 + variation * activity * mix(1.0, 0.55, anchor);
   float edge = 0.78 + 0.22 * hash(floor(local * 2.0) + seed);
   return exists * (core * edge + halo * anchor) * strength * flicker;
 }
