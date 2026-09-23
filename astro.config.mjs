@@ -1,6 +1,7 @@
 import { unified } from "@astrojs/markdown-remark";
 import { defineConfig } from "astro/config";
 import remarkGfm from "remark-gfm";
+import { fileURLToPath } from "node:url";
 
 const copyCodeTransformer = {
   name: "copy-code-opt-in",
@@ -15,6 +16,19 @@ const copyCodeTransformer = {
 };
 
 export default defineConfig({
+  vite: {
+    resolve: {
+      alias: {
+        // Monaco 0.56 exposes JS subpaths, but not its icon font stylesheet.
+        "monaco-editor-icons": fileURLToPath(
+          new URL(
+            "../base/browser/ui/codicons/codicon/codicon.css",
+            import.meta.resolve("monaco-editor/editor/editor.api.js"),
+          ),
+        ),
+      },
+    },
+  },
   markdown: {
     processor: unified({
       remarkPlugins: [remarkGfm],

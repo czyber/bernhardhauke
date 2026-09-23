@@ -1,0 +1,384 @@
+---
+import { getCollection } from "astro:content";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+import { Code } from "astro:components";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Files,
+  Search,
+  TextWrap,
+  Copy,
+  Download,
+  Maximize2,
+  MessageSquare,
+  BookOpen,
+} from "@lucide/astro";
+import {
+  fileHash,
+  noteHash,
+  parseCodeHash,
+  resolveNoteRange,
+  type CodeWorkspaceData,
+  type WorkspaceDefinition,
+} from "../lib/code-workspace";
+import "../styles/code-workspace.css";
+
+interface Props {
+  workspace: WorkspaceDefinition;
+}
+const { workspace } = Astro.props;
+const renderer = await createMarkdownProcessor();
+const entries = (
+  await getCollection(
+    "codeNotes",
+    ({ data }) => data.workspace === workspace.id,
+  )
+).sort((a, b) => a.data.order - b.data.order);
+const ids = new Set<string>();
+const notes = await Promise.all(
+  entries.map(async (entry) => {
+    if (ids.has(entry.data.noteId))
+      throw new Error(`Duplicate code note: ${entry.data.noteId}`);
+    ids.add(entry.data.noteId);
+    const file = workspace.files.find((file) => file.path === entry.data.file);
+    if (!file)
+      throw new Error(`Unknown file for note ${entry.id}: ${entry.data.file}`);
+    return {
+      id: entry.data.noteId,
+      title: entry.data.title,
+      file: file.path,
+      ...resolveNoteRange(file.source, entry.data),
+      html: (await renderer.render(entry.body ?? "")).code,
+    };
+  }),
+);
+if (!workspace.files.some((file) => file.path === workspace.initialFile))
+  throw new Error("Invalid initial workspace file");
+if (workspace.initialNote && !ids.has(workspace.initialNote))
+  throw new Error("Invalid initial workspace note");
+if (
+  new Set(workspace.files.map((file) => file.path)).size !==
+  workspace.files.length
+)
+  throw new Error(`Duplicate file path in workspace ${workspace.id}`);
+for (const note of notes) {
+  for (const [, hash] of note.html.matchAll(/href="(#[^"]+)"/g)) {
+    if (!hash.startsWith(`#${encodeURIComponent(workspace.id)}/`)) continue;
+    const target = parseCodeHash(hash, workspace.id);
+    if (!target) throw new Error(`Invalid code link in ${note.id}: ${hash}`);
+    if (target.kind === "note") {
+      if (!ids.has(target.id))
+        throw new Error(`Unknown note link in ${note.id}: ${hash}`);
+    } else {
+      const file = workspace.files.find((file) => file.path === target.file);
+      if (!file) throw new Error(`Unknown file link in ${note.id}: ${hash}`);
+      resolveNoteRange(file.source, target);
+    }
+  }
+}
+// Without the editor, file links target the complete source in the plain view.
+const plainNoteHtml = (html: string) =>
+  html.replace(/href="(#[^"]+)"/g, (match, hash) => {
+    const target = parseCodeHash(hash, workspace.id);
+    return target?.kind === "file"
+      ? `href="${fileHash(workspace.id, target.file)}"`
+      : match;
+  });
+const data: CodeWorkspaceData = { ...workspace, notes };
+const payload = JSON.stringify(data).replaceAll("<", "\\u003c");
+---
+
+<code-workspace
+  class="code-workspace"
+  aria-label={`${workspace.title} annotated code explorer`}
+>
+  <script
+    is:inline
+    type="application/json"
+    data-workspace-data
+    set:html={payload}
+  />
+  <div class="cw-workbench" hidden>
+    <div class="cw-titlebar">
+      <div class="cw-project-title">
+        <BookOpen size={15} aria-hidden="true" /><span>{workspace.title}</span
+        ><span class="cw-title-separator">/</span><span class="cw-title-label"
+          >a code walkthrough</span
+        >
+      </div>
+      <button
+        class="cw-icon-button"
+        data-action="fullscreen"
+        aria-label="Expand editor"
+        title="Expand editor"><Maximize2 size={15} /></button
+      >
+    </div>
+    <div class="cw-layout">
+      <aside
+        class="cw-sidebar"
+        id={`${workspace.id}-explorer`}
+        aria-label="Project explorer"
+      >
+        <div class="cw-section-label">
+          Explorer <span>{workspace.files.length} files</span>
+        </div>
+        <div class="cw-folder">
+          <span aria-hidden="true">⌄</span>
+          {workspace.title}
+        </div>
+        <nav class="cw-file-list" aria-label="Project files">
+          {
+            workspace.files.map((file) => (
+              <button
+                class="cw-file"
+                data-file={file.path}
+                aria-label={`Open ${file.path}`}
+              >
+                <span
+                  class:list={[
+                    "cw-file-icon",
+                    { "cw-python": file.language === "python" },
+                  ]}
+                  aria-hidden="true"
+                >
+                  {file.language === "python" ? "py" : "≡"}
+                </span>
+                <span>{file.path}</span>
+                {notes.some((note) => note.file === file.path) && (
+                  <span class="cw-file-count">
+                    {notes.filter((note) => note.file === file.path).length}
+                  </span>
+                )}
+              </button>
+            ))
+          }
+        </nav>
+        <div class="cw-section-label cw-guide-label">
+          Reading guide <span>{notes.length}</span>
+        </div>
+        <nav class="cw-guide" aria-label="Article notes">
+          {
+            notes.map((note, index) => (
+              <a
+                href={noteHash(workspace.id, note.id)}
+                data-note-link={note.id}
+              >
+                <span class="cw-guide-number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span>{note.title}</span>
+              </a>
+            ))
+          }
+        </nav>
+        <div class="cw-sidebar-foot">
+          <MessageSquare size={13} aria-hidden="true" /> Explanations live in the
+          code.
+        </div>
+      </aside>
+      <div class="cw-main">
+        <div class="cw-tabs" role="tablist" aria-label="Open files">
+          {
+            workspace.files.map((file, index) => (
+              <button
+                role="tab"
+                class="cw-tab"
+                id={`${workspace.id}-tab-${index}`}
+                aria-controls={`${workspace.id}-editor`}
+                aria-selected="false"
+                tabindex="-1"
+                data-file={file.path}
+              >
+                <span
+                  class:list={[
+                    "cw-file-icon",
+                    { "cw-python": file.language === "python" },
+                  ]}
+                  aria-hidden="true"
+                >
+                  {file.language === "python" ? "py" : "≡"}
+                </span>
+                {file.path}
+              </button>
+            ))
+          }
+        </div>
+        <div class="cw-toolbar">
+          <div class="cw-toolbar-left">
+            <button
+              class="cw-icon-button cw-explorer-toggle"
+              data-action="explorer"
+              aria-label="Toggle file explorer"
+              aria-controls={`${workspace.id}-explorer`}
+              aria-expanded="false"
+              title="Files and reading guide"><Files size={15} /></button
+            >
+            <span class="cw-breadcrumb" data-breadcrumb
+              >{workspace.initialFile}</span
+            >
+          </div>
+          <div class="cw-tools">
+            <button
+              class="cw-tool-button"
+              data-action="notes"
+              aria-pressed="true"
+              title="Show or hide author notes"
+              ><MessageSquare size={14} /><span>Notes</span></button
+            >
+            <button
+              class="cw-icon-button"
+              data-action="find"
+              aria-label="Find in file"
+              title="Find in file (Ctrl / ⌘ F)"><Search size={15} /></button
+            >
+            <button
+              class="cw-icon-button"
+              data-action="wrap"
+              aria-pressed="false"
+              aria-label="Wrap code lines"
+              title="Wrap code lines"><TextWrap size={15} /></button
+            >
+            <button
+              class="cw-icon-button"
+              data-action="copy"
+              aria-label="Copy file"
+              title="Copy file"><Copy size={14} /></button
+            >
+            <a
+              class="cw-icon-button"
+              data-download
+              href={workspace.files[0].downloadUrl}
+              download
+              aria-label="Download current file"
+              title="Download current file"><Download size={15} /></a
+            >
+          </div>
+        </div>
+        <div
+          class="cw-editor"
+          id={`${workspace.id}-editor`}
+          role="tabpanel"
+          aria-label="Source code"
+          tabindex="0"
+        >
+        </div>
+        <div class="cw-note-nav">
+          <span class="cw-reading-position" data-reading-position
+            >Explore the code</span
+          >
+          <div>
+            <button data-action="previous" aria-label="Previous explanation"
+              ><ChevronLeft size={14} /> Previous</button
+            ><button data-action="next" aria-label="Next explanation"
+              >Next <ChevronRight size={14} /></button
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cw-statusbar">
+      <span
+        ><span class="cw-status-dot" aria-hidden="true"></span> Read-only</span
+      ><span data-location>Ln 1, Col 1</span><span data-language>Python</span
+      ><span class="cw-status-hint">Select code · follow notes · explore</span>
+    </div>
+  </div>
+  <div class="cw-announcement" role="status" aria-live="polite"></div>
+  <div class="cw-below">
+    <p>
+      <MessageSquare size={14} aria-hidden="true" /> Open an inline note, or follow
+      the reading guide. Links jump to the code they explain.
+    </p>
+    <button data-action="plain" hidden>Plain reading view</button>
+  </div>
+  <div class="cw-fallback">
+    <p class="cw-loading" data-loading>
+      Loading the code explorer. The complete source and notes are also
+      available below.
+    </p>
+    <noscript
+      ><p>
+        The complete project and its explanations are available here without
+        JavaScript.
+      </p></noscript
+    >
+    {
+      workspace.files.map((file) => (
+        <details
+          class="cw-plain-file"
+          open={file.path === workspace.initialFile}
+          id={`${workspace.id}/file/${encodeURIComponent(file.path)}/1-1`}
+        >
+          <summary>
+            {file.path}{" "}
+            <a href={file.downloadUrl} download>
+              Download file
+            </a>
+          </summary>
+          <Code
+            code={file.source}
+            lang={file.language === "python" ? "python" : "text"}
+            theme="github-dark"
+          />
+          {notes
+            .filter((note) => note.file === file.path)
+            .map((note) => (
+              <details
+                class="cw-plain-note"
+                id={`${workspace.id}/note/${note.id}`}
+                open
+              >
+                <summary>
+                  {note.title}{" "}
+                  <span>
+                    Lines {note.startLine}–{note.endLine}
+                  </span>
+                </summary>
+                <div class="cw-note-body" set:html={plainNoteHtml(note.html)} />
+                <a
+                  class="cw-source-link"
+                  href={fileHash(workspace.id, file.path)}
+                >
+                  View lines {note.startLine}–{note.endLine}
+                </a>
+              </details>
+            ))}
+        </details>
+      ))
+    }
+  </div>
+</code-workspace>
+
+<script>
+  // Keep the editor and its worker off ordinary articles and load near the viewport.
+  const observer = new IntersectionObserver(
+    async (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        observer.unobserve(entry.target);
+        try {
+          const { initializeWorkspace } =
+            await import("./code-workspace/editor");
+          await initializeWorkspace(entry.target as HTMLElement);
+        } catch (error) {
+          console.error("Code explorer could not load", error);
+          const workbench =
+            entry.target.querySelector<HTMLElement>(".cw-workbench");
+          const fallback =
+            entry.target.querySelector<HTMLElement>(".cw-fallback");
+          if (workbench) workbench.hidden = true;
+          if (fallback) fallback.hidden = false;
+          const message = entry.target.querySelector("[data-loading]");
+          if (message)
+            message.textContent =
+              "The interactive editor could not load. You can read and download every file and note below.";
+        }
+      }
+    },
+    { rootMargin: "300px" },
+  );
+  document
+    .querySelectorAll("code-workspace")
+    .forEach((element) => observer.observe(element));
+</script>

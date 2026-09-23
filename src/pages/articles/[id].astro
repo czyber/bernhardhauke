@@ -2,6 +2,8 @@
 import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import CodeWorkspace from "../../components/CodeWorkspace.astro";
+import { codeWorkspaces } from "../../data/code-workspaces";
 
 interface Props {
   article: CollectionEntry<"articles">;
@@ -20,6 +22,11 @@ export async function getStaticPaths() {
 
 const { article } = Astro.props;
 const { Content } = await render(article);
+const workspace = article.data.codeWorkspace
+  ? codeWorkspaces[article.data.codeWorkspace]
+  : undefined;
+if (article.data.codeWorkspace && !workspace)
+  throw new Error(`Unknown code workspace: ${article.data.codeWorkspace}`);
 const date = article.data.pubDate.toLocaleDateString("en", {
   month: "long",
   day: "numeric",
@@ -41,7 +48,11 @@ const date = article.data.pubDate.toLocaleDateString("en", {
   tags={article.data.tags}
 >
   <article
-    class="article-page article-page--reading"
+    class:list={[
+      "article-page",
+      "article-page--reading",
+      { "article-page--code": workspace },
+    ]}
     data-animate
     data-analytics-article
   >
@@ -61,6 +72,7 @@ const date = article.data.pubDate.toLocaleDateString("en", {
     <div class="prose">
       <Content />
     </div>
+    {workspace && <CodeWorkspace workspace={workspace} />}
   </article>
 </BaseLayout>
 
@@ -69,6 +81,10 @@ const date = article.data.pubDate.toLocaleDateString("en", {
 
   if (document.querySelector("token-loop, sampling-comparison")) {
     import("../../components/GenerationExamples");
+  }
+
+  if (document.querySelector("tensor-pixels")) {
+    import("../../components/TensorPixels");
   }
 </script>
 

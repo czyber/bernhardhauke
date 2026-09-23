@@ -13,6 +13,7 @@ const articles = defineCollection({
     updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    codeWorkspace: z.string().optional(),
   }),
 });
 
@@ -49,4 +50,27 @@ const labs = defineCollection({
   }),
 });
 
-export const collections = { articles, projects, labs };
+const codeNotes = defineCollection({
+  loader: glob({ base: "./src/content/code-notes", pattern: "**/*.md" }),
+  schema: z
+    .object({
+      workspace: z.string(),
+      noteId: z.string().regex(/^[a-z0-9-]+$/),
+      title: z.string(),
+      file: z.string(),
+      order: z.number(),
+      from: z.string().optional(),
+      to: z.string().optional(),
+      startLine: z.number().int().positive().optional(),
+      endLine: z.number().int().positive().optional(),
+    })
+    .refine((note) => Boolean(note.from) !== Boolean(note.startLine), {
+      message:
+        "Use either a unique 'from' source line or 'startLine' for a note.",
+    })
+    .refine((note) => !(note.to && note.endLine), {
+      message: "Use either 'to' or 'endLine', not both.",
+    }),
+});
+
+export const collections = { articles, projects, labs, codeNotes };
