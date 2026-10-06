@@ -1,7 +1,7 @@
 # Articles with an annotated code explorer
 
-The showcase is `/articles/a-tiny-gpt-explained-in-place/`. It uses Monaco, the
-editor behind VS Code, with read-only source files and author-written Markdown
+The code explorer uses Monaco, the editor behind VS Code, with read-only source
+files and author-written Markdown
 notes inserted as collapsible view zones. Readers can browse files, fold code,
 search, select and copy text, download source, and follow links between notes.
 There are no visitor comments, private drafts, or browser execution of the code.
@@ -17,7 +17,7 @@ There are no visitor comments, private drafts, or browser execution of the code.
    the introduction, followed by the full-width explorer.
 4. Add the notes in `src/content/code-notes/<project>/` as individual `.md` files.
 
-Python highlighting is bundled for the showcase; `plaintext` also works. For a
+Python highlighting is bundled; `plaintext` also works. For a
 new language, register its Monaco definition in
 `src/components/code-workspace/editor.ts` and set the corresponding `language` in
 the manifest. The editor loads only when a workspace nears the viewport.
@@ -91,7 +91,7 @@ npm run build
 python3 -m unittest discover -s tests -p 'test_*.py'
 ```
 
-The Python checks are optional and need PyTorch installed. They verify tensor
-shapes, shifted targets, backpropagation, the context limit, and that future
-tokens cannot affect earlier predictions. `npm test` checks source anchors,
-share links, and every showcase note reference without needing PyTorch.
+`npm test` checks source anchors and share links without needing PyTorch.
+Source ranges and workspace references are also validated when an article's
+code explorer is built. The optional Python checks compare tensor operations
+and their generated code with PyTorch.

@@ -1,0 +1,106 @@
+.field-title {
+  text-align: center;
+  font-size: 11px;
+  color: var(--quiet);
+  margin-bottom: 10px;
+}
+.field-plot {
+  width: min(100%, 340px);
+  overflow: hidden;
+}
+.directions {
+  fill: none;
+  stroke: var(--quiet);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.32;
+  pointer-events: none;
+}
+.field-trail {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  opacity: 0.4;
+  pointer-events: none;
+}
+.field-start {
+  fill: var(--accent);
+  opacity: 0.4;
+}
+.field-vector {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.field-handle {
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+}
+.field-handle:active {
+  cursor: grabbing;
+}
+.field-handle:focus-visible .field-point {
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+.field-handle text {
+  fill: var(--accent);
+}
+.field-context {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-size: 11px;
+  color: var(--quiet);
+  margin: 12px 0;
+  font-variant-numeric: tabular-nums;
+}
+.field-context output {
+  color: var(--ink);
+}
+.field-probabilities {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin: 12px 0;
+  font-size: 10px;
+  color: var(--quiet);
+}
+.field-probabilities span {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  min-width: 54px;
+}
+.field-probabilities output {
+  font-size: 12px;
+  color: var(--ink);
+}
+.field-probabilities [data-target="true"] output {
+  color: var(--accent);
+}
+.field-update {
+  min-height: 38px;
+  margin: 10px auto 0;
+  max-width: 430px;
+  font-size: 10px;
+  text-align: center;
+  color: var(--quiet);
+}
+.controls button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+.field-details .equation {
+  text-align: left;
+}
+.field-details p:has(.katex) {
+  overflow-x: auto;
+  padding-block: 6px;
+}

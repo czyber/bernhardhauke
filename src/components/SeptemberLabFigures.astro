@@ -1,0 +1,615 @@
+---
+import measurements from "../data/september-lab.json";
+import gpuMeasurements from "../data/september-gpu-runs.json";
+import "../styles/september-lab-figures.css";
+
+const { characterRun, widthNotes, batches, corpusBudgets } = measurements;
+const microbatchTokens = batches.sequences * batches.context;
+const updateTokens = microbatchTokens * batches.accumulation;
+const firstExposure = updateTokens * corpusBudgets.firstUpdates;
+const formats = [
+  {
+    name: "wide",
+    width: 640,
+    left: 52,
+    right: 622,
+    top: 35,
+    bottom: 244,
+    ticks: [0, 1000, 2000, 3000, 4000, 5000],
+  },
+  {
+    name: "narrow",
+    width: 360,
+    left: 38,
+    right: 344,
+    top: 35,
+    bottom: 244,
+    ticks: [0, 2500, 5000],
+  },
+];
+const lossX = (step: number, format: (typeof formats)[number]) =>
+  format.left + (step / 5000) * (format.right - format.left);
+const lossY = (loss: number, format: (typeof formats)[number]) =>
+  format.bottom - ((loss - 1) / 4.5) * (format.bottom - format.top);
+const lossLine = (
+  key: "train" | "validation",
+  format: (typeof formats)[number],
+) =>
+  characterRun.points
+    .map(
+      (point) =>
+        `${lossX(point.step, format).toFixed(2)},${lossY(point[key], format).toFixed(2)}`,
+    )
+    .join(" ");
+const widthX = (loss: number, format: (typeof formats)[number]) =>
+  format.left + ((loss - 1.7) / 0.55) * (format.right - format.left);
+type GpuValidationPoint = {
+  update: number;
+  processedTokenPositions: number;
+  loss: number;
+};
+type GpuRun = {
+  preparedTrainingTokens: number;
+  tokensPerUpdate: number;
+  optimizerUpdates: number;
+  processedTokenPositions: number;
+  validation: GpuValidationPoint[];
+  finalUpdate: { loss: number };
+  provenance: { kind: string; logFilename?: string };
+};
+const gpuRuns = Object.entries(gpuMeasurements)
+  .filter(([, value]) => "validation" in value)
+  .map(([key, value]) => {
+    const run = value as GpuRun;
+    return {
+      ...run,
+      key,
+      label: `${run.preparedTrainingTokens / 1_000_000}M corpus`,
+      isLarger: run.preparedTrainingTokens === 500_000_000,
+      isReportedEndpoint:
+        run.provenance.kind === "author_reported_final_log_excerpt",
+    };
+  })
+  .sort(
+    (first, second) =>
+      first.preparedTrainingTokens - second.preparedTrainingTokens,
+  );
+const largerGpuRun = gpuRuns.find((run) => run.isLarger)!;
+const finalGpuValidation = largerGpuRun.validation.at(-1)!;
+const gpuLosses = gpuRuns.flatMap((run) =>
+  run.validation.map((point) => point.loss),
+);
+const gpuMinLoss = Math.floor(Math.min(...gpuLosses));
+const gpuMaxLoss = Math.ceil(Math.max(...gpuLosses));
+const gpuLossTicks = Array.from(
+  { length: gpuMaxLoss - gpuMinLoss + 1 },
+  (_, index) => gpuMinLoss + index,
+);
+const gpuX = (positions: number, format: (typeof formats)[number]) =>
+  format.left + (positions / 500_000_000) * (format.right - format.left);
+const gpuY = (loss: number, format: (typeof formats)[number]) =>
+  format.bottom -
+  ((loss - gpuMinLoss) / (gpuMaxLoss - gpuMinLoss)) *
+    (format.bottom - format.top);
+const gpuLine = (
+  points: GpuValidationPoint[],
+  format: (typeof formats)[number],
+) =>
+  points
+    .map(
+      (point) =>
+        `${gpuX(point.processedTokenPositions, format).toFixed(2)},${gpuY(point.loss, format).toFixed(2)}`,
+    )
+    .join(" ");
+---
+
+<div hidden data-september-lab-template="character-loss">
+  <figure class="september-lab-figure">
+    <div class="sl-figure-heading">
+      <p class="sl-title">Character-model training</p>
+    </div>
+    <div class="sl-legend" aria-label="Plot legend">
+      <span
+        ><i class="sl-key sl-key--train" aria-hidden="true"></i>Training split</span
+      >
+      <span
+        ><i class="sl-key sl-key--validation" aria-hidden="true"></i>Validation
+        split</span
+      >
+    </div>
+    {
+      formats.map((format) => (
+        <svg
+          class={`sl-plot sl-plot--${format.name}`}
+          viewBox={`0 0 ${format.width} 302`}
+          role="img"
+          aria-label="Character model loss during the September 20 run: training loss falls from 5.0121 to 1.2194 and validation loss from 5.0168 to 1.1898. Twenty evaluations are recorded, from update 0 to update 4,750."
+        >
+          <text x={format.left} y="17" class="sl-axis-label">
+            Cross-entropy per character
+          </text>
+          {[1, 2, 3, 4, 5].map((tick) => (
+            <g>
+              <line
+                class="sl-grid"
+                x1={format.left}
+                y1={lossY(tick, format)}
+                x2={format.right}
+                y2={lossY(tick, format)}
+              />
+              <text
+                x={format.left - 12}
+                y={lossY(tick, format) + 4}
+                text-anchor="end"
+              >
+                {tick.toFixed(1)}
+              </text>
+            </g>
+          ))}
+          <path
+            class="sl-axis"
+            d={`M${format.left} ${format.top} V${format.bottom} H${format.right}`}
+          />
+          {format.ticks.map((tick) => (
+            <g>
+              <line
+                class="sl-axis"
+                x1={lossX(tick, format)}
+                y1={format.bottom}
+                x2={lossX(tick, format)}
+                y2={format.bottom + 5}
+              />
+              <text
+                x={lossX(tick, format)}
+                y={format.bottom + 23}
+                text-anchor={
+                  tick === 0 ? "start" : tick === 5000 ? "end" : "middle"
+                }
+              >
+                {tick.toLocaleString("en-US")}
+              </text>
+            </g>
+          ))}
+          <text
+            x={(format.left + format.right) / 2}
+            y="295"
+            text-anchor="middle"
+            class="sl-axis-label"
+          >
+            Optimizer update
+          </text>
+          <polyline
+            class="sl-line sl-line--train"
+            points={lossLine("train", format)}
+          />
+          <polyline
+            class="sl-line sl-line--validation"
+            points={lossLine("validation", format)}
+          />
+          {characterRun.points.map((point) => (
+            <g>
+              <rect
+                class="sl-point--train"
+                x={lossX(point.step, format) - 2.4}
+                y={lossY(point.train, format) - 2.4}
+                width="4.8"
+                height="4.8"
+              >
+                <title>{`Update ${point.step}: training ${point.train.toFixed(4)}`}</title>
+              </rect>
+              <circle
+                class="sl-point--validation"
+                cx={lossX(point.step, format)}
+                cy={lossY(point.validation, format)}
+                r="2.7"
+              >
+                <title>{`Update ${point.step}: validation ${point.validation.toFixed(4)}`}</title>
+              </circle>
+            </g>
+          ))}
+        </svg>
+      ))
+    }
+    <figcaption>
+      Training and validation estimates from my character-level run on the Mac,
+      each averaged over 20 sampled batches. Lines join the recorded
+      measurements; the last evaluation was at update 4,750 of 5,000. These
+      losses are per character.
+    </figcaption>
+  </figure>
+</div>
+
+<div hidden data-september-lab-template="widths">
+  <figure class="september-lab-figure">
+    <div class="sl-figure-heading">
+      <p class="sl-title">Notebook width comparison</p>
+    </div>
+    <div class="sl-legend" aria-label="Plot legend">
+      <span
+        ><i class="sl-key sl-key--train sl-key--dot" aria-hidden="true"
+        ></i>Training</span
+      ><span
+        ><i class="sl-key sl-key--validation sl-key--dot" aria-hidden="true"
+        ></i>Validation</span
+      >
+    </div>
+    {
+      formats.map((format) => (
+        <svg
+          class={`sl-plot sl-plot--${format.name}`}
+          viewBox={`0 0 ${format.width} 288`}
+          role="img"
+          aria-label="Saved notebook observations: hidden width 32 has training loss 1.981 and validation loss 2.058; width 64 has training loss 1.816 and validation loss 2.017. An earlier unscaled validation loss was approximately 2.164. These are observations, not a controlled benchmark."
+        >
+          <text x={format.left} y="17" class="sl-axis-label">
+            Hidden width
+          </text>
+          <line
+            class="sl-baseline"
+            x1={widthX(widthNotes.baselineValidationApproximate, format)}
+            y1="50"
+            x2={widthX(widthNotes.baselineValidationApproximate, format)}
+            y2="232"
+          />
+          <text
+            x={widthX(widthNotes.baselineValidationApproximate, format)}
+            y="41"
+            text-anchor="end"
+            class="sl-baseline-label"
+          >
+            Earlier val. ≈2.164
+          </text>
+          {widthNotes.points.map((point, index) => {
+            const row = 103 + index * 83;
+            return (
+              <g>
+                <text
+                  x={format.left - 12}
+                  y={row + 5}
+                  text-anchor="end"
+                  class="sl-row-label"
+                >
+                  {point.width}
+                </text>
+                <line
+                  class="sl-pair-line"
+                  x1={widthX(point.train, format)}
+                  y1={row}
+                  x2={widthX(point.validation, format)}
+                  y2={row}
+                />
+                <circle
+                  class="sl-dot--train"
+                  cx={widthX(point.train, format)}
+                  cy={row}
+                  r="4.5"
+                />
+                <circle
+                  class="sl-dot--validation"
+                  cx={widthX(point.validation, format)}
+                  cy={row}
+                  r="4.5"
+                />
+                <text
+                  class="sl-value--train"
+                  x={widthX(point.train, format)}
+                  y={row - 14}
+                  text-anchor="middle"
+                >
+                  {point.train.toFixed(3)}
+                </text>
+                <text
+                  class="sl-value--validation"
+                  x={widthX(point.validation, format)}
+                  y={row + 25}
+                  text-anchor="middle"
+                >
+                  {point.validation.toFixed(3)}
+                </text>
+              </g>
+            );
+          })}
+          <path class="sl-axis" d={`M${format.left} 232 H${format.right}`} />
+          {[1.7, 1.8, 1.9, 2, 2.1, 2.2].map((tick) => (
+            <g>
+              <line
+                class="sl-axis"
+                x1={widthX(tick, format)}
+                y1="232"
+                x2={widthX(tick, format)}
+                y2="237"
+              />
+              <text x={widthX(tick, format)} y="255" text-anchor="middle">
+                {tick.toFixed(1)}
+              </text>
+            </g>
+          ))}
+          <text
+            x={(format.left + format.right) / 2}
+            y="282"
+            text-anchor="middle"
+            class="sl-axis-label"
+          >
+            Cross-entropy per character · lower is better
+          </text>
+        </svg>
+      ))
+    }
+    <figcaption>
+      Values retained in my notebook notes, rounded as recorded. The earlier
+      baseline is approximate. This comparison did not hold every other training
+      choice constant.
+    </figcaption>
+  </figure>
+</div>
+
+<div hidden data-september-lab-template="fineweb-loss">
+  <figure class="september-lab-figure">
+    <div class="sl-figure-heading">
+      <p class="sl-title">The completed FineWeb-Edu run</p>
+    </div>
+    <div class="sl-legend" aria-label="Plot legend">
+      {
+        gpuRuns.map((run) => (
+          <span>
+            <i
+              class={`sl-key ${run.isReportedEndpoint ? "sl-key--reported" : run.isLarger ? "sl-key--validation" : "sl-key--train"}`}
+              aria-hidden="true"
+            />
+            {run.isReportedEndpoint
+              ? "100M run · reported endpoint"
+              : `${run.label} · validation`}
+          </span>
+        ))
+      }
+    </div>
+    {
+      formats.map((format) => (
+        <svg
+          class={`sl-plot sl-plot--${format.name}`}
+          viewBox={`0 0 ${format.width} 302`}
+          role="img"
+          aria-label={`Recorded FineWeb-Edu validation losses against processed training token positions. The 500-million-token corpus run completes ${largerGpuRun.optimizerUpdates.toLocaleString("en-US")} optimizer updates and finishes at validation loss ${finalGpuValidation.loss.toFixed(6)}, after ${largerGpuRun.processedTokenPositions.toLocaleString("en-US")} processed positions. The 100M run appears as a single reported final endpoint at 98,304,000 positions and validation 4.623868, with no learning curve. This is not a controlled comparison. Character-level model losses use a different unit and are shown separately.`}
+        >
+          <text x={format.left} y="17" class="sl-axis-label">
+            Cross-entropy per GPT-2 token
+          </text>
+          {gpuLossTicks.map((tick) => (
+            <g>
+              <line
+                class="sl-grid"
+                x1={format.left}
+                y1={gpuY(tick, format)}
+                x2={format.right}
+                y2={gpuY(tick, format)}
+              />
+              <text
+                x={format.left - 12}
+                y={gpuY(tick, format) + 4}
+                text-anchor="end"
+              >
+                {tick.toFixed(1)}
+              </text>
+            </g>
+          ))}
+          <path
+            class="sl-axis"
+            d={`M${format.left} ${format.top} V${format.bottom} H${format.right}`}
+          />
+          {(format.name === "wide"
+            ? [0, 100, 200, 300, 400, 500]
+            : [0, 250, 500]
+          ).map((million) => (
+            <g>
+              <line
+                class="sl-axis"
+                x1={gpuX(million * 1_000_000, format)}
+                y1={format.bottom}
+                x2={gpuX(million * 1_000_000, format)}
+                y2={format.bottom + 5}
+              />
+              <text
+                x={gpuX(million * 1_000_000, format)}
+                y={format.bottom + 23}
+                text-anchor={
+                  million === 0 ? "start" : million === 500 ? "end" : "middle"
+                }
+              >
+                {million === 0 ? "0" : `${million}M`}
+              </text>
+            </g>
+          ))}
+          <text
+            x={(format.left + format.right) / 2}
+            y="295"
+            text-anchor="middle"
+            class="sl-axis-label"
+          >
+            Processed training token positions
+          </text>
+          {gpuRuns.map((run) => (
+            <g>
+              {run.validation.length > 1 && (
+                <polyline
+                  class={`sl-line ${run.isLarger ? "sl-line--validation" : "sl-line--train"}`}
+                  points={gpuLine(run.validation, format)}
+                />
+              )}
+              {run.validation.map((point, index) =>
+                run.isReportedEndpoint ? (
+                  <g>
+                    <rect
+                      class="sl-reported-point"
+                      x={gpuX(point.processedTokenPositions, format) - 3.5}
+                      y={gpuY(point.loss, format) - 3.5}
+                      width="7"
+                      height="7"
+                    >
+                      <title>{`100M reported final endpoint: ${point.processedTokenPositions.toLocaleString("en-US")} positions, validation ${point.loss.toFixed(6)}`}</title>
+                    </rect>
+                    <text
+                      x={gpuX(point.processedTokenPositions, format) + 10}
+                      y={gpuY(point.loss, format) - 12}
+                      class="sl-reported-label"
+                    >
+                      100M endpoint
+                    </text>
+                  </g>
+                ) : (
+                  <circle
+                    class={
+                      run.isLarger ? "sl-point--validation" : "sl-point--train"
+                    }
+                    cx={gpuX(point.processedTokenPositions, format)}
+                    cy={gpuY(point.loss, format)}
+                    r={index === run.validation.length - 1 ? 3.5 : 1.4}
+                  >
+                    <title>{`${run.label}: after ${(point.update + 1).toLocaleString("en-US")} updates / ${point.processedTokenPositions.toLocaleString("en-US")} positions, validation ${point.loss.toFixed(6)}`}</title>
+                  </circle>
+                ),
+              )}
+            </g>
+          ))}
+        </svg>
+      ))
+    }
+    <figcaption>
+      The curve follows the completed run; the square marks the earlier run's
+      final result. Both use the same held-out text, but their training
+      schedules differ, so this comparison does not isolate corpus size. The
+      axes count processed token positions and loss per GPT-2 token.
+    </figcaption>
+  </figure>
+</div>
+
+<div hidden data-september-lab-template="budget">
+  <figure class="september-lab-figure">
+    <div class="sl-figure-heading">
+      <p class="sl-title">Training-data budgets</p>
+    </div>
+    <div
+      class="sl-budget"
+      role="img"
+      aria-label="Prepared training corpus budgets: the first corpus contains 100 million GPT-2 tokens; the larger corpus contains 500 million. The initial 3,000-update run processed 98,304,000 token positions. Corpus size and processed positions are different counts."
+    >
+      <div class="sl-budget-row">
+        <div class="sl-budget-label">
+          <span>First corpus</span><strong>100M tokens</strong>
+        </div><div class="sl-budget-track">
+          <div
+            class="sl-budget-bar sl-budget-bar--first"
+            style="--budget-share:20%"
+          >
+          </div>
+        </div>
+      </div>
+      <div class="sl-budget-row">
+        <div class="sl-budget-label">
+          <span>Larger corpus</span><strong class="sl-accent"
+            >500M tokens</strong
+          >
+        </div><div class="sl-budget-track">
+          <div class="sl-budget-bar" style="--budget-share:100%"></div>
+        </div>
+      </div>
+      <div class="sl-budget-axis" aria-hidden="true">
+        <span>0</span><span>100M</span><span>200M</span><span>300M</span><span
+          >400M</span
+        ><span>500M</span>
+      </div>
+      <p class="sl-budget-axis-title" aria-hidden="true">
+        Prepared training tokens
+      </p>
+    </div>
+    <div class="sl-exposure">
+      <span>First run: positions processed</span><strong
+        >{corpusBudgets.firstUpdates.toLocaleString("en-US")} × {
+          updateTokens.toLocaleString("en-US")
+        } = {firstExposure.toLocaleString("en-US")}</strong
+      >
+    </div>
+    <figcaption>
+      The bars show prepared corpus budgets. The first run processed 98.3M
+      positions; the completed larger run processed 499,974,144. Each position
+      is one next-token prediction used in training; reading the same text again
+      adds processed positions without increasing the corpus size.
+    </figcaption>
+  </figure>
+</div>
+
+<div hidden data-september-lab-template="batch">
+  <figure class="september-lab-figure">
+    <div class="sl-figure-heading">
+      <p class="sl-title">One optimizer update</p>
+    </div>
+    <ol
+      class="sl-microbatches"
+      aria-label="Four microbatches accumulate gradients before one optimizer update"
+    >
+      {
+        Array.from({ length: batches.accumulation }, (_, index) => (
+          <li>
+            <>
+              <span class="sl-microbatch-label">Microbatch {index + 1}</span>
+              <div class="sl-sequence-strips" aria-hidden="true">
+                {Array.from({ length: batches.sequences }, () => (
+                  <span />
+                ))}
+              </div>
+              <strong>
+                {batches.sequences} × {batches.context.toLocaleString("en-US")}
+              </strong>
+              <span class="sl-microbatch-count">
+                {microbatchTokens.toLocaleString("en-US")} positions
+              </span>
+            </>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="sl-accumulation">
+      <span class="sl-accumulation-note">Accumulate scaled gradients</span><span
+        class="sl-flow-arrow"
+        aria-hidden="true">↓</span
+      ><div class="sl-update">
+        <span>One optimizer update</span><strong
+          >{updateTokens.toLocaleString("en-US")} token positions</strong
+        >
+      </div>
+    </div>
+    <figcaption>
+      Each pass contains eight sequences of 1,024 tokens. Dividing each pass's
+      loss by four makes their accumulated gradients an average for one update.
+      The context length stays 1,024. This is a schematic of the training
+      recipe.
+    </figcaption>
+  </figure>
+</div>
+
+<script>
+  const populateSeptemberFigures = () => {
+    const templates = new Map(
+      [
+        ...document.querySelectorAll<HTMLElement>(
+          "[hidden][data-september-lab-template]",
+        ),
+      ].map((template) => [template.dataset.septemberLabTemplate, template]),
+    );
+    document
+      .querySelectorAll<HTMLElement>("september-lab-figure[kind]")
+      .forEach((slot) => {
+        if (slot.dataset.figureReady === "true") return;
+        const template = templates.get(slot.getAttribute("kind") ?? "");
+        if (!template) return;
+        const figure = template.firstElementChild;
+        if (!figure) return;
+        const clone = figure.cloneNode(true) as HTMLElement;
+        if (slot.hasAttribute("bare")) clone.querySelector("figcaption")?.remove();
+        slot.replaceChildren(clone);
+        slot.dataset.figureReady = "true";
+      });
+    templates.forEach((template) => template.remove());
+  };
+  populateSeptemberFigures();
+  document.addEventListener("astro:page-load", populateSeptemberFigures);
+</script>

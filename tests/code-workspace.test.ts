@@ -1,7 +1,5 @@
 import assert from "node:assert/strict";
-import { readdirSync, readFileSync } from "node:fs";
 import { test } from "node:test";
-import { parse } from "yaml";
 import {
   fileHash,
   noteHash,
@@ -73,32 +71,4 @@ test("unrelated or malformed deep links are ignored", () => {
     "#demo/file/x/1-9999999999999999999",
   ])
     assert.equal(parseCodeHash(hash, "demo"), null);
-});
-
-test("every showcase note and cross-reference points to existing source", () => {
-  const dir = new URL("../src/content/code-notes/tiny-gpt/", import.meta.url);
-  const notes = readdirSync(dir)
-    .filter((name) => name.endsWith(".md"))
-    .map((name) => {
-      const text = readFileSync(new URL(name, dir), "utf8");
-      const [, frontmatter, body] = text.split("---");
-      return { ...parse(frontmatter), body };
-    });
-  const ids = new Set(notes.map((note) => note.noteId));
-  assert.equal(ids.size, notes.length, "Note IDs must be unique");
-  const source = (file: string) =>
-    readFileSync(
-      new URL(`../public/code/tiny-gpt/${file}`, import.meta.url),
-      "utf8",
-    );
-  for (const note of notes) {
-    resolveNoteRange(source(note.file), note);
-    for (const [, hash] of note.body.matchAll(/\]\((#tiny-gpt\/[^)]+)\)/g)) {
-      const target = parseCodeHash(hash, "tiny-gpt");
-      assert.ok(target, `Invalid link: ${hash}`);
-      if (target.kind === "note")
-        assert.ok(ids.has(target.id), `Missing note: ${target.id}`);
-      else resolveNoteRange(source(target.file), target);
-    }
-  }
 });

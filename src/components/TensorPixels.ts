@@ -4,9 +4,16 @@ import {
   tensorDomain,
   tensorFromNested,
   tensorSlice,
+  tensorLabels,
 } from "../lib/tensor";
 import type { PixelTensor, TensorPalette } from "../lib/tensor";
 import styles from "../styles/tensor-pixels.css?inline";
+import {
+  loadTensorMath,
+  mathReady,
+  mathStyles,
+  mathText,
+} from "../lib/tensor-math";
 
 const VOXEL = { pitch: 6, edge: 5, depthX: 0.42, depthY: 0.32, scale: 4 };
 let nextTensorId = 0;
@@ -24,7 +31,7 @@ const escape = (value: string) =>
       })[char]!,
   );
 
-class TensorPixels extends HTMLElement {
+export class TensorPixels extends HTMLElement {
   private root = this.attachShadow({ mode: "open" });
   private clipId = `tensor-voxel-${nextTensorId++}`;
   private tensor!: PixelTensor;
@@ -34,13 +41,77 @@ class TensorPixels extends HTMLElement {
   private domain: [number, number] = [0, 1];
   private view: "slices" | "3d" = "slices";
   private controller?: AbortController;
+  private provided?: PixelTensor;
+  private providedDomain?: [number, number];
+
+  configure(tensor: PixelTensor, domain: [number, number]) {
+    this.provided = tensor;
+    this.providedDomain = domain;
+    this.connectedCallback();
+  }
+
+  setValuesVisible(visible: boolean) {
+    const toggle = this.root.querySelector<HTMLInputElement>("[data-values]");
+    if (toggle) {
+      toggle.checked = visible;
+      this.showNumbers();
+    }
+  }
+
+  getSlice() {
+    return [...this.sliceIndices];
+  }
+
+  linkCells(indices: number[][]) {
+    if (indices.length) {
+      const prefix = indices[0].slice(
+        0,
+        Math.max(0, this.tensor.shape.length - 2),
+      );
+      if (prefix.join() !== this.sliceIndices.join()) this.selectSlice(prefix);
+    }
+    const selected = new Set(indices.map((index) => index.join(",")));
+    this.root
+      .querySelectorAll<SVGGraphicsElement>(".pixel, .depth-voxel")
+      .forEach((pixel) => {
+        const index = this.indices(
+          Number(pixel.dataset.row),
+          Number(pixel.dataset.column),
+        );
+        if (pixel.dataset.depth !== undefined)
+          index[0] = Number(pixel.dataset.depth);
+        const linked = selected.has(index.join(","));
+        pixel.dataset.linked = String(linked);
+        pixel.dataset.dimmed = String(indices.length > 0 && !linked);
+      });
+  }
 
   connectedCallback() {
+    // The equation resolves declared operations before initializing its terms.
+    if (this.parentElement?.localName === "tensor-equation" && !this.provided)
+      return;
+    if (
+      !mathReady() &&
+      [...this.attributes].some((attr) => attr.value.includes("$"))
+    ) {
+      this.root.innerHTML = "<slot></slot>";
+      void loadTensorMath()
+        .then(() => {
+          if (this.isConnected) this.connectedCallback();
+        })
+        .catch(() => {
+          if (this.isConnected)
+            this.root.innerHTML = `<style>${styles}</style><slot></slot><p class="error">Tensor figure unavailable: math could not load.</p>`;
+        });
+      return;
+    }
     this.controller?.abort();
     this.controller = new AbortController();
     try {
       const preset = this.getAttribute("preset");
-      if (preset) {
+      if (this.provided) {
+        this.tensor = { ...this.provided };
+      } else if (preset) {
         this.tensor = tensorExample(preset);
       } else {
         const parsed = tensorFromNested(
@@ -70,6 +141,11 @@ class TensorPixels extends HTMLElement {
       ) {
         throw new Error("Provide one non-empty axis label per dimension.");
       }
+      if (this.hasAttribute("labels"))
+        this.tensor.labels = tensorLabels(
+          JSON.parse(this.getAttribute("labels")!),
+          this.tensor.shape,
+        );
       const palette = this.getAttribute("palette") ?? this.tensor.palette;
       if (!["binary", "sequential", "diverging"].includes(palette))
         throw new Error("Choose binary, sequential, or diverging colors.");
@@ -79,7 +155,14 @@ class TensorPixels extends HTMLElement {
         this.tensor.values.some((n) => n !== 0 && n !== 1)
       )
         throw new Error("Binary figures accept only 0 and 1.");
-      this.domain = tensorDomain(this.tensor);
+      this.domain = this.providedDomain ?? tensorDomain(this.tensor);
+      // Check every label now, including labels in currently hidden slices.
+      [
+        this.tensor.caption,
+        this.getAttribute("label") ?? "",
+        ...this.tensor.axes,
+        ...(this.tensor.labels ?? []).flatMap((names) => names ?? []),
+      ].forEach(mathText);
       this.sliceIndices = Array(Math.max(0, this.tensor.shape.length - 2)).fill(
         0,
       );
@@ -128,7 +211,13 @@ class TensorPixels extends HTMLElement {
 
   private pixels(prefix: number[], interactive: boolean) {
     const { rows, columns, values } = tensorSlice(this.tensor, prefix);
-    const inset = interactive && !this.hasAttribute("compact") ? 4 : 0;
+    const inset =
+      interactive &&
+      !this.hasAttribute("compact") &&
+      !this.hasAttribute("term") &&
+      !this.hasGridLabels()
+        ? 4
+        : 0;
     let content = "";
     for (let row = 0; row < rows; row++) {
       let cells = "";
@@ -168,6 +257,29 @@ class TensorPixels extends HTMLElement {
       ? `class="grid" role="grid" aria-label="${escape(this.sliceName())}; use arrow keys to inspect values" aria-rowcount="${rows}" aria-colcount="${columns}"`
       : 'aria-hidden="true"';
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${columns * 6 + inset} ${rows * 6 + inset}" ${accessibility}>${content}</svg>`;
+  }
+
+  private hasGridLabels() {
+    return Boolean(this.tensor.labels?.slice(-2).some((names) => names));
+  }
+
+  private gridMarkup() {
+    const svg = this.pixels(this.sliceIndices, true);
+    if (!this.hasGridLabels()) return svg;
+    const { rows, columns } = tensorSlice(this.tensor, this.sliceIndices);
+    const columnNames = this.tensor.labels?.at(-1);
+    const rowNames =
+      this.tensor.shape.length > 1 ? this.tensor.labels?.at(-2) : null;
+    const columnLength = Math.max(
+      0,
+      ...(columnNames ?? []).map(
+        (name) => name.replace(/\\[a-zA-Z]+|[$_^{}]/g, "").length,
+      ),
+    );
+    const rotated = columnLength > 3;
+    return `<div class="context-grid" style="--columns:${columns};--rows:${rows}">
+      <div class="column-names${rotated ? " rotated" : ""}" style="--label-height:${Math.min(64, columnLength * 5 + 10)}px">${Array.from({ length: columns }, (_, i) => `<span title="${escape(columnNames?.[i] ?? String(i))}">${mathText(columnNames?.[i] ?? String(i))}</span>`).join("")}</div>
+      <div class="row-names">${Array.from({ length: rows }, (_, i) => `<span title="${escape(rowNames?.[i] ?? String(i))}">${mathText(rowNames?.[i] ?? String(i))}</span>`).join("")}</div>${svg}</div>`;
   }
 
   private cube() {
@@ -258,10 +370,17 @@ class TensorPixels extends HTMLElement {
       <defs><clipPath id="${this.clipId}" clipPathUnits="userSpaceOnUse"><path d="${outline}"/></clipPath></defs>
       ${voxels}
       <g class="cube-labels" aria-hidden="true">
-        <text x="${width / 2}" y="${height + 10}">${escape(axes[2])} · ${columns}</text>
-        <text transform="translate(-7 ${height / 2}) rotate(-90)">${escape(axes[1])} · ${rows}</text>
+        ${this.cubeAxisLabel(`${axes[2]} · ${columns}`, width / 2, height + 10)}
+        ${this.cubeAxisLabel(`${axes[1]} · ${rows}`, -7, height / 2, true)}
       </g>
     </svg>`;
+  }
+
+  private cubeAxisLabel(label: string, x: number, y: number, vertical = false) {
+    const transform = `translate(${x} ${y})${vertical ? " rotate(-90)" : ""}`;
+    return label.includes("$")
+      ? `<foreignObject transform="${transform}" x="-40" y="-4" width="80" height="10"><div xmlns="http://www.w3.org/1999/xhtml" style="text-align:center">${mathText(label)}</div></foreignObject>`
+      : `<text transform="${transform}">${escape(label)}</text>`;
   }
 
   private render() {
@@ -269,21 +388,22 @@ class TensorPixels extends HTMLElement {
     const controls = this.sliceIndices
       .map(
         (value, axis) =>
-          `<label class="axis-control">${escape(axes[axis])}<select data-axis="${axis}" aria-label="${escape(axes[axis])} slice">${Array.from({ length: shape[axis] }, (_, i) => `<option value="${i}"${i === value ? " selected" : ""}>${i}</option>`).join("")}</select></label>`,
+          `<label class="axis-control">${mathText(axes[axis])}<select data-axis="${axis}" aria-label="${escape(axes[axis])} slice">${Array.from({ length: shape[axis] }, (_, i) => `<option value="${i}"${i === value ? " selected" : ""}>${escape(this.tensor.labels?.[axis]?.[i] ?? String(i))}</option>`).join("")}</select></label>`,
       )
       .join("");
-    this.root.innerHTML = `<style>${styles}</style>
+    this.root.innerHTML = `<style>${styles}${mathStyles()}</style>
       <figure aria-label="${escape(name)} tensor">
-        <div class="heading"><div class="signature"><span class="name">${escape(name)}</span><span class="shape">[${shape.join(", ")}]</span></div><span class="meta">${shape.length}D · ${this.tensor.values.length} ${this.tensor.values.length === 1 ? "value" : "values"}</span></div>
-        <div class="tools">${shape.length === 3 ? '<div class="view-toggle" role="group" aria-label="Tensor view"><button type="button" data-view="slices">Slices</button><button type="button" data-view="3d">3D</button></div>' : ""}${controls}<label class="value-toggle"><input type="checkbox" data-values/>Show values</label></div>
+        <div class="heading"><div class="signature"><span class="name">${mathText(this.getAttribute("label") ?? name)}</span><span class="shape">[${shape.join(", ")}]</span></div><span class="meta">${shape.length}D · ${this.tensor.values.length} ${this.tensor.values.length === 1 ? "value" : "values"}</span></div>
+        <div class="tools">${shape.length === 3 ? '<div class="view-toggle" role="group" aria-label="Tensor view"><button type="button" data-view="slices">Slices</button><button type="button" data-view="3d">3D</button></div>' : ""}${controls}<label class="value-toggle"><input type="checkbox" data-values ${this.hasAttribute("show-values") ? "checked" : ""}/>Show values</label></div>
         <div class="scene"><div class="atlas" aria-label="Tensor slices"></div><div class="matrix">
-          <p class="axis-top axis-label">${escape(axes.at(-1) ?? "scalar")}${shape.length ? ` · ${shape.at(-1)}` : ""}</p>
-          <div class="plot"><span class="axis-side axis-label">${shape.length > 1 ? `${escape(axes.at(-2)!)} · ${shape.at(-2)}` : ""}</span><div class="grid-wrap"></div></div>
+          <p class="axis-top axis-label">${mathText(axes.at(-1) ?? "scalar")}${shape.length ? ` · ${shape.at(-1)}` : ""}</p>
+          <div class="plot"><span class="axis-side axis-label">${shape.length > 1 ? `${mathText(axes.at(-2)!)} · ${shape.at(-2)}` : ""}</span><div class="grid-wrap"></div></div>
           <div class="legend">${this.legend()}</div>
         </div><div class="volume" hidden><div class="cube-wrap"></div><div class="legend">${this.legend()}</div></div></div>
         <div class="inspect"><p class="address" role="status" aria-live="polite" aria-atomic="true"></p><p class="row-info"></p></div>
+        <p class="context"></p>
         <p class="hint">Hover or tap a square. Arrow keys move between values. Indices start at 0.</p>
-        ${caption ? `<figcaption>${escape(caption)}</figcaption>` : ""}
+        ${caption ? `<figcaption>${mathText(caption)}</figcaption>` : ""}
         <details class="data"><summary>Read this slice as a table</summary><div class="table-scroll"></div></details>
       </figure>`;
     this.renderSlice();
@@ -313,17 +433,42 @@ class TensorPixels extends HTMLElement {
     volume.hidden = !cube;
     this.root.querySelector(".grid-wrap")!.innerHTML = cube
       ? ""
-      : this.pixels(this.sliceIndices, true);
+      : this.gridMarkup();
     this.root.querySelector(".cube-wrap")!.innerHTML = cube ? this.cube() : "";
-    matrix.style.setProperty(
-      "--matrix-width",
-      `${this.hasAttribute("compact") ? columns * 16 : columns * 24 + 40}px`,
-    );
+    const rowLabelWidth = this.hasGridLabels()
+      ? Math.min(
+          80,
+          Math.max(
+            1,
+            ...(this.tensor.labels?.at(-2) ?? []).map(
+              (name) => name.replace(/\\[a-zA-Z]+|[$_^{}]/g, "").length,
+            ),
+          ) *
+            7 +
+            4,
+        ) + 8
+      : 0;
+    this.root
+      .querySelector<HTMLElement>(".grid-wrap")!
+      .style.setProperty(
+        "--row-label-width",
+        `${Math.max(0, rowLabelWidth - 8)}px`,
+      );
+    const matrixWidth = this.hasAttribute("term")
+      ? columns * 22 + rowLabelWidth
+      : this.hasAttribute("compact")
+        ? columns * 16 + rowLabelWidth
+        : columns * 24 + (this.hasGridLabels() ? 24 : 40) + rowLabelWidth;
+    matrix.style.setProperty("--matrix-width", `${matrixWidth}px`);
     if (cube)
       volume.style.setProperty(
         "--volume-width",
         `${((columns - 1) * VOXEL.pitch + VOXEL.edge + ((this.tensor.shape[0] - 1) * VOXEL.pitch + VOXEL.edge) * VOXEL.depthX + 28) * VOXEL.scale}px`,
       );
+    this.style.setProperty(
+      "--term-width",
+      `${cube ? Math.min(260, ((columns - 1) * VOXEL.pitch + VOXEL.edge + ((this.tensor.shape[0] - 1) * VOXEL.pitch + VOXEL.edge) * VOXEL.depthX + 28) * VOXEL.scale) : Math.max(110, matrixWidth)}px`,
+    );
     this.root
       .querySelectorAll<HTMLButtonElement>("[data-view]")
       .forEach((button) => {
@@ -339,10 +484,10 @@ class TensorPixels extends HTMLElement {
     this.showNumbers();
     this.inspect(this.row, this.column, false);
     this.root.querySelector(".table-scroll")!.innerHTML =
-      `<table><caption>${escape(this.sliceName())} — values rounded to 4 decimal places</caption><thead><tr><th scope="col">${escape(this.tensor.axes.at(-2) ?? "index")}</th>${Array.from({ length: columns }, (_, i) => `<th scope="col">${i}</th>`).join("")}</tr></thead><tbody>${Array.from(
+      `<table><caption>${escape(this.sliceName())} — values rounded to 4 decimal places</caption><thead><tr><th scope="col">${mathText(this.tensor.axes.at(-2) ?? "index")}</th>${Array.from({ length: columns }, (_, i) => `<th scope="col">${mathText(this.tensor.labels?.at(-1)?.[i] ?? String(i))}</th>`).join("")}</tr></thead><tbody>${Array.from(
         { length: rows },
         (_, row) =>
-          `<tr><th scope="row">${row}</th>${values
+          `<tr><th scope="row">${mathText(this.tensor.shape.length > 1 ? (this.tensor.labels?.at(-2)?.[row] ?? String(row)) : String(row))}</th>${values
             .slice(row * columns, (row + 1) * columns)
             .map((n) => `<td>${formatTensorValue(n)}</td>`)
             .join("")}</tr>`,
@@ -401,6 +546,14 @@ class TensorPixels extends HTMLElement {
       });
     this.root.querySelector(".address")!.innerHTML =
       `${escape(this.address(row, column))} <span class="muted">=</span> <span class="value">${formatTensorValue(value)}</span>`;
+    this.root.querySelector(".context")!.innerHTML = this.indices(row, column)
+      .map((index, axis) =>
+        this.tensor.labels?.[axis]?.[index]
+          ? `${mathText(this.tensor.axes[axis])}: ${mathText(this.tensor.labels[axis]![index])}`
+          : "",
+      )
+      .filter(Boolean)
+      .join(" · ");
     const info = this.root.querySelector(".row-info")!;
     if (this.tensor.palette === "binary") {
       info.textContent = `row ${row}: ${values.slice(row * columns, (row + 1) * columns).filter((n) => n === 1).length} of ${columns} active`;
@@ -410,9 +563,17 @@ class TensorPixels extends HTMLElement {
         .reduce((a, b) => a + b, 0);
       info.textContent = `row ${row} sum: ${formatTensorValue(sum)}`;
     }
+    if (highlight)
+      this.dispatchEvent(
+        new CustomEvent("tensor-inspect", {
+          bubbles: true,
+          composed: true,
+          detail: { indices: this.indices(row, column) },
+        }),
+      );
   }
 
-  private selectSlice(prefix: number[]) {
+  selectSlice(prefix: number[], notify = false) {
     this.sliceIndices = prefix;
     this.root
       .querySelectorAll<HTMLSelectElement>("[data-axis]")
@@ -420,6 +581,14 @@ class TensorPixels extends HTMLElement {
         select.value = String(prefix[axis]);
       });
     this.renderSlice();
+    if (notify)
+      this.dispatchEvent(
+        new CustomEvent("tensor-slice", {
+          bubbles: true,
+          composed: true,
+          detail: { prefix },
+        }),
+      );
   }
 
   private clearHighlight() {
@@ -429,12 +598,15 @@ class TensorPixels extends HTMLElement {
         pixel.dataset.selected = "false";
         pixel.dataset.dimmed = "false";
       });
+    this.dispatchEvent(
+      new CustomEvent("tensor-leave", { bubbles: true, composed: true }),
+    );
   }
 
   private revealDepth(depth: number, row: number, column: number) {
     this.row = row;
     this.column = column;
-    this.selectSlice([depth]);
+    this.selectSlice([depth], true);
     this.root
       .querySelector<SVGGraphicsElement>('.pixel[tabindex="0"]')!
       .focus();
@@ -450,7 +622,7 @@ class TensorPixels extends HTMLElement {
         if (target instanceof HTMLSelectElement) {
           const prefix = [...this.sliceIndices];
           prefix[Number(target.dataset.axis)] = Number(target.value);
-          this.selectSlice(prefix);
+          this.selectSlice(prefix, true);
         }
       },
       options,
@@ -477,7 +649,7 @@ class TensorPixels extends HTMLElement {
         const thumb = event.target.closest<HTMLButtonElement>("[data-prefix]");
         if (thumb) {
           const prefix = thumb.dataset.prefix!;
-          this.selectSlice(prefix.split(",").map(Number));
+          this.selectSlice(prefix.split(",").map(Number), true);
           this.root
             .querySelector<HTMLButtonElement>(`[data-prefix="${prefix}"]`)!
             .focus();

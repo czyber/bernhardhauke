@@ -1,4 +1,4 @@
-// A fixed photographic star field, rendered in one native WebGL pass.
+// A photographic star field, meteors, and satellite passes in one WebGL pass.
 const vertexSource = `
 attribute vec2 position;
 void main() { gl_Position = vec4(position, 0.0, 1.0); }
@@ -19,6 +19,10 @@ uniform float clearWidth;
 uniform float readingCenter;
 uniform vec3 paper;
 uniform vec3 ink;
+uniform vec4 meteor;
+uniform vec4 meteorTrail;
+uniform vec4 meteorTiming;
+uniform vec4 satellite;
 
 float hash(vec2 p) {
   vec3 q = fract(vec3(p.xyx) * 0.1031);
@@ -72,6 +76,60 @@ float stars(vec2 pixel, float spacing, float seed, float radius, float strength,
   float edge = 0.78 + 0.22 * hash(floor(local * 2.0) + seed);
   return exists * (core * edge + halo * anchor) * strength * flicker;
 }
+float passingSatellite(vec2 pixel) {
+  if (satellite.w <= 0.0) return 0.0;
+  vec2 delta = pixel - satellite.xy;
+  float distance = dot(delta, delta);
+  if (distance > 36.0) return 0.0;
+  float footprint = viewport.x / resolution.x;
+  float spread = satellite.z * satellite.z + footprint * footprint * 0.28;
+  float core = exp(-distance / spread) * satellite.z * satellite.z / spread;
+  float halo = exp(-distance / (spread * 5.0)) * 0.028;
+  return (core + halo) * satellite.w;
+}
+float meteorBurn(float progress) {
+  float ignition = smoothstep(0.0, 0.075, progress);
+  float burnout = 1.0 - smoothstep(0.84, 1.0, progress);
+  float flutter = 0.84 + 0.16 * noise(vec2(progress * 27.0, meteorTiming.z));
+  float flare = exp(-pow((progress - meteorTiming.w) / 0.055, 2.0));
+  float flareStrength = mix(0.18, 0.65, smoothstep(0.85, 1.3, meteorTrail.w));
+  return ignition * burnout * flutter *
+    (0.64 + 0.36 * sin(progress * 3.14159) + flare * flareStrength);
+}
+vec3 shootingStar(vec2 pixel) {
+  if (meteor.z <= 0.0) return vec3(0.0);
+  vec2 delta = pixel - meteor.xy;
+  float along = dot(delta, meteorTrail.xy);
+  float across = dot(delta, vec2(-meteorTrail.y, meteorTrail.x));
+  float progress = clamp(meteor.w / meteorTiming.x, 0.0, 1.0);
+  float headDistance = meteor.z * progress;
+  // Only the narrow, already traversed section needs the luminous-wake math.
+  if (abs(across) > 7.0 || along < -4.0 || along > headDistance + 4.0)
+    return vec3(0.0);
+
+  // Light belongs to its emission position, so the wake stays behind at burnout.
+  float emittedAt = clamp(along / meteor.z, 0.0, 1.0);
+  float age = meteor.w - emittedAt * meteorTiming.x;
+  if (age > meteorTiming.y) return vec3(0.0);
+  float freshness = exp(-max(age, 0.0) / (meteorTiming.y * 0.28));
+  float decay = freshness * (1.0 - smoothstep(meteorTiming.y * 0.6, meteorTiming.y, age));
+  float texture = 0.86 + 0.14 * noise(vec2(along * 0.045, meteorTiming.z + 17.0));
+  float width = meteorTrail.z * mix(0.35, 1.0, freshness) * texture;
+  float footprint = viewport.x / resolution.x;
+  float spread = width * width + footprint * footprint * 0.18;
+  float core = exp(-across * across / spread) * width * width / spread;
+  float glow = exp(-across * across / (spread * 7.0)) * 0.045;
+  float deposited = step(0.0, age) * step(0.0, along) * step(along, meteor.z);
+  float wake = (core + glow) * decay * meteorBurn(emittedAt) * deposited;
+
+  vec2 tip = delta - meteorTrail.xy * headDistance;
+  float headSpread = meteorTrail.z * meteorTrail.z + footprint * footprint * 0.18;
+  float head = exp(-dot(tip, tip) / (headSpread * 2.0)) * meteorBurn(progress);
+  // The newest light is ivory; older light acquires a little of the site's warmth.
+  vec3 wakeTint = mix(ink, ink * vec3(1.0, 0.9, 0.78),
+    smoothstep(0.015, meteorTiming.y * 0.7, age) * 0.65);
+  return ((wakeTint - paper) * wake + (ink - paper) * head * 0.75) * meteorTrail.w;
+}
 void main() {
   vec2 uv = gl_FragCoord.xy / resolution;
   vec2 pixel = uv * viewport;
@@ -91,6 +149,7 @@ void main() {
   light += stars(pixel, 55.0, 9.7, 0.78, 0.62, vec2(0.65, -0.18));
   light += stars(pixel, 117.0, 21.4, 1.0, 0.92, vec2(1.55, -0.38));
   light += stars(pixel, 279.0, 37.9, 1.25, 1.2, vec2(0.38, -0.1));
+  light += passingSatellite(pixel);
 
   // The grain has a stable structure and a visible, softly changing emulsion.
   vec2 grainPixel = floor(pixel * 1.15);
@@ -103,6 +162,7 @@ void main() {
   float grain = (fixedGrain - 0.5) * 0.024 + (movingGrain - 0.5) * 0.022;
 
   vec3 color = paper + (ink - paper) * (grain + light) * visibility;
+  color += shootingStar(pixel) * visibility;
   gl_FragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
 }
 
@@ -138,6 +198,177 @@ export function startAmbientScene(canvas: HTMLCanvasElement) {
   let readingCenter = 0.5;
   let lost = false;
   let disposed = false;
+  let meteorCycle = -1;
+  let meteorActive = false;
+  let meteorEvent = {
+    start: 0,
+    duration: 1,
+    x: 0,
+    y: 0,
+    dx: 1,
+    dy: 0,
+    travel: 0,
+    wake: 0.2,
+    width: 1,
+    brightness: 1,
+    seed: 0,
+    flare: 0.5,
+  };
+  let satelliteCycle = -1;
+  let satelliteEvent = {
+    start: 0,
+    duration: 1,
+    x: 0,
+    y: 0,
+    dx: 0,
+    dy: 0,
+    size: 0.8,
+    brightness: 0.5,
+  };
+
+  function meteorRandom(cycle: number, seed: number) {
+    const value = Math.sin(cycle * 127.1 + seed * 311.7) * 43758.5453;
+    return value - Math.floor(value);
+  }
+
+  function updateSatellite() {
+    // Use a separate seed sequence, sharing the sky clock across navigation.
+    const random = (cycle: number, seed: number) =>
+      meteorRandom(cycle + 719, seed + 37);
+    let cycle = Math.max(0, satelliteCycle);
+    let start =
+      satelliteCycle < 0 ? 15 + random(cycle, 4) * 15 : satelliteEvent.start;
+    let duration =
+      satelliteCycle < 0 ? 55 + random(cycle, 5) * 30 : satelliteEvent.duration;
+    // A lone pass lasts about a minute, followed by a longer, irregular quiet gap.
+    while (elapsed >= start + duration) {
+      cycle += 1;
+      start += duration + 70 + random(cycle, 4) * 90;
+      duration = 55 + random(cycle, 5) * 30;
+    }
+    if (cycle !== satelliteCycle) {
+      satelliteCycle = cycle;
+      const fromLeft = random(cycle, 2) > 0.5;
+      const y = 0.2 + random(cycle, 6) * 0.62;
+      satelliteEvent = {
+        start,
+        duration,
+        x: fromLeft ? -0.04 : 1.04,
+        y,
+        dx: fromLeft ? 1.08 : -1.08,
+        dy: 0.2 + random(cycle, 7) * 0.62 - y,
+        size: 0.7 + random(cycle, 9) * 0.22,
+        brightness: 0.32 + random(cycle, 10) * 0.28,
+      };
+    }
+    const age = elapsed - satelliteEvent.start;
+    if (motion.matches || age < 0 || age >= satelliteEvent.duration) {
+      gl!.uniform4f(uniforms.satellite, 0, 0, 1, 0);
+      return;
+    }
+    const progress = age / satelliteEvent.duration;
+    const smooth = (value: number) => {
+      const t = Math.max(0, Math.min(1, value));
+      return t * t * (3 - 2 * t);
+    };
+    // Keep the light steady throughout the crossing, with gentle entry and exit.
+    const visibility =
+      smooth(age / 3) * smooth((satelliteEvent.duration - age) / 5);
+    gl!.uniform4f(
+      uniforms.satellite,
+      (satelliteEvent.x + satelliteEvent.dx * progress) * canvas.clientWidth,
+      (satelliteEvent.y + satelliteEvent.dy * progress) * canvas.clientHeight,
+      satelliteEvent.size,
+      satelliteEvent.brightness * visibility,
+    );
+  }
+
+  function updateMeteor() {
+    let cycle = Math.max(0, meteorCycle);
+    let start =
+      meteorCycle < 0 ? 20 + meteorRandom(cycle, 4) * 40 : meteorEvent.start;
+    let duration =
+      meteorCycle < 0
+        ? 0.45 + meteorRandom(cycle, 5) * 0.2
+        : meteorEvent.duration;
+    let wake =
+      meteorCycle < 0 ? 0.18 + meteorRandom(cycle, 8) * 0.12 : meteorEvent.wake;
+    // Leave 20–60 seconds of quiet after the last wake has fully disappeared.
+    // Catch up to the continuous sky clock when navigating or returning to a tab.
+    while (elapsed >= start + duration + wake) {
+      cycle += 1;
+      start += duration + wake + 20 + meteorRandom(cycle, 4) * 40;
+      duration = 0.45 + meteorRandom(cycle, 5) * 0.2;
+      wake = 0.18 + meteorRandom(cycle, 8) * 0.12;
+    }
+    if (cycle !== meteorCycle) {
+      meteorCycle = cycle;
+      // Reproduce each event across navigation, with a different path and gap.
+      const random = (seed: number) => meteorRandom(cycle, seed);
+      const angle = 0.28 + random(1) * 0.42;
+      const dx = Math.cos(angle) * (random(2) > 0.3 ? 1 : -1);
+      const dy = -Math.sin(angle);
+      const travel =
+        Math.min(
+          (canvas.clientWidth * 0.88) / Math.abs(dx),
+          (canvas.clientHeight * 0.72) / Math.abs(dy),
+          1100,
+        ) *
+        (0.8 + random(3) * 0.2);
+      meteorEvent = {
+        start,
+        duration,
+        // Leave room for the entire flight within every viewport size.
+        x:
+          0.06 +
+          Math.max(0, -dx * travel) / canvas.clientWidth +
+          random(6) * (0.88 - Math.abs(dx * travel) / canvas.clientWidth),
+        y:
+          0.12 +
+          Math.abs(dy * travel) / canvas.clientHeight +
+          random(7) * (0.8 - Math.abs(dy * travel) / canvas.clientHeight),
+        dx,
+        dy,
+        travel,
+        wake,
+        width: 0.48 + random(9) * 0.28,
+        brightness: 0.55 + random(10) * 0.4 + (random(11) > 0.85 ? 0.35 : 0),
+        seed: random(12) * 64,
+        flare: 0.38 + random(13) * 0.4,
+      };
+    }
+
+    const age = elapsed - meteorEvent.start;
+    meteorActive =
+      !motion.matches &&
+      age >= 0 &&
+      age < meteorEvent.duration + meteorEvent.wake;
+    if (!meteorActive) {
+      gl!.uniform4f(uniforms.meteor, 0, 0, 0, 0);
+      return;
+    }
+    gl!.uniform4f(
+      uniforms.meteor,
+      meteorEvent.x * canvas.clientWidth,
+      meteorEvent.y * canvas.clientHeight,
+      meteorEvent.travel,
+      age,
+    );
+    gl!.uniform4f(
+      uniforms.meteorTrail,
+      meteorEvent.dx,
+      meteorEvent.dy,
+      meteorEvent.width,
+      meteorEvent.brightness,
+    );
+    gl!.uniform4f(
+      uniforms.meteorTiming,
+      meteorEvent.duration,
+      meteorEvent.wake,
+      meteorEvent.seed,
+      meteorEvent.flare,
+    );
+  }
 
   function shader(type: number, source: string) {
     const item = gl!.createShader(type);
@@ -188,6 +419,10 @@ export function startAmbientScene(canvas: HTMLCanvasElement) {
         "readingCenter",
         "paper",
         "ink",
+        "meteor",
+        "meteorTrail",
+        "meteorTiming",
+        "satellite",
       ].map((name) => [name, gl!.getUniformLocation(program!, name)]),
     );
     return true;
@@ -245,6 +480,7 @@ export function startAmbientScene(canvas: HTMLCanvasElement) {
     gl!.viewport(0, 0, canvas.width, canvas.height);
     gl!.uniform2f(uniforms.resolution, canvas.width, canvas.height);
     gl!.uniform2f(uniforms.viewport, width, height);
+    meteorCycle = -1;
     updateReading();
     draw();
   }
@@ -252,6 +488,8 @@ export function startAmbientScene(canvas: HTMLCanvasElement) {
   function draw() {
     if (lost || !program || disposed) return;
     elapsed = motion.matches ? 0 : (Date.now() - epoch) / 1000;
+    updateMeteor();
+    updateSatellite();
     gl!.uniform1f(uniforms.time, elapsed);
     gl!.uniform1f(uniforms.reading, reading);
     gl!.uniform1f(uniforms.clearWidth, clearWidth);
@@ -263,8 +501,8 @@ export function startAmbientScene(canvas: HTMLCanvasElement) {
   function tick(now: number) {
     frame = 0;
     if (document.hidden || motion.matches || lost || disposed) return;
-    const interval = 1000 / 30;
-    if (now - lastFrame >= interval) {
+    const interval = 1000 / (meteorActive ? 60 : 30);
+    if (now - lastFrame >= interval - 1) {
       lastFrame = now;
       draw();
     }

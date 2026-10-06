@@ -7,6 +7,30 @@ export interface PixelTensor {
   axes: string[];
   palette: TensorPalette;
   caption: string;
+  labels?: (string[] | null)[];
+}
+
+/** Optional names for the entries along each axis, independent of its title. */
+export function tensorLabels(
+  input: unknown,
+  shape: number[],
+): PixelTensor["labels"] {
+  if (input === undefined) return undefined;
+  if (
+    !Array.isArray(input) ||
+    input.length !== shape.length ||
+    input.some(
+      (names, axis) =>
+        names !== null &&
+        (!Array.isArray(names) ||
+          names.length !== shape[axis] ||
+          names.some((name) => typeof name !== "string" || !name.trim())),
+    )
+  )
+    throw new Error(
+      "Labels need one array per axis, matching its size; use null for unnamed axes.",
+    );
+  return input;
 }
 
 /** Rectangular, row-major data. Keep article figures small enough to inspect. */

@@ -32,6 +32,9 @@
   },
   "dependencies": {
     "asciinema-player": "^3.16.0",
-    "monaco-editor": "^0.56.0"
+    "katex": "^0.18.7",
+    "monaco-editor": "^0.56.0",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0"
   }
 }

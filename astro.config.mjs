@@ -1,6 +1,8 @@
 import { unified } from "@astrojs/markdown-remark";
 import { defineConfig } from "astro/config";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import { fileURLToPath } from "node:url";
 
 const copyCodeTransformer = {
@@ -31,7 +33,8 @@ export default defineConfig({
   },
   markdown: {
     processor: unified({
-      remarkPlugins: [remarkGfm],
+      remarkPlugins: [remarkGfm, remarkMath],
+      rehypePlugins: [[rehypeKatex, { strict: "error", throwOnError: true }]],
     }),
     shikiConfig: {
       themes: {

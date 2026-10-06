@@ -1,0 +1,142 @@
+:host {
+  display: block;
+  margin-block: 32px;
+  color: var(--text, #e3e1db);
+  font: 12px/1.6 var(--font-mono, monospace);
+  hyphens: none;
+}
+* {
+  box-sizing: border-box;
+}
+figure,
+p {
+  margin: 0;
+}
+figure {
+  border-block: 1px solid var(--border, #ffffff24);
+  padding: 20px 0 14px;
+}
+.equation-scroll {
+  overflow-x: auto;
+  padding-block: 12px 18px;
+  scrollbar-width: thin;
+}
+.equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: max-content;
+  min-width: 100%;
+}
+.operator {
+  flex: none;
+  font-size: 20px;
+}
+::slotted(tensor-pixels) {
+  flex: none;
+  margin: 0;
+}
+.tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: var(--muted, #bdbbb5);
+  font-size: 10px;
+}
+label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 32px;
+  cursor: pointer;
+}
+input {
+  accent-color: var(--px-active, #d8a17b);
+  margin: 0;
+}
+.working {
+  border-top: 1px solid var(--border, #ffffff24);
+  margin-top: 8px;
+  padding-top: 12px;
+  min-height: 80px;
+}
+.address {
+  display: flex;
+  gap: 8px 20px;
+  flex-wrap: wrap;
+  align-items: baseline;
+  font-size: 11px;
+}
+.address code {
+  color: var(--px-active, #d8a17b);
+}
+.address span {
+  color: var(--muted, #bdbbb5);
+}
+.calculation {
+  display: flex;
+  gap: 12px;
+  padding: 8px 0;
+  overflow-x: auto;
+  color: var(--muted, #bdbbb5);
+  font-size: 12px;
+}
+.calculation .katex {
+  color: var(--text, #e3e1db);
+  font-size: 1.2em;
+}
+figcaption {
+  font: 16px/1.6 var(--font-copy, Georgia, serif);
+  margin-top: 8px;
+  color: var(--muted, #bdbbb5);
+}
+details {
+  margin-top: 12px;
+  color: var(--muted, #bdbbb5);
+  font-size: 11px;
+}
+summary {
+  cursor: pointer;
+  width: fit-content;
+  padding: 5px 0;
+}
+pre {
+  overflow-x: auto;
+  padding: 12px;
+  margin: 8px 0 0;
+  background: #ffffff04;
+  border: 1px solid var(--border, #ffffff24);
+  border-radius: 4px;
+  line-height: 1.7;
+}
+code,
+button {
+  font: inherit;
+}
+button {
+  border: 1px solid var(--border, #ffffff24);
+  border-radius: 4px;
+  color: inherit;
+  background: transparent;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+:focus-visible {
+  outline: 1px solid var(--px-active, #d8a17b);
+  outline-offset: 3px;
+}
+.error {
+  color: var(--px-active, #d8a17b);
+}
+@media (max-width: 560px) {
+  .equation {
+    gap: 10px;
+  }
+  .operator {
+    font-size: 18px;
+  }
+}

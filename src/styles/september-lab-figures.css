@@ -1,0 +1,496 @@
+september-lab-figure {
+  display: block;
+  margin-block: 38px;
+  hyphens: none;
+}
+
+.prose .september-lab-figure {
+  margin: 0;
+  padding: 24px 0 20px;
+  border-block: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+  hyphens: none;
+}
+
+.prose september-lab-figure[bare] .september-lab-figure {
+  border: 0;
+  padding: 0;
+}
+
+.september-lab-figure *,
+.september-lab-figure *::before,
+.september-lab-figure *::after {
+  box-sizing: border-box;
+}
+
+.prose .september-lab-figure p,
+.prose .september-lab-figure ol {
+  margin: 0;
+}
+
+.prose .september-lab-figure .sl-title {
+  color: var(--text);
+  font: 24px/1.25 var(--font-copy);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.september-lab-figure .sl-legend {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin: 22px 0 18px;
+  font: 11px/1.5 var(--font-mono);
+  color: var(--muted);
+}
+
+.september-lab-figure .sl-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.september-lab-figure .sl-key {
+  width: 23px;
+  border-top: 2px solid var(--accent);
+}
+
+.september-lab-figure .sl-key--train {
+  border-color: var(--subtle);
+  border-top-style: dashed;
+}
+
+.september-lab-figure .sl-key--reported {
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--subtle);
+  background: var(--surface);
+}
+
+.september-lab-figure .sl-reported-point {
+  stroke: var(--subtle);
+  stroke-width: 1.5;
+  fill: var(--surface);
+}
+
+.september-lab-figure .sl-plot .sl-reported-label {
+  fill: var(--subtle);
+  font-size: 10px;
+}
+
+.september-lab-figure .sl-key--dot {
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.september-lab-figure .sl-key--train.sl-key--dot {
+  border-color: var(--subtle);
+  background: var(--surface);
+}
+
+.september-lab-figure .sl-plot {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.september-lab-figure .sl-plot--narrow {
+  display: none;
+}
+
+.september-lab-figure .sl-plot text {
+  fill: var(--subtle);
+  font: 12px var(--font-mono);
+}
+
+.september-lab-figure .sl-plot .sl-axis-label {
+  fill: var(--muted);
+  font-size: 11px;
+}
+
+.september-lab-figure .sl-axis,
+.september-lab-figure .sl-grid {
+  stroke: var(--border);
+  stroke-width: 1;
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.september-lab-figure .sl-grid {
+  stroke-dasharray: 2 5;
+}
+
+.september-lab-figure .sl-line {
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.september-lab-figure .sl-line--train {
+  stroke: var(--subtle);
+  stroke-dasharray: 5 4;
+}
+
+.september-lab-figure .sl-line--validation {
+  stroke: var(--accent);
+}
+
+.september-lab-figure .sl-point--train {
+  fill: var(--subtle);
+}
+
+.september-lab-figure .sl-point--validation,
+.september-lab-figure .sl-dot--validation {
+  fill: var(--accent);
+}
+
+.september-lab-figure .sl-accent {
+  color: var(--accent) !important;
+}
+
+.prose .september-lab-figure figcaption {
+  display: block;
+  margin-top: 18px;
+  border: 0;
+  padding: 0;
+  color: var(--muted);
+  font: 16px/1.5 var(--font-copy);
+}
+
+.prose .september-lab-figure figcaption::before {
+  content: none;
+}
+
+.september-lab-figure .sl-details {
+  margin-top: 18px;
+  color: var(--subtle);
+  font: 12px/1.7 var(--font-mono);
+}
+
+.september-lab-figure .sl-details summary {
+  padding-block: 5px;
+  width: fit-content;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.september-lab-figure .sl-details summary:hover {
+  color: var(--accent);
+}
+
+.september-lab-figure .sl-details summary:focus-visible,
+.september-lab-figure a:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.prose .september-lab-figure .sl-details p {
+  margin-top: 12px;
+  color: var(--muted);
+  font: 15px/1.5 var(--font-copy);
+  overflow-wrap: anywhere;
+}
+
+.prose .september-lab-figure .sl-details code {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  font-size: 0.75em;
+}
+
+.september-lab-figure .sl-downloads {
+  display: flex;
+  gap: 8px 20px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  font-size: 11px;
+}
+
+.september-lab-figure .sl-table-scroll {
+  overflow-x: auto;
+  margin-top: 18px;
+}
+
+.september-lab-figure .sl-table-scroll--gpu {
+  max-height: 330px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.september-lab-figure .sl-table-scroll--gpu thead {
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+}
+
+.prose .september-lab-figure table {
+  margin-top: 18px;
+  font: 12px/1.6 var(--font-mono);
+}
+
+.prose .september-lab-figure .sl-table-scroll table {
+  margin-top: 0;
+}
+
+.prose .september-lab-figure table caption {
+  text-align: left;
+  padding-bottom: 10px;
+  color: var(--subtle);
+  font-size: 11px;
+}
+
+.prose .september-lab-figure td,
+.prose .september-lab-figure th {
+  padding: 8px 14px 8px 0;
+  font-size: 12px;
+}
+
+.september-lab-figure .sl-baseline {
+  stroke: var(--border-strong);
+  stroke-dasharray: 3 5;
+}
+
+.september-lab-figure .sl-plot .sl-baseline-label {
+  font-size: 10px;
+}
+
+.september-lab-figure .sl-pair-line {
+  stroke: var(--border-strong);
+  stroke-width: 2;
+}
+
+.september-lab-figure .sl-dot--train {
+  fill: var(--surface);
+  stroke: var(--subtle);
+  stroke-width: 1.8;
+}
+
+.september-lab-figure .sl-plot .sl-row-label,
+.september-lab-figure .sl-plot .sl-value--train {
+  fill: var(--text);
+}
+
+.september-lab-figure .sl-plot .sl-value--validation {
+  fill: var(--accent);
+}
+
+.september-lab-figure .sl-budget {
+  margin-top: 28px;
+  color: var(--muted);
+  font: 12px/1.7 var(--font-mono);
+}
+
+.september-lab-figure .sl-budget-row + .sl-budget-row {
+  margin-top: 24px;
+}
+
+.september-lab-figure .sl-budget-label {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.september-lab-figure .sl-budget-label strong {
+  font-weight: normal;
+}
+
+.september-lab-figure .sl-budget-track {
+  width: 100%;
+  height: 28px;
+  border-block: 1px solid var(--border);
+  background: repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent calc(20% - 1px),
+    var(--border) calc(20% - 1px),
+    var(--border) 20%
+  );
+}
+
+.september-lab-figure .sl-budget-bar {
+  width: var(--budget-share);
+  height: 100%;
+  background: var(--accent);
+  opacity: 0.85;
+}
+
+.september-lab-figure .sl-budget-bar--first {
+  background: var(--subtle);
+}
+
+.september-lab-figure .sl-budget-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  color: var(--subtle);
+  font-size: 10px;
+}
+
+.prose .september-lab-figure .sl-budget-axis-title {
+  text-align: center;
+  color: var(--subtle);
+  font: 11px/1.6 var(--font-mono);
+  margin-top: 8px;
+}
+
+.september-lab-figure .sl-exposure {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  color: var(--subtle);
+  font: 11px/1.6 var(--font-mono);
+}
+
+.september-lab-figure .sl-exposure strong {
+  color: var(--text);
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.prose .september-lab-figure .sl-microbatches {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin-top: 28px;
+  color: var(--muted);
+  font: 11px/1.6 var(--font-mono);
+}
+
+.prose .september-lab-figure .sl-microbatches li {
+  padding: 12px;
+  border: 1px solid var(--border);
+  margin: 0;
+  min-width: 0;
+}
+
+.september-lab-figure .sl-microbatch-label {
+  display: block;
+  white-space: nowrap;
+  font-size: 10px;
+  color: var(--subtle);
+}
+
+.september-lab-figure .sl-sequence-strips {
+  display: grid;
+  gap: 5px;
+  padding-block: 14px;
+}
+
+.september-lab-figure .sl-sequence-strips span {
+  display: block;
+  height: 6px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--accent-line) 0,
+    var(--accent-line) calc(12.5% - 2px),
+    transparent calc(12.5% - 2px),
+    transparent 12.5%
+  );
+}
+
+.september-lab-figure .sl-microbatches strong {
+  display: block;
+  font-weight: normal;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.september-lab-figure .sl-microbatch-count {
+  display: block;
+  color: var(--subtle);
+  font-size: 9px;
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+.september-lab-figure .sl-accumulation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--accent-line);
+  font: 11px/1.7 var(--font-mono);
+  color: var(--subtle);
+}
+
+.september-lab-figure .sl-flow-arrow {
+  font: 24px/1.2 var(--font-copy);
+  color: var(--accent);
+  padding-block: 8px;
+}
+
+.september-lab-figure .sl-update {
+  border: 1px solid var(--accent-line);
+  width: min(100%, 360px);
+  padding: 13px 16px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.september-lab-figure .sl-update strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: normal;
+}
+
+@media (max-width: 600px) {
+  .september-lab-figure .sl-plot--wide {
+    display: none;
+  }
+  .september-lab-figure .sl-plot--narrow {
+    display: block;
+  }
+  .september-lab-figure .sl-plot--narrow text {
+    font-size: 14px;
+  }
+  .september-lab-figure .sl-plot--narrow .sl-axis-label,
+  .september-lab-figure .sl-plot--narrow .sl-reported-label {
+    font-size: 12px;
+  }
+  .september-lab-figure .sl-plot--narrow .sl-baseline-label {
+    font-size: 11px;
+  }
+  .prose .september-lab-figure .sl-title {
+    font-size: 22px;
+  }
+  .prose .september-lab-figure .sl-microbatches {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .september-lab-figure .sl-microbatch-label {
+    font-size: 11px;
+  }
+  .september-lab-figure .sl-microbatch-count {
+    font-size: 10px;
+  }
+  .september-lab-figure .sl-exposure strong {
+    font-size: 12px;
+  }
+}
+
+@media print {
+  .september-lab-figure .sl-plot--wide {
+    display: block;
+  }
+  .september-lab-figure .sl-plot--narrow {
+    display: none;
+  }
+  .september-lab-figure {
+    break-inside: avoid;
+  }
+}

@@ -14,6 +14,7 @@ const articles = defineCollection({
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     codeWorkspace: z.string().optional(),
+    math: z.boolean().default(false),
   }),
 });
 

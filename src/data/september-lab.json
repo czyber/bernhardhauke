@@ -1,0 +1,46 @@
+{
+  "characterRun": {
+    "date": "2026-09-20",
+    "parameters": 3287167,
+    "device": "Apple MPS",
+    "updates": 5000,
+    "evaluationBatches": 20,
+    "source": "nanogpt-lecture/outputs/training_20260920T210527_506365Z.log",
+    "points": [
+      { "step": 0, "train": 5.0121, "validation": 5.0168 },
+      { "step": 250, "train": 2.3228, "validation": 2.2888 },
+      { "step": 500, "train": 2.0658, "validation": 2.0017 },
+      { "step": 750, "train": 1.839, "validation": 1.792 },
+      { "step": 1000, "train": 1.7015, "validation": 1.6335 },
+      { "step": 1250, "train": 1.6116, "validation": 1.5429 },
+      { "step": 1500, "train": 1.5199, "validation": 1.4889 },
+      { "step": 1750, "train": 1.4816, "validation": 1.4209 },
+      { "step": 2000, "train": 1.4405, "validation": 1.3843 },
+      { "step": 2250, "train": 1.4128, "validation": 1.3618 },
+      { "step": 2500, "train": 1.3772, "validation": 1.332 },
+      { "step": 2750, "train": 1.3634, "validation": 1.3002 },
+      { "step": 3000, "train": 1.3194, "validation": 1.2768 },
+      { "step": 3250, "train": 1.3079, "validation": 1.2633 },
+      { "step": 3500, "train": 1.2984, "validation": 1.2428 },
+      { "step": 3750, "train": 1.2706, "validation": 1.2379 },
+      { "step": 4000, "train": 1.2669, "validation": 1.2067 },
+      { "step": 4250, "train": 1.2588, "validation": 1.2137 },
+      { "step": 4500, "train": 1.234, "validation": 1.205 },
+      { "step": 4750, "train": 1.2194, "validation": 1.1898 }
+    ]
+  },
+  "widthNotes": {
+    "source": "notebooks/wavenet_experiments2.ipynb, notebook notes in cell 10",
+    "baselineValidationApproximate": 2.164,
+    "points": [
+      { "width": 32, "train": 1.981, "validation": 2.058 },
+      { "width": 64, "train": 1.816, "validation": 2.017 }
+    ]
+  },
+  "batches": { "sequences": 8, "context": 1024, "accumulation": 4 },
+  "corpusBudgets": {
+    "first": 100000000,
+    "larger": 500000000,
+    "firstUpdates": 3000
+  }
+}

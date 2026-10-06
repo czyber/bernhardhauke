@@ -1,0 +1,53 @@
+{
+  "sampledAt": "2026-10-05T13:53:41.476056+00:00",
+  "checkpoint": {
+    "label": "500M FineWeb-Edu run",
+    "optimizerUpdates": 15258,
+    "processedTokenPositions": 499974144,
+    "modelConfig": {
+      "n_layer": 12,
+      "n_head": 12,
+      "n_embd": 768,
+      "block_size": 1024,
+      "vocab_size": 50304
+    },
+    "trainingSettings": {
+      "dataset": "fineweb-edu",
+      "batch_size": 8,
+      "block_size": 1024,
+      "total_batch_size": 32768,
+      "ddp_world_size": 1,
+      "device_type": "cuda",
+      "max_lr": 0.0003,
+      "min_lr": 2.9999999999999997e-5,
+      "warmup_steps": 20,
+      "max_steps": 15258
+    }
+  },
+  "samplingSettings": {
+    "max_new_tokens": 200,
+    "temperature": 0.7,
+    "top_k": 40,
+    "seed": 1337,
+    "device": "cuda",
+    "precision": "bf16 autocast"
+  },
+  "samples": [
+    {
+      "prompt": "The scientific method",
+      "text": "The scientific method is to study the interactions between the individual and the environment; however, in the case of the environment, the interaction between the environment and the environment is an essential component of the biological processes. The study was published in the journal Science.\nIn order to be able to understand the interaction between the environment and the environment, we need to understand the interaction between the environment and the environment; the environmental conditions, the environment, and the environment.\nThe study was conducted using a computer model that allows the study to be based on the results of real-world experiments. The results indicate that the interaction between the environment and the environment is essential for the study of biological processes.\nThe study was conducted using the computer model of the interaction between the environment and the environment.\nTo be able to understand the interaction between the environment and the environment, the study was conducted using a computer model that allows the study to be used in a laboratory setting.\nThe environmental conditions were tested in the laboratory using the computer",
+      "generated_tokens": 200
+    },
+    {
+      "prompt": "Sheldon: ",
+      "text": "Sheldon: \n|Murd: \nMurd: \n|Johra: \nA. E. W. Johnson|\n|JOH: \n|JOH: \nI. JOH: \n|JOH: \n|JOH: \n- \n- A. W. Johnson|\n|JOH: \n- A. W. Johnson|\n- D. W. Johnson|\n- D. W. Johnson|\n- D. W. Johnson|\nThe following articles were prepared for the discussion of the United States Constitution.\n- The Constitution of the United States\n- The Constitution of the United States\n- A. W. Johnson\n- A. W. Johnson\n- A. W. Johnson\n- A. W. Johnson\n- A. W. Johnson\n- A. W. Johnson\n- A. W. Johnson\n- A. W. Johnson\n- A. W.",
+      "generated_tokens": 200
+    }
+  ],
+  "notes": [
+    "Generated from the completed September 500M checkpoint on October 5, 2026 while writing the article.",
+    "Each prompt is followed by 200 generated GPT-2 BPE tokens using the listed sampling settings.",
+    "These samples are illustrative continuations, not a controlled comparison or evidence that their factual claims are true.",
+    "The original 3000-update 100M checkpoint was not retained, so no matching before-and-after sample comparison is provided."
+  ]
+}

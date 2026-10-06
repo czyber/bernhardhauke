@@ -1,0 +1,14 @@
+/* Page-level spacing wins over the reset applied to custom-element hosts.
+   Keep this outside the shadow roots and leave nested figure parts untouched. */
+.article-page--lab .prose > :is(
+  bigram-counts,
+  token-embeddings,
+  embedding-training,
+  vector-attention,
+  tensor-pixels,
+  model-diagram,
+  september-lab-figure
+) {
+  display: block;
+  margin-block: 32px;
+}

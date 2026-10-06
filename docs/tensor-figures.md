@@ -4,7 +4,8 @@ Articles can use `<tensor-pixels>` directly in Markdown. It is a small, SVG-base
 web component; it loads only on article pages containing a figure. It needs no
 chart library, canvas, model runtime, or external service.
 
-See `/articles/tensors-one-square-at-a-time/` for the showcase.
+For computed operations embedded in LaTeX equations, see
+[tensor equations](tensor-equations.md).
 
 ## Your own numbers
 
@@ -31,12 +32,22 @@ are indexed in row-major order. Do not indent the HTML block in Markdown.
 - `palette`: `diverging`, `sequential`, or `binary`. Signed data automatically
   uses diverging colors. Other data uses sequential colors. Binary accepts only
   0 and 1.
-- `caption`: plain-text explanation below the figure.
+- `caption`: explanation below the figure; `$...$` supports inline LaTeX.
+- `label`: optional display name, also supporting `$...$` math, independent of
+  the variable's `name` used in addresses.
+- `labels`: JSON arrays naming the entries along each axis, such as
+  `[["hello","world"],["$f_1$","$f_2$","$f_3$"]]`. Each array must match its
+  dimension; use `null` for unnamed axes. Context appears beside 2D grids and
+  in inspected addresses and tables.
 - `view="3d"`: start a rank-3 tensor in the SVG cuboid view. Rank-3 figures
   have a **Slices / 3D** switch; the default remains Slices. Other ranks keep
   their existing slice view.
 - `compact`: presence of this attribute gives a small figure for scalar, vector,
   and matrix illustrations. It hides the controls, help, and table.
+- `quiet`: keeps the normal-size grid, axis labels, and caption while hiding
+  metadata, controls, the inspection readout, and the table disclosure.
+- `show-values`: starts with the numbers visible in the cells, including in a
+  quiet figure whose controls are hidden.
 
 Write a descriptive paragraph inside every element. It remains readable without
 JavaScript or if the component fails to load. The interactive figure replaces
@@ -99,9 +110,8 @@ numbers to four decimal places or scientific notation for very small/large value
 Examples are defined in `src/data/tensor-examples.ts`. Embedding values are
 illustrative. Attention probabilities are calculated from fixed toy queries
 and keys with four features, causal masking, and row-wise softmax. They are not
-recorded model activations. The tiny GPT article uses one head and 32 embedding
-features; the separate tensor showcase uses smaller/different toy dimensions
-to make each axis visible.
+recorded model activations. These toy dimensions keep each axis visible and
+can differ from the model being discussed in an article.
 
 Colors can be customized on the element through `--px-active`, `--px-negative`,
 and `--px-inactive`. The rounded squares are inspired by

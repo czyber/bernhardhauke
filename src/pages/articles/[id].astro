@@ -3,7 +3,10 @@ import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import CodeWorkspace from "../../components/CodeWorkspace.astro";
+import SeptemberLabFigures from "../../components/SeptemberLabFigures.astro";
+import septemberLabStyles from "../../styles/september-lab-story.css?inline";
 import { codeWorkspaces } from "../../data/code-workspaces";
+import katexStyles from "katex/dist/katex.min.css?inline";
 
 interface Props {
   article: CollectionEntry<"articles">;
@@ -22,6 +25,7 @@ export async function getStaticPaths() {
 
 const { article } = Astro.props;
 const { Content } = await render(article);
+const isSeptemberLab = article.id === "a-month-of-teaching-a-model-to-talk";
 const workspace = article.data.codeWorkspace
   ? codeWorkspaces[article.data.codeWorkspace]
   : undefined;
@@ -52,6 +56,7 @@ const date = article.data.pubDate.toLocaleDateString("en", {
       "article-page",
       "article-page--reading",
       { "article-page--code": workspace },
+      { "article-page--lab": isSeptemberLab },
     ]}
     data-animate
     data-analytics-article
@@ -70,7 +75,10 @@ const date = article.data.pubDate.toLocaleDateString("en", {
       }
     </header>
     <div class="prose">
+      {isSeptemberLab && <style is:global set:html={septemberLabStyles} />}
+      {article.data.math && <style is:global set:html={katexStyles} />}
       <Content />
+      {isSeptemberLab && <SeptemberLabFigures />}
     </div>
     {workspace && <CodeWorkspace workspace={workspace} />}
   </article>
@@ -83,12 +91,60 @@ const date = article.data.pubDate.toLocaleDateString("en", {
     import("../../components/GenerationExamples");
   }
 
-  if (document.querySelector("tensor-pixels")) {
+  if (document.querySelector("tensor-equation")) {
+    import("../../components/TensorEquation");
+  } else if (document.querySelector("tensor-pixels")) {
     import("../../components/TensorPixels");
   }
+
+  if (document.querySelector("token-embeddings"))
+    import("../../components/TokenEmbeddings");
+  if (document.querySelector("bigram-counts"))
+    import("../../components/BigramCounts");
+  if (document.querySelector("embedding-training"))
+    import("../../components/EmbeddingTraining");
+  if (document.querySelector("sgd-step")) import("../../components/SGDStep");
+  if (document.querySelector("vector-attention"))
+    import("../../components/VectorAttention");
+  if (document.querySelector("vector-field"))
+    import("../../components/VectorField");
+  if (document.querySelector("model-diagram"))
+    import("../../components/ModelDiagram");
+  if (document.querySelector("prediction-lab, transformer-record"))
+    import("../../components/TransformerLesson");
 </script>
 
 <style is:global>
+  .prose .katex {
+    font-size: 1.05em;
+  }
+  .prose .katex-display {
+    margin-block: 24px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-block: 8px;
+  }
+  .prose .lesson-map {
+    border-block: 1px solid var(--border);
+    padding-block: 18px;
+    margin-block: 30px;
+    font-size: 0.9em;
+  }
+  .prose .lesson-map ol {
+    padding-left: 24px;
+  }
+  .prose details.lesson-check {
+    margin-block: 26px;
+    border-left: 2px solid var(--border);
+    padding: 8px 0 8px 18px;
+  }
+  .prose details.lesson-check summary {
+    cursor: pointer;
+    color: var(--text);
+  }
+  .prose details.lesson-check > :not(summary) {
+    margin-top: 14px;
+  }
   .article-page--reading .prose:has(token-loop) {
     hyphens: none;
   }

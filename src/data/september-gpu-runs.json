@@ -1,0 +1,956 @@
+{
+  "fineweb500m": {
+    "preparedTrainingTokens": 500000000,
+    "preparedValidationTokens": 1000000,
+    "tokensPerUpdate": 32768,
+    "optimizerUpdates": 15258,
+    "processedTokenPositions": 499974144,
+    "parameters": 124526208,
+    "device": "CUDA",
+    "gradientAccumulationMicrobatches": 4,
+    "lossUnit": "Natural-log cross-entropy per GPT-2 BPE token",
+    "validation": [
+      {
+        "update": 99,
+        "processedTokenPositions": 3276800,
+        "loss": 6.80925
+      },
+      {
+        "update": 199,
+        "processedTokenPositions": 6553600,
+        "loss": 6.512911
+      },
+      {
+        "update": 299,
+        "processedTokenPositions": 9830400,
+        "loss": 6.33762
+      },
+      {
+        "update": 399,
+        "processedTokenPositions": 13107200,
+        "loss": 6.204143
+      },
+      {
+        "update": 499,
+        "processedTokenPositions": 16384000,
+        "loss": 6.06215
+      },
+      {
+        "update": 599,
+        "processedTokenPositions": 19660800,
+        "loss": 5.940008
+      },
+      {
+        "update": 699,
+        "processedTokenPositions": 22937600,
+        "loss": 5.829525
+      },
+      {
+        "update": 799,
+        "processedTokenPositions": 26214400,
+        "loss": 5.690527
+      },
+      {
+        "update": 899,
+        "processedTokenPositions": 29491200,
+        "loss": 5.560717
+      },
+      {
+        "update": 999,
+        "processedTokenPositions": 32768000,
+        "loss": 5.442926
+      },
+      {
+        "update": 1099,
+        "processedTokenPositions": 36044800,
+        "loss": 5.374716
+      },
+      {
+        "update": 1199,
+        "processedTokenPositions": 39321600,
+        "loss": 5.289612
+      },
+      {
+        "update": 1299,
+        "processedTokenPositions": 42598400,
+        "loss": 5.217237
+      },
+      {
+        "update": 1399,
+        "processedTokenPositions": 45875200,
+        "loss": 5.175114
+      },
+      {
+        "update": 1499,
+        "processedTokenPositions": 49152000,
+        "loss": 5.095846
+      },
+      {
+        "update": 1599,
+        "processedTokenPositions": 52428800,
+        "loss": 5.011226
+      },
+      {
+        "update": 1699,
+        "processedTokenPositions": 55705600,
+        "loss": 4.923568
+      },
+      {
+        "update": 1799,
+        "processedTokenPositions": 58982400,
+        "loss": 4.837074
+      },
+      {
+        "update": 1899,
+        "processedTokenPositions": 62259200,
+        "loss": 4.797453
+      },
+      {
+        "update": 1999,
+        "processedTokenPositions": 65536000,
+        "loss": 4.724816
+      },
+      {
+        "update": 2099,
+        "processedTokenPositions": 68812800,
+        "loss": 4.677101
+      },
+      {
+        "update": 2199,
+        "processedTokenPositions": 72089600,
+        "loss": 4.662408
+      },
+      {
+        "update": 2299,
+        "processedTokenPositions": 75366400,
+        "loss": 4.614624
+      },
+      {
+        "update": 2399,
+        "processedTokenPositions": 78643200,
+        "loss": 4.585421
+      },
+      {
+        "update": 2499,
+        "processedTokenPositions": 81920000,
+        "loss": 4.528821
+      },
+      {
+        "update": 2599,
+        "processedTokenPositions": 85196800,
+        "loss": 4.48312
+      },
+      {
+        "update": 2699,
+        "processedTokenPositions": 88473600,
+        "loss": 4.465917
+      },
+      {
+        "update": 2799,
+        "processedTokenPositions": 91750400,
+        "loss": 4.447924
+      },
+      {
+        "update": 2899,
+        "processedTokenPositions": 95027200,
+        "loss": 4.429632
+      },
+      {
+        "update": 2999,
+        "processedTokenPositions": 98304000,
+        "loss": 4.40556
+      },
+      {
+        "update": 3099,
+        "processedTokenPositions": 101580800,
+        "loss": 4.37269
+      },
+      {
+        "update": 3199,
+        "processedTokenPositions": 104857600,
+        "loss": 4.339286
+      },
+      {
+        "update": 3299,
+        "processedTokenPositions": 108134400,
+        "loss": 4.337203
+      },
+      {
+        "update": 3399,
+        "processedTokenPositions": 111411200,
+        "loss": 4.3192
+      },
+      {
+        "update": 3499,
+        "processedTokenPositions": 114688000,
+        "loss": 4.29918
+      },
+      {
+        "update": 3599,
+        "processedTokenPositions": 117964800,
+        "loss": 4.283632
+      },
+      {
+        "update": 3699,
+        "processedTokenPositions": 121241600,
+        "loss": 4.282174
+      },
+      {
+        "update": 3799,
+        "processedTokenPositions": 124518400,
+        "loss": 4.252054
+      },
+      {
+        "update": 3899,
+        "processedTokenPositions": 127795200,
+        "loss": 4.220107
+      },
+      {
+        "update": 3999,
+        "processedTokenPositions": 131072000,
+        "loss": 4.206391
+      },
+      {
+        "update": 4099,
+        "processedTokenPositions": 134348800,
+        "loss": 4.201262
+      },
+      {
+        "update": 4199,
+        "processedTokenPositions": 137625600,
+        "loss": 4.17686
+      },
+      {
+        "update": 4299,
+        "processedTokenPositions": 140902400,
+        "loss": 4.163452
+      },
+      {
+        "update": 4399,
+        "processedTokenPositions": 144179200,
+        "loss": 4.161333
+      },
+      {
+        "update": 4499,
+        "processedTokenPositions": 147456000,
+        "loss": 4.151141
+      },
+      {
+        "update": 4599,
+        "processedTokenPositions": 150732800,
+        "loss": 4.135777
+      },
+      {
+        "update": 4699,
+        "processedTokenPositions": 154009600,
+        "loss": 4.112771
+      },
+      {
+        "update": 4799,
+        "processedTokenPositions": 157286400,
+        "loss": 4.105271
+      },
+      {
+        "update": 4899,
+        "processedTokenPositions": 160563200,
+        "loss": 4.105685
+      },
+      {
+        "update": 4999,
+        "processedTokenPositions": 163840000,
+        "loss": 4.094522
+      },
+      {
+        "update": 5099,
+        "processedTokenPositions": 167116800,
+        "loss": 4.081792
+      },
+      {
+        "update": 5199,
+        "processedTokenPositions": 170393600,
+        "loss": 4.084251
+      },
+      {
+        "update": 5299,
+        "processedTokenPositions": 173670400,
+        "loss": 4.062938
+      },
+      {
+        "update": 5399,
+        "processedTokenPositions": 176947200,
+        "loss": 4.043524
+      },
+      {
+        "update": 5499,
+        "processedTokenPositions": 180224000,
+        "loss": 4.037712
+      },
+      {
+        "update": 5599,
+        "processedTokenPositions": 183500800,
+        "loss": 4.029591
+      },
+      {
+        "update": 5699,
+        "processedTokenPositions": 186777600,
+        "loss": 4.037679
+      },
+      {
+        "update": 5799,
+        "processedTokenPositions": 190054400,
+        "loss": 4.01967
+      },
+      {
+        "update": 5899,
+        "processedTokenPositions": 193331200,
+        "loss": 4.013845
+      },
+      {
+        "update": 5999,
+        "processedTokenPositions": 196608000,
+        "loss": 4.008036
+      },
+      {
+        "update": 6099,
+        "processedTokenPositions": 199884800,
+        "loss": 3.986023
+      },
+      {
+        "update": 6199,
+        "processedTokenPositions": 203161600,
+        "loss": 3.970827
+      },
+      {
+        "update": 6299,
+        "processedTokenPositions": 206438400,
+        "loss": 3.973077
+      },
+      {
+        "update": 6399,
+        "processedTokenPositions": 209715200,
+        "loss": 3.968858
+      },
+      {
+        "update": 6499,
+        "processedTokenPositions": 212992000,
+        "loss": 3.963666
+      },
+      {
+        "update": 6599,
+        "processedTokenPositions": 216268800,
+        "loss": 3.963574
+      },
+      {
+        "update": 6699,
+        "processedTokenPositions": 219545600,
+        "loss": 3.955988
+      },
+      {
+        "update": 6799,
+        "processedTokenPositions": 222822400,
+        "loss": 3.935202
+      },
+      {
+        "update": 6899,
+        "processedTokenPositions": 226099200,
+        "loss": 3.93844
+      },
+      {
+        "update": 6999,
+        "processedTokenPositions": 229376000,
+        "loss": 3.918788
+      },
+      {
+        "update": 7099,
+        "processedTokenPositions": 232652800,
+        "loss": 3.911222
+      },
+      {
+        "update": 7199,
+        "processedTokenPositions": 235929600,
+        "loss": 3.915456
+      },
+      {
+        "update": 7299,
+        "processedTokenPositions": 239206400,
+        "loss": 3.908496
+      },
+      {
+        "update": 7399,
+        "processedTokenPositions": 242483200,
+        "loss": 3.909428
+      },
+      {
+        "update": 7499,
+        "processedTokenPositions": 245760000,
+        "loss": 3.897905
+      },
+      {
+        "update": 7599,
+        "processedTokenPositions": 249036800,
+        "loss": 3.897408
+      },
+      {
+        "update": 7699,
+        "processedTokenPositions": 252313600,
+        "loss": 3.876679
+      },
+      {
+        "update": 7799,
+        "processedTokenPositions": 255590400,
+        "loss": 3.876288
+      },
+      {
+        "update": 7899,
+        "processedTokenPositions": 258867200,
+        "loss": 3.874108
+      },
+      {
+        "update": 7999,
+        "processedTokenPositions": 262144000,
+        "loss": 3.86666
+      },
+      {
+        "update": 8099,
+        "processedTokenPositions": 265420800,
+        "loss": 3.867389
+      },
+      {
+        "update": 8199,
+        "processedTokenPositions": 268697600,
+        "loss": 3.86971
+      },
+      {
+        "update": 8299,
+        "processedTokenPositions": 271974400,
+        "loss": 3.845567
+      },
+      {
+        "update": 8399,
+        "processedTokenPositions": 275251200,
+        "loss": 3.846429
+      },
+      {
+        "update": 8499,
+        "processedTokenPositions": 278528000,
+        "loss": 3.839141
+      },
+      {
+        "update": 8599,
+        "processedTokenPositions": 281804800,
+        "loss": 3.83293
+      },
+      {
+        "update": 8699,
+        "processedTokenPositions": 285081600,
+        "loss": 3.832784
+      },
+      {
+        "update": 8799,
+        "processedTokenPositions": 288358400,
+        "loss": 3.828743
+      },
+      {
+        "update": 8899,
+        "processedTokenPositions": 291635200,
+        "loss": 3.832825
+      },
+      {
+        "update": 8999,
+        "processedTokenPositions": 294912000,
+        "loss": 3.815106
+      },
+      {
+        "update": 9099,
+        "processedTokenPositions": 298188800,
+        "loss": 3.804961
+      },
+      {
+        "update": 9199,
+        "processedTokenPositions": 301465600,
+        "loss": 3.805249
+      },
+      {
+        "update": 9299,
+        "processedTokenPositions": 304742400,
+        "loss": 3.797832
+      },
+      {
+        "update": 9399,
+        "processedTokenPositions": 308019200,
+        "loss": 3.791972
+      },
+      {
+        "update": 9499,
+        "processedTokenPositions": 311296000,
+        "loss": 3.793144
+      },
+      {
+        "update": 9599,
+        "processedTokenPositions": 314572800,
+        "loss": 3.792397
+      },
+      {
+        "update": 9699,
+        "processedTokenPositions": 317849600,
+        "loss": 3.795886
+      },
+      {
+        "update": 9799,
+        "processedTokenPositions": 321126400,
+        "loss": 3.782437
+      },
+      {
+        "update": 9899,
+        "processedTokenPositions": 324403200,
+        "loss": 3.782025
+      },
+      {
+        "update": 9999,
+        "processedTokenPositions": 327680000,
+        "loss": 3.767479
+      },
+      {
+        "update": 10099,
+        "processedTokenPositions": 330956800,
+        "loss": 3.764604
+      },
+      {
+        "update": 10199,
+        "processedTokenPositions": 334233600,
+        "loss": 3.766866
+      },
+      {
+        "update": 10299,
+        "processedTokenPositions": 337510400,
+        "loss": 3.763746
+      },
+      {
+        "update": 10399,
+        "processedTokenPositions": 340787200,
+        "loss": 3.758908
+      },
+      {
+        "update": 10499,
+        "processedTokenPositions": 344064000,
+        "loss": 3.756502
+      },
+      {
+        "update": 10599,
+        "processedTokenPositions": 347340800,
+        "loss": 3.74307
+      },
+      {
+        "update": 10699,
+        "processedTokenPositions": 350617600,
+        "loss": 3.739653
+      },
+      {
+        "update": 10799,
+        "processedTokenPositions": 353894400,
+        "loss": 3.736294
+      },
+      {
+        "update": 10899,
+        "processedTokenPositions": 357171200,
+        "loss": 3.734545
+      },
+      {
+        "update": 10999,
+        "processedTokenPositions": 360448000,
+        "loss": 3.731076
+      },
+      {
+        "update": 11099,
+        "processedTokenPositions": 363724800,
+        "loss": 3.731148
+      },
+      {
+        "update": 11199,
+        "processedTokenPositions": 367001600,
+        "loss": 3.731025
+      },
+      {
+        "update": 11299,
+        "processedTokenPositions": 370278400,
+        "loss": 3.722129
+      },
+      {
+        "update": 11399,
+        "processedTokenPositions": 373555200,
+        "loss": 3.715223
+      },
+      {
+        "update": 11499,
+        "processedTokenPositions": 376832000,
+        "loss": 3.712524
+      },
+      {
+        "update": 11599,
+        "processedTokenPositions": 380108800,
+        "loss": 3.711186
+      },
+      {
+        "update": 11699,
+        "processedTokenPositions": 383385600,
+        "loss": 3.709488
+      },
+      {
+        "update": 11799,
+        "processedTokenPositions": 386662400,
+        "loss": 3.707853
+      },
+      {
+        "update": 11899,
+        "processedTokenPositions": 389939200,
+        "loss": 3.708275
+      },
+      {
+        "update": 11999,
+        "processedTokenPositions": 393216000,
+        "loss": 3.703117
+      },
+      {
+        "update": 12099,
+        "processedTokenPositions": 396492800,
+        "loss": 3.693679
+      },
+      {
+        "update": 12199,
+        "processedTokenPositions": 399769600,
+        "loss": 3.692639
+      },
+      {
+        "update": 12299,
+        "processedTokenPositions": 403046400,
+        "loss": 3.690277
+      },
+      {
+        "update": 12399,
+        "processedTokenPositions": 406323200,
+        "loss": 3.688589
+      },
+      {
+        "update": 12499,
+        "processedTokenPositions": 409600000,
+        "loss": 3.690721
+      },
+      {
+        "update": 12599,
+        "processedTokenPositions": 412876800,
+        "loss": 3.69091
+      },
+      {
+        "update": 12699,
+        "processedTokenPositions": 416153600,
+        "loss": 3.687881
+      },
+      {
+        "update": 12799,
+        "processedTokenPositions": 419430400,
+        "loss": 3.682082
+      },
+      {
+        "update": 12899,
+        "processedTokenPositions": 422707200,
+        "loss": 3.6769
+      },
+      {
+        "update": 12999,
+        "processedTokenPositions": 425984000,
+        "loss": 3.674835
+      },
+      {
+        "update": 13099,
+        "processedTokenPositions": 429260800,
+        "loss": 3.673621
+      },
+      {
+        "update": 13199,
+        "processedTokenPositions": 432537600,
+        "loss": 3.673581
+      },
+      {
+        "update": 13299,
+        "processedTokenPositions": 435814400,
+        "loss": 3.676597
+      },
+      {
+        "update": 13399,
+        "processedTokenPositions": 439091200,
+        "loss": 3.673481
+      },
+      {
+        "update": 13499,
+        "processedTokenPositions": 442368000,
+        "loss": 3.667549
+      },
+      {
+        "update": 13599,
+        "processedTokenPositions": 445644800,
+        "loss": 3.664718
+      },
+      {
+        "update": 13699,
+        "processedTokenPositions": 448921600,
+        "loss": 3.663159
+      },
+      {
+        "update": 13799,
+        "processedTokenPositions": 452198400,
+        "loss": 3.662765
+      },
+      {
+        "update": 13899,
+        "processedTokenPositions": 455475200,
+        "loss": 3.660827
+      },
+      {
+        "update": 13999,
+        "processedTokenPositions": 458752000,
+        "loss": 3.660306
+      },
+      {
+        "update": 14099,
+        "processedTokenPositions": 462028800,
+        "loss": 3.659678
+      },
+      {
+        "update": 14199,
+        "processedTokenPositions": 465305600,
+        "loss": 3.659558
+      },
+      {
+        "update": 14299,
+        "processedTokenPositions": 468582400,
+        "loss": 3.653443
+      },
+      {
+        "update": 14399,
+        "processedTokenPositions": 471859200,
+        "loss": 3.652524
+      },
+      {
+        "update": 14499,
+        "processedTokenPositions": 475136000,
+        "loss": 3.6527
+      },
+      {
+        "update": 14599,
+        "processedTokenPositions": 478412800,
+        "loss": 3.651238
+      },
+      {
+        "update": 14699,
+        "processedTokenPositions": 481689600,
+        "loss": 3.650845
+      },
+      {
+        "update": 14799,
+        "processedTokenPositions": 484966400,
+        "loss": 3.651969
+      },
+      {
+        "update": 14899,
+        "processedTokenPositions": 488243200,
+        "loss": 3.652925
+      },
+      {
+        "update": 14999,
+        "processedTokenPositions": 491520000,
+        "loss": 3.646628
+      },
+      {
+        "update": 15099,
+        "processedTokenPositions": 494796800,
+        "loss": 3.644742
+      },
+      {
+        "update": 15199,
+        "processedTokenPositions": 498073600,
+        "loss": 3.64474
+      },
+      {
+        "update": 15257,
+        "processedTokenPositions": 499974144,
+        "loss": 3.642228
+      }
+    ],
+    "finalUpdate": {
+      "update": 15257,
+      "loss": 3.636497,
+      "learningRate": 3e-5,
+      "gradientNorm": 0.7442,
+      "durationMs": 429.94,
+      "tokensPerSecond": 76215.1
+    },
+    "validationSummary": {
+      "count": 153,
+      "first": {
+        "update": 99,
+        "processedTokenPositions": 3276800,
+        "loss": 6.80925
+      },
+      "final": {
+        "update": 15257,
+        "processedTokenPositions": 499974144,
+        "loss": 3.642228
+      },
+      "best": {
+        "update": 15257,
+        "processedTokenPositions": 499974144,
+        "loss": 3.642228
+      },
+      "finalPerplexity": 38.176799951510745
+    },
+    "timing": {
+      "sumLoggedUpdateSeconds": 6593.39136,
+      "meanLoggedUpdateMs": 432.12684231222966,
+      "medianLoggedUpdateMs": 431.09,
+      "aggregateUpdateTokensPerSecond": 75829.58703667848,
+      "wallClockSeconds": null,
+      "excludes": [
+        "Data preparation",
+        "Initialization before first update timer",
+        "Validation",
+        "Checkpoint saving",
+        "Other work outside timed optimizer updates"
+      ]
+    },
+    "qualityChecks": {
+      "contiguousTrainingUpdateIndices": true,
+      "finiteLoggedMetrics": true,
+      "warningsOrErrorsInLog": false
+    },
+    "provenance": {
+      "kind": "saved_training_log",
+      "logFilename": "fineweb-500m.log",
+      "reviewedOn": "2026-10-05",
+      "runDate": "2026-09-29",
+      "notes": [
+        "Extracted from the completed GPU run log supplied by the author.",
+        "Validation is measured after the optimizer update; the x-coordinate is (update index + 1) \u00d7 32,768 processed token positions.",
+        "Each validation estimate averages 20 batches, rather than the entire held-out file.",
+        "Training loss in the final update and validation loss use different estimates.",
+        "The 100M and 500M runs are observations, not a controlled comparison of dataset size alone.",
+        "Model configuration and training settings verified against the completed saved checkpoint.",
+        "The 100M and 500M prepared validation files were verified byte-identical, with 1,000,000 tokens each.",
+        "The current remote project is at the same final September implementation; an exact training-time code revision was not stored in the checkpoint."
+      ],
+      "runDateEvidence": "Final checkpoint and log filesystem modification dates in the original GPU environment."
+    },
+    "hardware": {
+      "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+      "observedOn": "2026-10-05"
+    },
+    "modelConfig": {
+      "layers": 12,
+      "heads": 12,
+      "embeddingWidth": 768,
+      "contextTokens": 1024,
+      "outputVocabularySize": 50304,
+      "tokenizer": "gpt2"
+    },
+    "trainingSettings": {
+      "microbatchSequences": 8,
+      "sequenceTokens": 1024,
+      "globalTokensPerUpdate": 32768,
+      "gpuProcesses": 1,
+      "maximumLearningRate": 0.0003,
+      "minimumLearningRate": 3e-5,
+      "warmupUpdates": 20,
+      "configuredOptimizerUpdates": 15258,
+      "checkpointNextUpdate": 15258
+    },
+    "dataset": {
+      "name": "HuggingFaceFW/fineweb-edu",
+      "configuration": "sample-10BT",
+      "trainingDocuments": 482666,
+      "validationDocuments": 970
+    },
+    "checkpointBytes": 1494503059,
+    "samplingEvidence": {
+      "sampledAt": "2026-10-05T13:53:41.476056+00:00",
+      "sampleCount": 2,
+      "settings": {
+        "max_new_tokens": 200,
+        "temperature": 0.7,
+        "top_k": 40,
+        "seed": 1337,
+        "device": "cuda",
+        "precision": "bf16 autocast"
+      },
+      "downloadPath": "/articles/a-month-of-teaching-a-model-to-talk/checkpoint-samples.json"
+    }
+  },
+  "fineweb100m": {
+    "preparedTrainingTokens": 100000000,
+    "preparedValidationTokens": 1000000,
+    "tokensPerUpdate": 32768,
+    "optimizerUpdates": 3000,
+    "processedTokenPositions": 98304000,
+    "parameters": 124526208,
+    "lossUnit": "Natural-log cross-entropy per GPT-2 BPE token",
+    "validation": [
+      {
+        "update": 2999,
+        "processedTokenPositions": 98304000,
+        "loss": 4.623868
+      }
+    ],
+    "finalUpdate": {
+      "update": 2999,
+      "loss": 4.679044,
+      "learningRate": 3e-5,
+      "gradientNorm": 0.7937,
+      "durationMs": 425.27,
+      "tokensPerSecond": 77051.71
+    },
+    "validationSummary": {
+      "count": 1,
+      "final": {
+        "update": 2999,
+        "processedTokenPositions": 98304000,
+        "loss": 4.623868
+      },
+      "finalPerplexity": 101.88737127331738
+    },
+    "dataset": {
+      "name": "HuggingFaceFW/fineweb-edu",
+      "configuration": "sample-10BT",
+      "trainingDocuments": 95804,
+      "validationDocuments": 970
+    },
+    "provenance": {
+      "kind": "author_reported_final_log_excerpt",
+      "reviewedOn": "2026-10-05",
+      "notes": [
+        "The author supplied the final training and validation log lines in the original article notes.",
+        "The full 100M run log was not found in the saved remote outputs; this is one reported endpoint, not a learning curve.",
+        "Preparation metadata verified against the existing 100M dataset.",
+        "The prepared validation file is byte-identical to the 500M dataset validation file.",
+        "The longer run used a different learning-rate horizon and more processed training positions. These observations do not isolate the effect of dataset size.",
+        "The current earlier checkpoint has only 100 completed updates and does not preserve the 3000-update run; no matched 100M checkpoint sample comparison is available."
+      ]
+    }
+  },
+  "comparison": {
+    "identicalPreparedValidationFilesVerified": true,
+    "validationTokens": 1000000,
+    "validationDocuments": 970,
+    "notes": [
+      "The 100M final loss is an author-reported log excerpt; the 500M history comes from the saved complete training log.",
+      "Both prepared validation files contain the same token IDs.",
+      "Training length, source coverage and learning-rate schedule differ; this is not a controlled dataset-size experiment."
+    ]
+  },
+  "environmentInspection": {
+    "observedOn": "2026-10-05",
+    "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+    "pytorchVersion": "2.14.0+cu130",
+    "cudaVersion": "13.0",
+    "notes": [
+      "Versions describe the remote environment when the saved checkpoint was inspected; the original run log does not record its dependency versions."
+    ]
+  }
+}

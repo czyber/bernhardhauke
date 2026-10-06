@@ -1,0 +1,41 @@
+<!-- Six worked tensor operations for comparison with PyTorch. -->
+<tensor-equation formula="{{tokens}} + {{positions}} = {{encoded}}" show-values caption="$X_{b,t,c}=E_{b,t,c}+P_{t,c}$. Inspect a square in $X$ to see its two input values. Change the batch slice to follow the same position in another sequence.">
+<tensor-pixels name="tokens" label="$E$" values="[[[1,2,0],[0,1,3]],[[2,0,1],[1,3,2]]]" axes="batch,position,feature" labels='[["sequence 1","sequence 2"],["$t_0$","$t_1$"],["$f_1$","$f_2$","$f_3$"]]' caption="Token embeddings"></tensor-pixels>
+<tensor-pixels name="positions" label="$P$" values="[[0,1,0],[1,0,1]]" axes="position,feature" labels='[["$t_0$","$t_1$"],["$f_1$","$f_2$","$f_3$"]]' caption="Position encodings"></tensor-pixels>
+<tensor-pixels name="encoded" label="$X$" op="add" inputs="tokens,positions" caption="Combined embeddings"></tensor-pixels>
+<p>For sequence 1 the result has rows [1, 3, 0] and [1, 1, 4]. For sequence 2 it has rows [2, 1, 1] and [2, 3, 3]. The same position encodings are added to each sequence.</p>
+</tensor-equation>
+
+<tensor-equation formula="A = {{a}} \qquad A^{\mathsf{T}} = {{at}}" show-values caption="For every entry, $A^{\mathsf{T}}_{j,i} = A_{i,j}$. The values are unchanged; their addresses swap.">
+<tensor-pixels name="a" values="[[1,2,3],[4,5,6]]" axes="token,feature" labels='[["hello","world"],["$f_1$","$f_2$","$f_3$"]]' caption="$A \in \mathbb{R}^{2\times3}$"></tensor-pixels>
+<tensor-pixels name="at" op="transpose" inputs="a" caption="$A^{\mathsf{T}} \in \mathbb{R}^{3\times2}$"></tensor-pixels>
+<p>A has rows [1, 2, 3] and [4, 5, 6]. Its transpose has rows [1, 4], [2, 5], and [3, 6].</p>
+</tensor-equation>
+
+<tensor-equation formula="{{x}} \xrightarrow{\texttt{x.view(2,2,2)}} {{heads}}" show-values caption="The eight values keep their order. For example, $x_{1,2}$ becomes $H_{1,1,0}$. Select a token layer to inspect inside the cube.">
+<tensor-pixels name="x" label="$X$" values="[[0,1,2,3],[4,5,6,7]]" axes="token,feature" labels='[["hello","world"],null]' caption="$T \times C = 2 \times 4$"></tensor-pixels>
+<tensor-pixels name="heads" label="$H$" op="view" inputs="x" shape="2,2,2" axes="token,head,feature" labels='[["hello","world"],null,null]' view="3d" caption="$T \times n_h \times d_h = 2 \times 2 \times 2$"></tensor-pixels>
+<p>X contains 0 through 7. Its view has shape [2, 2, 2], with layers [[0, 1], [2, 3]] and [[4, 5], [6, 7]].</p>
+</tensor-equation>
+
+<tensor-equation formula="{{qkv}} \xrightarrow{\operatorname{split}} ({{q}},{{k}},{{v}})" show-values caption="In this small example, $[Q\;K\;V]$ has shape $2\times6$. Each result has shape $2\times2$.">
+<tensor-pixels name="qkv" label="$[Q\;K\;V]$" values="[[1,2,3,4,5,6],[7,8,9,10,11,12]]" axes="token,projection" caption="Two tokens, three groups"></tensor-pixels>
+<tensor-pixels name="q" label="$Q$" op="split" inputs="qkv" axis="1" sizes="2,2,2" part="0" caption="Queries"></tensor-pixels>
+<tensor-pixels name="k" label="$K$" op="split" inputs="qkv" axis="1" sizes="2,2,2" part="1" caption="Keys"></tensor-pixels>
+<tensor-pixels name="v" label="$V$" op="split" inputs="qkv" axis="1" sizes="2,2,2" part="2" caption="Values"></tensor-pixels>
+<p>Q has rows [1, 2], [7, 8]. K has rows [3, 4], [9, 10]. V has rows [5, 6], [11, 12].</p>
+</tensor-equation>
+
+<tensor-equation formula="{{a}} \cdot {{b}} = {{c}}" show-values caption="$C_{i,j}=\sum_k A_{i,k}B_{k,j}$. Inspect an entry in $C$ to see its exact dot product.">
+<tensor-pixels name="a" label="$A$" values="[[1,2,0],[0,1,3]]" axes="token,feature" labels='[["hello","world"],["$f_1$","$f_2$","$f_3$"]]' caption="Token features $\in \mathbb{R}^{2\times3}$"></tensor-pixels>
+<tensor-pixels name="b" label="$B$" values="[[1,0],[0,2],[1,1]]" axes="feature,output" labels='[["$f_1$","$f_2$","$f_3$"],["$o_1$","$o_2$"]]' caption="Projection $\in \mathbb{R}^{3\times2}$"></tensor-pixels>
+<tensor-pixels name="c" label="$C$" op="matmul" inputs="a,b" caption="Projected tokens $\in \mathbb{R}^{2\times2}$"></tensor-pixels>
+<p>A multiplied by B gives C with rows [1, 4] and [3, 5]. C[1, 1] is 0×0 + 1×2 + 3×1 = 5.</p>
+</tensor-equation>
+
+<tensor-equation formula="{{a}} \otimes {{b}} = {{product}}" show-values caption="Each $a_{i,j}$ scales a whole copy of $B$. The matrix representation has shape $(2\cdot2)\times(2\cdot2)$.">
+<tensor-pixels name="a" label="$A$" values="[[1,2],[3,4]]" axes="row,column" caption="$2\times2$"></tensor-pixels>
+<tensor-pixels name="b" label="$B$" values="[[1,0],[0,1]]" axes="row,column" caption="$I_2$"></tensor-pixels>
+<tensor-pixels name="product" label="$A\otimes B$" op="kron" inputs="a,b" axes="row,column" caption="$4\times4$"></tensor-pixels>
+<p>The Kronecker product has rows [1, 0, 2, 0], [0, 1, 0, 2], [3, 0, 4, 0], [0, 3, 0, 4].</p>
+</tensor-equation>
