@@ -7,6 +7,7 @@
     "test": "node --experimental-strip-types --test tests/*.test.ts",
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
     "build:og": "node scripts/build-og-images.mjs",
+    "build:favicons": "node scripts/build-favicons.mjs",
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro check && ASTRO_TELEMETRY_DISABLED=1 astro build",
     "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",

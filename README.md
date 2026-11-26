@@ -10,6 +10,7 @@ npm run dev
 npm run check
 npm run build
 npm run build:og
+npm run build:favicons
 ```
 
 ## Content
@@ -42,6 +43,13 @@ Set `socialImage` in the article frontmatter to
 `/articles/<article-slug>/og-image.png`. Run `npm test` and `npm run build` before
 publishing. Local research notes and plot previews belong in the ignored `work/`
 directory.
+
+The site logo is `public/favicon.svg`. After changing it, regenerate the
+`.ico` and PNG fallbacks (requires `rsvg-convert`, from `brew install librsvg`):
+
+```sh
+npm run build:favicons
+```
 
 Code-block copy buttons are opt-in. Add the `copy` property after the fence
 language when a block should include one:
