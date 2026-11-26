@@ -3,9 +3,10 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
   project: CollectionEntry<"projects">;
+  compact?: boolean;
 }
 
-const { project } = Astro.props;
+const { project, compact = false } = Astro.props;
 ---
 
 <article class="project-row">
@@ -14,7 +15,7 @@ const { project } = Astro.props;
       <h3 class="project-row-title">{project.data.title}</h3>
       <span class="project-row-description">{project.data.description}</span>
       {
-        project.data.stack.length > 0 && (
+        !compact && project.data.stack.length > 0 && (
           <span class="project-row-stack" aria-label="Project stack">
             {project.data.stack.join(" / ")}
           </span>
@@ -22,7 +23,11 @@ const { project } = Astro.props;
       }
     </span>
     <span class="project-row-status">
-      {project.data.year} / {project.data.status}
+      {
+        compact
+          ? project.data.year
+          : `${project.data.year} / ${project.data.status}`
+      }
     </span>
   </a>
 </article>

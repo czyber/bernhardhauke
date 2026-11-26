@@ -29,12 +29,15 @@ const articles = (await getCollection("articles"))
 
 <BaseLayout>
   <section class="home-opening" aria-labelledby="home-title">
-    <div class="home-introduction">
-      <h1 id="home-title">
-        A focused place for what I am<br class="wide-break" /> building and learning.
-      </h1>
-      <p>A curious mind, exploring the landscape of software.</p>
-    </div>
+    <h1 id="home-title" class="visually-hidden">Bernhard Hauke</h1>
+    <figure class="home-quote">
+      <blockquote>
+        “Nobody ever figures out what life is all about, and it doesn’t matter.
+        Explore the world. Nearly everything is really interesting if you go
+        into it deeply enough.”
+      </blockquote>
+      <figcaption>― Richard P. Feynman</figcaption>
+    </figure>
     <a class="home-continue" href="#recent-writing"
       >Writing &amp; projects <span aria-hidden="true">↓</span></a
     >
@@ -64,7 +67,7 @@ const articles = (await getCollection("articles"))
         {
           allProjects
             .slice(0, 2)
-            .map((project) => <ProjectCard project={project} />)
+            .map((project) => <ProjectCard project={project} compact />)
         }
       </div>
     </section>
@@ -96,26 +99,34 @@ const articles = (await getCollection("articles"))
     overflow: hidden;
   }
 
-  .home-introduction {
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .home-quote {
     position: relative;
     z-index: 1;
+    max-width: 46ch;
+    margin: 0 auto;
     text-align: center;
   }
-  .home-introduction h1 {
-    max-width: 30ch;
-    margin: 0 auto;
-    font-family: var(--font-title);
-    font-size: clamp(30px, 3.3vw, 44px);
-    font-weight: 400;
-    font-style: italic;
-    line-height: 1.18;
-    text-wrap: balance;
-  }
-  .home-introduction p {
-    margin: 24px 0 0;
+  .home-quote blockquote {
+    margin: 0;
     color: var(--muted);
     font-size: 17px;
-    line-height: 1.5;
+    font-style: italic;
+    line-height: 1.6;
+    text-wrap: balance;
+  }
+  .home-quote figcaption {
+    margin-top: 20px;
+    color: var(--subtle);
+    font-family: var(--font-mono);
+    font-size: 11px;
   }
   .home-continue {
     position: absolute;
@@ -186,13 +197,6 @@ const articles = (await getCollection("articles"))
       min-height: 620px;
       margin-top: -24px;
       padding-top: 96px;
-    }
-    .home-introduction p {
-      max-width: 27ch;
-      margin-inline: auto;
-    }
-    .wide-break {
-      display: none;
     }
     .home-notes {
       margin-top: 40px;

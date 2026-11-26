@@ -251,8 +251,7 @@ main {
   padding-top: 32px;
 }
 
-.section-panel,
-.note-panel {
+.section-panel {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--border);
@@ -263,12 +262,6 @@ main {
 
 .section-panel {
   padding: 32px;
-}
-
-.note-panel {
-  max-width: 760px;
-  margin-top: 96px;
-  padding: 48px 32px 32px;
 }
 
 .hero h1,
@@ -432,8 +425,7 @@ main > .section-stack:first-child {
 }
 
 .section-heading h1,
-.section-heading h2,
-.note-panel h2 {
+.section-heading h2 {
   max-width: 23ch;
   margin: 0;
   font-family: var(--font-title);
@@ -444,8 +436,7 @@ main > .section-stack:first-child {
 }
 
 .section-heading > p:not(.eyebrow),
-.text-block,
-.note-panel p {
+.text-block {
   color: var(--muted);
   font-family: var(--font-copy);
   font-size: 16px;
@@ -467,15 +458,6 @@ main > .section-stack:first-child {
 
 .text-block p + p {
   margin-top: 18px;
-}
-
-.note-panel p {
-  max-width: 580px;
-  margin: 16px 0 0;
-}
-
-.note-panel .button {
-  margin-top: 20px;
 }
 
 .card-grid {
@@ -1259,14 +1241,8 @@ main > .section-stack:first-child {
     padding: 40px 0 80px;
   }
 
-  .section-panel,
-  .note-panel {
+  .section-panel {
     padding: 24px;
-  }
-
-  .note-panel {
-    margin-top: 80px;
-    padding-top: 44px;
   }
 
   .hero h1,
@@ -1284,8 +1260,7 @@ main > .section-stack:first-child {
   }
 
   .section-heading h1,
-  .section-heading h2,
-  .note-panel h2 {
+  .section-heading h2 {
     font-size: 28px;
     line-height: 36px;
   }

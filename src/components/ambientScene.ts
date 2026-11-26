@@ -430,15 +430,19 @@ export function startAmbientScene(canvas: HTMLCanvasElement) {
 
   function updateReading() {
     const opening = document.querySelector(".home-opening");
-    reading = opening
-      ? Math.max(
-          0,
-          Math.min(
-            1,
-            -opening.getBoundingClientRect().top / (opening.clientHeight * 0.6),
-          ),
-        )
-      : 1;
+    // Short pages can opt out of the cleared column and keep the whole sky.
+    reading = document.querySelector("[data-open-sky]")
+      ? 0
+      : opening
+        ? Math.max(
+            0,
+            Math.min(
+              1,
+              -opening.getBoundingClientRect().top /
+                (opening.clientHeight * 0.6),
+            ),
+          )
+        : 1;
     const article = document.querySelector(
       ".article-page--reading, .article-page, .home-notes, .article-index",
     );
